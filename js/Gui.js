@@ -1,8 +1,3 @@
-var FizzyText = function() {
-  this.message = 'dat.gui';
-  this.speed = 0.8;
-};
-
 window.onload = function() {
   var gui = new dat.GUI();
   var rubiksMovements = {
@@ -10,7 +5,7 @@ window.onload = function() {
     rightPrime:function(){console.log("Right Prime")},
     left:function(){console.log("Left")},
     leftPrime:function(){console.log("Left Prime")},
-    front:function(){console.log("Front"); front(rubiksCube);},
+    front:function(){console.log("Front"); front(rubiksCubeFaces);},
     frontPrime:function(){console.log("Front Prime");},
     back:function(){console.log("Back")},
     backPrime:function(){console.log("Back Prime")},
