@@ -6,6 +6,8 @@ var renderer = new THREE.WebGLRenderer();
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2(), INTERSECTED;
 controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableZoom = false;
+controls.enablePan = false;
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor(0xaaaaaa);
 document.body.appendChild(renderer.domElement);
@@ -22,11 +24,12 @@ window.addEventListener('resize', function(){
 var rubiksCubeFaces = createCubeFaces();
 var rubiksCubeBlocks = createCubeBlocks();
 addCubeBlocksToScene(rubiksCubeBlocks, scene);
-addCubeFacesToScene(rubiksCubeFaces, scene);
+//addCubeFacesToScene(rubiksCubeFaces, scene);
 
 //Update logic
 var update = function()
 {
+
 };
 
 //Draw scene
@@ -41,19 +44,15 @@ var AnimationLoop = function()
   requestAnimationFrame(AnimationLoop);
   update();
   render();
+  rubiksCubeBlocks[0][0][0].rotation.z += .01;
+  rubiksCubeBlocks[0][0][1].rotation.z += .01;
 };
 
 document.addEventListener("keydown", onDocumentKeyDown, false);
 function onDocumentKeyDown(event) {
 var keyCode = event.which;
-if (keyCode == 82) {
-  randomizeFaces(rubiksCubeFaces);
+if (keyCode == 192) {
 }
-};
-
-var FizzyText = function() {
-  this.message = 'dat.gui';
-  this.speed = 0.8;
 };
 
 AnimationLoop();

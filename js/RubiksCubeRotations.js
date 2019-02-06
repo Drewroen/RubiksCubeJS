@@ -1,3 +1,50 @@
+function performAlgorithmSequence(rubiksCube, alg)
+{
+  var moves = alg.split(" ");
+  moves.forEach(function(move) {
+    switch(move)
+    {
+      case "F": front(rubiksCube); break;
+      case "F'": frontPrime(rubiksCube); break;
+      case "X": xAxis(rubiksCube); break;
+      case "X'": xAxisPrime(rubiksCube); break;
+      case "Y": yAxis(rubiksCube); break;
+      case "Y'": yAxisPrime(rubiksCube); break;
+      case "Z": zAxis(rubiksCube); break;
+      case "Z'": zAxisPrime(rubiksCube); break;
+      case "R": right(rubiksCube); break;
+      case "R'": rightPrime(rubiksCube); break;
+      case "L": left(rubiksCube); break;
+      case "L'": leftPrime(rubiksCube); break;
+      case "B": back(rubiksCube); break;
+      case "B'": backPrime(rubiksCube); break;
+      case "U": up(rubiksCube); break;
+      case "U'": upPrime(rubiksCube); break;
+      case "D": down(rubiksCube); break;
+      case "D'": downPrime(rubiksCube); break;
+      case "E": equator(rubiksCube); break;
+      case "E'": equatorPrime(rubiksCube); break;
+      case "M": middle(rubiksCube); break;
+      case "M'": middlePrime(rubiksCube); break;
+      case "S": standing(rubiksCube); break;
+      case "S'": standingPrime(rubiksCube); break;
+      case "F2": front(rubiksCube); front(rubiksCube); break;
+      case "X2": xAxis(rubiksCube); xAxis(rubiksCube); break;
+      case "Y2": yAxis(rubiksCube); yAxis(rubiksCube); break;
+      case "Z2": zAxis(rubiksCube); zAxis(rubiksCube); break;
+      case "R2": right(rubiksCube); right(rubiksCube); break;
+      case "L2": left(rubiksCube); left(rubiksCube); break;
+      case "B2": back(rubiksCube); back(rubiksCube); break;
+      case "U2": up(rubiksCube); up(rubiksCube); break;
+      case "D2": down(rubiksCube); down(rubiksCube); break;
+      case "E2": equator(rubiksCube); equator(rubiksCube); break;
+      case "M2": middle(rubiksCube); middle(rubiksCube); break;
+      case "S2": standing(rubiksCube); standing(rubiksCube); break;
+
+    }
+  });
+}
+
 function front(rubiksCube)
 {
   rubiksCubeOldReference = createCubeFacesFromCube(rubiksCube);
@@ -18,157 +65,142 @@ function front(rubiksCube)
 
 function frontPrime(rubiksCube)
 {
-  front(rubiksCube);
-  front(rubiksCube);
-  front(rubiksCube);
+  performAlgorithmSequence(rubiksCube, "F F F");
 }
 
 function xAxis(rubiksCube)
 {
   rubiksCubeOldReference = createCubeFacesFromCube(rubiksCube);
-  setCubeFace(rubiksCube, 4, 0, getCubeFace(rubiksCubeOldReference, 0, 2));
-  setCubeFace(rubiksCube, 4, 1, getCubeFace(rubiksCubeOldReference, 0, 1));
-  setCubeFace(rubiksCube, 4, 2, getCubeFace(rubiksCubeOldReference, 0, 0));
-  setCubeFace(rubiksCube, 4, 3, getCubeFace(rubiksCubeOldReference, 0, 5));
-  setCubeFace(rubiksCube, 4, 4, getCubeFace(rubiksCubeOldReference, 0, 4));
-  setCubeFace(rubiksCube, 4, 5, getCubeFace(rubiksCubeOldReference, 0, 3));
-  setCubeFace(rubiksCube, 4, 6, getCubeFace(rubiksCubeOldReference, 0, 8));
-  setCubeFace(rubiksCube, 4, 7, getCubeFace(rubiksCubeOldReference, 0, 7));
-  setCubeFace(rubiksCube, 4, 8, getCubeFace(rubiksCubeOldReference, 0, 6));
-  setCubeFace(rubiksCube, 0, 0, getCubeFace(rubiksCubeOldReference, 5, 0));
-  setCubeFace(rubiksCube, 0, 1, getCubeFace(rubiksCubeOldReference, 5, 1));
-  setCubeFace(rubiksCube, 0, 2, getCubeFace(rubiksCubeOldReference, 5, 2));
-  setCubeFace(rubiksCube, 0, 3, getCubeFace(rubiksCubeOldReference, 5, 3));
-  setCubeFace(rubiksCube, 0, 4, getCubeFace(rubiksCubeOldReference, 5, 4));
-  setCubeFace(rubiksCube, 0, 5, getCubeFace(rubiksCubeOldReference, 5, 5));
-  setCubeFace(rubiksCube, 0, 6, getCubeFace(rubiksCubeOldReference, 5, 6));
-  setCubeFace(rubiksCube, 0, 7, getCubeFace(rubiksCubeOldReference, 5, 7));
-  setCubeFace(rubiksCube, 0, 8, getCubeFace(rubiksCubeOldReference, 5, 8));
-
-  setCubeFace(rubiksCube, 5, 0, getCubeFace(rubiksCubeOldReference, 2, 2));
-  setCubeFace(rubiksCube, 5, 1, getCubeFace(rubiksCubeOldReference, 2, 1));
-  setCubeFace(rubiksCube, 5, 2, getCubeFace(rubiksCubeOldReference, 2, 0));
-  setCubeFace(rubiksCube, 5, 3, getCubeFace(rubiksCubeOldReference, 2, 5));
-  setCubeFace(rubiksCube, 5, 4, getCubeFace(rubiksCubeOldReference, 2, 4));
-  setCubeFace(rubiksCube, 5, 5, getCubeFace(rubiksCubeOldReference, 2, 3));
-  setCubeFace(rubiksCube, 5, 6, getCubeFace(rubiksCubeOldReference, 2, 8));
-  setCubeFace(rubiksCube, 5, 7, getCubeFace(rubiksCubeOldReference, 2, 7));
-  setCubeFace(rubiksCube, 5, 8, getCubeFace(rubiksCubeOldReference, 2, 6));
-
-  setCubeFace(rubiksCube, 2, 0, getCubeFace(rubiksCubeOldReference, 4, 0));
-  setCubeFace(rubiksCube, 2, 1, getCubeFace(rubiksCubeOldReference, 4, 1));
-  setCubeFace(rubiksCube, 2, 2, getCubeFace(rubiksCubeOldReference, 4, 2));
-  setCubeFace(rubiksCube, 2, 3, getCubeFace(rubiksCubeOldReference, 4, 3));
-  setCubeFace(rubiksCube, 2, 4, getCubeFace(rubiksCubeOldReference, 4, 4));
-  setCubeFace(rubiksCube, 2, 5, getCubeFace(rubiksCubeOldReference, 4, 5));
-  setCubeFace(rubiksCube, 2, 6, getCubeFace(rubiksCubeOldReference, 4, 6));
-  setCubeFace(rubiksCube, 2, 7, getCubeFace(rubiksCubeOldReference, 4, 7));
-  setCubeFace(rubiksCube, 2, 8, getCubeFace(rubiksCubeOldReference, 4, 8));
+  for(var i = 0; i < rubiksCube[0].length; i++)
+  {
+    setCubeFace(rubiksCube, 4, i, getCubeFace(rubiksCubeOldReference, 0, Math.floor(i/3) * 3 + (2 - (i % 3))));
+    setCubeFace(rubiksCube, 0, i, getCubeFace(rubiksCubeOldReference, 5, i));
+    setCubeFace(rubiksCube, 5, i, getCubeFace(rubiksCubeOldReference, 2, Math.floor(i/3) * 3 + (2 - (i % 3))));
+    setCubeFace(rubiksCube, 2, i, getCubeFace(rubiksCubeOldReference, 4, i));
+    setCubeFace(rubiksCube, 1, i, getCubeFace(rubiksCubeOldReference, 1, (2 - (i % 3)) * 3 + Math.floor(i/3)));
+    setCubeFace(rubiksCube, 3, i, getCubeFace(rubiksCubeOldReference, 3, (2 - (i % 3)) * 3 + Math.floor(i/3)));
+  }
 }
 
 function xAxisPrime(rubiksCube)
 {
-  xAxis(rubiksCube);
-  xAxis(rubiksCube);
-  xAxis(rubiksCube);
+  performAlgorithmSequence(rubiksCube, "X X X");
 }
 
-function yAxis(rubiksCubeToTurn)
+function yAxis(rubiksCube)
 {
-
+  rubiksCubeOldReference = createCubeFacesFromCube(rubiksCube);
+  for(var i = 0; i < rubiksCube[0].length; i++)
+  {
+    setCubeFace(rubiksCube, 0, i, getCubeFace(rubiksCubeOldReference, 1, Math.floor(i % 3) * 3 + (2 - (Math.floor(i/3)))));
+    setCubeFace(rubiksCube, 1, i, getCubeFace(rubiksCubeOldReference, 2, Math.floor(i % 3) * 3 + ((Math.floor(i/3)))));
+    setCubeFace(rubiksCube, 2, i, getCubeFace(rubiksCubeOldReference, 3, Math.floor(i % 3) * 3 + (2 - (Math.floor(i/3)))));
+    setCubeFace(rubiksCube, 3, i, getCubeFace(rubiksCubeOldReference, 0, Math.floor(i % 3) * 3 + ((Math.floor(i/3)))));
+    setCubeFace(rubiksCube, 4, i, getCubeFace(rubiksCubeOldReference, 4, (i % 3) * 3 + (2 - Math.floor(i/3))));
+    setCubeFace(rubiksCube, 5, i, getCubeFace(rubiksCubeOldReference, 5, (i % 3) * 3 + (2 - Math.floor(i/3))));
+  }
 }
 
-function yAxisPrime(rubiksCubeToTurn)
+function yAxisPrime(rubiksCube)
 {
-
+  performAlgorithmSequence(rubiksCube, "Y Y Y");
 }
 
-function zAxis(rubiksCubeToTurn)
+function zAxis(rubiksCube)
 {
-
+  rubiksCubeOldReference = createCubeFacesFromCube(rubiksCube);
+  for(var i = 0; i < rubiksCube[0].length; i++)
+  {
+    setCubeFace(rubiksCube, 4, i, getCubeFace(rubiksCubeOldReference, 3, Math.floor(i/3) * 3 + (i % 3)));
+    setCubeFace(rubiksCube, 3, i, getCubeFace(rubiksCubeOldReference, 5, (2 - Math.floor(i/3)) * 3 + (i % 3)));
+    setCubeFace(rubiksCube, 5, i, getCubeFace(rubiksCubeOldReference, 1, Math.floor(i/3) * 3 + (i % 3)));
+    setCubeFace(rubiksCube, 1, i, getCubeFace(rubiksCubeOldReference, 4, (2 - Math.floor(i/3)) * 3 + (i % 3)));
+    setCubeFace(rubiksCube, 0, i, getCubeFace(rubiksCubeOldReference, 0, (2 - (i % 3)) * 3 + Math.floor(i/3)));
+    setCubeFace(rubiksCube, 2, i, getCubeFace(rubiksCubeOldReference, 2, (2 - (i % 3)) * 3 + Math.floor(i/3)));
+  }
 }
 
-function zAxisPrime(rubiksCubeToTurn)
+function zAxisPrime(rubiksCube)
 {
-
+  performAlgorithmSequence(rubiksCube, "Z Z Z");
 }
 
-function right(rubiksCubeToTurn)
+function right(rubiksCube)
 {
-
+  performAlgorithmSequence(rubiksCube, "Y F Y'");
 }
 
-function rightPrime(rubiksCubeToTurn)
+function rightPrime(rubiksCube)
 {
-
+  performAlgorithmSequence(rubiksCube, "Y F' Y'");
 }
 
-function left(rubiksCubeToTurn)
+function left(rubiksCube)
 {
-
+  performAlgorithmSequence(rubiksCube, "Y' F Y");
 }
 
-function leftPrime(rubiksCubeToTurn)
+function leftPrime(rubiksCube)
 {
-
+  performAlgorithmSequence(rubiksCube, "Y' F' Y");
 }
 
-function back(rubiksCubeToTurn)
+function back(rubiksCube)
 {
-
+  performAlgorithmSequence(rubiksCube, "X X F X' X'");
 }
 
-function backPrime(rubiksCubeToTurn)
+function backPrime(rubiksCube)
 {
-
+  performAlgorithmSequence(rubiksCube, "X X F' X' X'");
 }
 
-function up(rubiksCubeToTurn)
+function up(rubiksCube)
 {
-
+  performAlgorithmSequence(rubiksCube, "X' F X");
 }
 
-function upPrime(rubiksCubeToTurn)
+function upPrime(rubiksCube)
 {
-
+  performAlgorithmSequence(rubiksCube, "X' F' X");
 }
 
-function down(rubiksCubeToTurn)
+function down(rubiksCube)
 {
-
+  performAlgorithmSequence(rubiksCube, "X F X'");
 }
 
-function downPrime(rubiksCubeToTurn)
+function downPrime(rubiksCube)
 {
-
+  performAlgorithmSequence(rubiksCube, "X F' X'");
 }
 
-function middle(rubiksCubeToTurn)
+function middle(rubiksCube)
 {
-
+  performAlgorithmSequence(rubiksCube, "Y F Y' Y' F' Y X'");
 }
 
-function middlePrime(rubiksCubeToTurn)
+function middlePrime(rubiksCube)
 {
-
+  performAlgorithmSequence(rubiksCube, "Y F' Y' Y' F Y X");
 }
 
-function equator(rubiksCubeToTurn)
+function equator(rubiksCube)
 {
-
+  performAlgorithmSequence(rubiksCube, "X F' X' X' F X Y'");
 }
 
-function equatorPrime(rubiksCubeToTurn)
+function equatorPrime(rubiksCube)
 {
-
+  performAlgorithmSequence(rubiksCube, "X F X' X' F' X Y");
 }
 
-function standing(rubiksCubeToTurn)
+function standing(rubiksCube)
 {
-
+  performAlgorithmSequence(rubiksCube, "F' Y Y F Y' Y' Z");
 }
 
-function standingPrime(rubiksCubeToTurn)
+function standingPrime(rubiksCube)
 {
-
+  performAlgorithmSequence(rubiksCube, "F Y Y F' Y' Y' Z'");
 }
