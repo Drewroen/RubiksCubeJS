@@ -2,15 +2,25 @@
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 6;
+var center = new THREE.Group();
+scene.add(center);
+var pivot = new THREE.Group();
+pivot.name = "centerPivot";
+center.add(pivot);
 var renderer = new THREE.WebGLRenderer();
-var raycaster = new THREE.Raycaster();
-var mouse = new THREE.Vector2(), INTERSECTED;
 controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.enableZoom = false;
 controls.enablePan = false;
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor(0xaaaaaa);
 document.body.appendChild(renderer.domElement);
+
+var rotations = {
+  x: 0,
+  y: 0,
+  z: 0,
+  alg: ""
+}
 
 //Makes the JavaScript applet resizable
 window.addEventListener('resize', function(){
@@ -23,13 +33,19 @@ window.addEventListener('resize', function(){
 
 var rubiksCubeFaces = createCubeFaces();
 var rubiksCubeBlocks = createCubeBlocks();
+
 addCubeBlocksToScene(rubiksCubeBlocks, scene);
-//addCubeFacesToScene(rubiksCubeFaces, scene);
+addCubeFacesToScene(rubiksCubeFaces, scene);
 
 //Update logic
 var update = function()
 {
+  pivot.rotation.x += .01 * rotations.x
+  pivot.rotation.y += .01 * rotations.y;
+  pivot.rotation.z += .01 * rotations.z;
 
+
+  validateCube(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot);
 };
 
 //Draw scene
@@ -44,14 +60,17 @@ var AnimationLoop = function()
   requestAnimationFrame(AnimationLoop);
   update();
   render();
-  rubiksCubeBlocks[0][0][0].rotation.z += .01;
-  rubiksCubeBlocks[0][0][1].rotation.z += .01;
 };
 
 document.addEventListener("keydown", onDocumentKeyDown, false);
 function onDocumentKeyDown(event) {
 var keyCode = event.which;
 if (keyCode == 192) {
+  cubeLeftPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot);
+}
+
+if (keyCode == 226) {
+  recreateCube(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot);
 }
 };
 
