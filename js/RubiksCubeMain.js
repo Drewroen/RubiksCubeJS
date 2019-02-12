@@ -16,7 +16,10 @@ document.body.appendChild(renderer.domElement);
 
 var rubiksGUI = {
   algorithm: "R' D R D'",
-  algorithmSubmit:function(){performAlgorithmSequence(rubiksCubeFaces, rubiksGUI.algorithm);},
+  algorithmSubmit: function(){
+    algArray = rubiksGUI.algorithm.split(" ");
+    rotations.longAlg = rotations.longAlg.concat(algArray);
+  },
   rotationSpeed: 0.05
 };
 
@@ -24,7 +27,8 @@ var rotations = {
   x: 0,
   y: 0,
   z: 0,
-  alg: ""
+  alg: "",
+  longAlg: []
 }
 
 //Makes the JavaScript applet resizable
@@ -45,6 +49,14 @@ addCubeFacesToScene(rubiksCubeFaces, scene);
 //Update logic
 var update = function()
 {
+  if(isNotRotating(rotations))
+  {
+    var tempAlgorithm = rotations.longAlg.shift();
+    if(tempAlgorithm)
+    {
+      performTurn(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot, tempAlgorithm);
+    }
+  }
   pivot.rotation.x += rubiksGUI.rotationSpeed * rotations.x
   pivot.rotation.y += rubiksGUI.rotationSpeed * rotations.y;
   pivot.rotation.z += rubiksGUI.rotationSpeed * rotations.z;

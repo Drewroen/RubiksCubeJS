@@ -43,6 +43,49 @@ function validateCube(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot
   }
 }
 
+function performTurn(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot, algorithm)
+{
+  switch(algorithm)
+  {
+    case "F": cubeFront(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "F'": cubeFrontPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "X": cubeXAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "X'": cubeXAxisPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "Y": cubeYAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "Y'": cubeYAxisPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "Z": cubeZAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "Z'": cubeZAxisPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "R": cubeRight(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "R'": cubeRightPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "L": cubeLeft(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "L'": cubeLeftPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "B": cubeBack(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "B'": cubeBackPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "U": cubeUp(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "U'": cubeUpPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "D": cubeDown(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "D'": cubeDownPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "E": cubeEquator(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "E'": cubeEquatorPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "M": cubeMiddle(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "M'": cubeMiddlePrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "S": cubeStanding(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "S'": cubeStandingPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
+    case "F2": cubeFront(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("F"); break;
+    case "X2": cubeXAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("X"); break;
+    case "Y2": cubeYAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("Y"); break;
+    case "Z2": cubeZAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("Z"); break;
+    case "R2": cubeRight(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("R"); break;
+    case "L2": cubeLeft(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("L"); break;
+    case "B2": cubeBack(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("B"); break;
+    case "U2": cubeUp(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("U"); break;
+    case "D2": cubeDown(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("D"); break;
+    case "E2": cubeEquator(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("E"); break;
+    case "M2": cubeMiddle(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("M"); break;
+    case "S2": cubeStanding(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("S"); break;
+  }
+}
+
 function cubeLeft(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot)
 {
   if(isNotRotating(rotations))
