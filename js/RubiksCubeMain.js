@@ -5,7 +5,6 @@ camera.position.z = 6;
 var center = new THREE.Group();
 scene.add(center);
 var pivot = new THREE.Group();
-pivot.name = "centerPivot";
 center.add(pivot);
 var renderer = new THREE.WebGLRenderer();
 controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -14,6 +13,12 @@ controls.enablePan = false;
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor(0xaaaaaa);
 document.body.appendChild(renderer.domElement);
+
+var rubiksGUI = {
+  algorithm: "R' D R D'",
+  algorithmSubmit:function(){performAlgorithmSequence(rubiksCubeFaces, rubiksGUI.algorithm);},
+  rotationSpeed: 0.05
+};
 
 var rotations = {
   x: 0,
@@ -40,10 +45,9 @@ addCubeFacesToScene(rubiksCubeFaces, scene);
 //Update logic
 var update = function()
 {
-  pivot.rotation.x += .01 * rotations.x
-  pivot.rotation.y += .01 * rotations.y;
-  pivot.rotation.z += .01 * rotations.z;
-
+  pivot.rotation.x += rubiksGUI.rotationSpeed * rotations.x
+  pivot.rotation.y += rubiksGUI.rotationSpeed * rotations.y;
+  pivot.rotation.z += rubiksGUI.rotationSpeed * rotations.z;
 
   validateCube(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot);
 };
@@ -60,18 +64,6 @@ var AnimationLoop = function()
   requestAnimationFrame(AnimationLoop);
   update();
   render();
-};
-
-document.addEventListener("keydown", onDocumentKeyDown, false);
-function onDocumentKeyDown(event) {
-var keyCode = event.which;
-if (keyCode == 192) {
-  cubeLeftPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot);
-}
-
-if (keyCode == 226) {
-  recreateCube(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot);
-}
 };
 
 AnimationLoop();

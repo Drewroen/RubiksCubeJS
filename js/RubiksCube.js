@@ -47,7 +47,7 @@ function createCubeFaces()
       }
       else if (i == 4)
       {
-        rubiksCube[i][j] = new THREE.Mesh(geometry, blueMaterial);
+        rubiksCube[i][j] = new THREE.Mesh(geometry, greenMaterial);
         rubiksCube[i][j].position.x = Math.floor(j / 3) - 1;
         rubiksCube[i][j].position.y = 1.5;
         rubiksCube[i][j].position.z = j % 3 - 1;
@@ -55,7 +55,7 @@ function createCubeFaces()
       }
       else if (i == 5)
       {
-        rubiksCube[i][j] = new THREE.Mesh(geometry, greenMaterial);
+        rubiksCube[i][j] = new THREE.Mesh(geometry, blueMaterial);
         rubiksCube[i][j].position.x = Math.floor(j / 3) - 1;
         rubiksCube[i][j].position.y = -1.5;
         rubiksCube[i][j].position.z = j % 3 - 1;

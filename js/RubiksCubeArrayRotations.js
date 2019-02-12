@@ -40,7 +40,6 @@ function performAlgorithmSequence(rubiksCube, alg)
       case "E2": equator(rubiksCube); equator(rubiksCube); break;
       case "M2": middle(rubiksCube); middle(rubiksCube); break;
       case "S2": standing(rubiksCube); standing(rubiksCube); break;
-
     }
   });
 }
@@ -50,8 +49,7 @@ function front(rubiksCube)
   rubiksCubeOldReference = createCubeFacesFromCube(rubiksCube);
   for(var i = 0; i < rubiksCube[0].length; i++)
   {
-    var coordToRotate = ((2 - (i % 3)) * 3) + Math.floor(i / 3);
-    setCubeFace(rubiksCube, 0, i, getCubeFace(rubiksCubeOldReference, 0, coordToRotate));
+    setCubeFace(rubiksCube, 0, i, getCubeFace(rubiksCubeOldReference, 0, ((2 - (i % 3)) * 3) + Math.floor(i / 3)));
   }
 
   for(var i = 0; i < 3; i++)
