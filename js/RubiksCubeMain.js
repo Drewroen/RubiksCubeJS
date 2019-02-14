@@ -1,9 +1,9 @@
 //Creating the scene, camera, and renderer
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.x = -Math.sqrt(6);
-camera.position.y = Math.sqrt(6);
-camera.position.z = Math.sqrt(24);
+camera.position.x = 0;
+camera.position.y = 0;
+camera.position.z = 6;
 var center = new THREE.Group();
 scene.add(center);
 var pivot = new THREE.Group();
@@ -25,6 +25,8 @@ var cameraPoints = xCoords.map(function (x, i) {
   return [x, yCoords[i], zCoords[i]];
 });
 
+var mouseDown;
+
 var rubiksGUI = {
   algorithm: "L L' M M' R' R X' X U' U E E' D D' Y' Y F F' S S' B' B Z Z'",
   algorithmSubmit: function(){
@@ -39,7 +41,8 @@ var rotations = {
   y: 0,
   z: 0,
   alg: "",
-  longAlg: []
+  longAlg: [],
+  performingAlg: false
 }
 
 //Makes the JavaScript applet resizable
@@ -52,14 +55,18 @@ window.addEventListener('resize', function(){
 });
 
 window.addEventListener('mouseup', function(){
-  var newPositions = getClosestRotation(camera, controls, cameraPoints);
-  camera.position.set(newPositions.x, newPositions.y, newPositions.z);
-  modifyForFront(camera, controls, cameraPoints, rubiksCubeFaces);
-  controls.update();
+  mouseDown = false;
+  console.log(findCurrentFrontFace(camera));
+});
+
+window.addEventListener('mousedown', function(){
+  mouseDown = true;
+  console.log(findCurrentFrontFace(camera));
 });
 
 document.addEventListener('keydown', function(event){
   console.log(camera.position.x + " " + camera.position.y + " " + camera.position.z);
+  //console.log(camera.rotation.x + " " + camera.rotation.y + " " + camera.rotation.z);
 });
 
 var rubiksCubeFaces = createCubeFaces();
@@ -76,7 +83,12 @@ var update = function()
     var tempAlgorithm = rotations.longAlg.shift();
     if(tempAlgorithm)
     {
+      rotations.performingAlg = true;
       performTurn(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot, tempAlgorithm);
+    }
+    else
+    {
+      rotations.performingAlg = false;
     }
   }
   pivot.rotation.x += rubiksGUI.rotationSpeed * rotations.x
@@ -84,6 +96,14 @@ var update = function()
   pivot.rotation.z += rubiksGUI.rotationSpeed * rotations.z;
 
   validateCube(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot);
+  if(!rotations.performingAlg)
+  {
+    realignFrontFace(rubiksCubeFaces, camera);
+  }
+  if(!mouseDown)
+  {
+    moveTowardGrid(camera, controls);
+  }
 };
 
 //Draw scene
@@ -98,6 +118,7 @@ var AnimationLoop = function()
   requestAnimationFrame(AnimationLoop);
   update();
   render();
+  controls.update();
 };
 
 AnimationLoop();

@@ -6,13 +6,19 @@ function getClosestRotation(camera, controls, cameraPoints, rubiksCubeFaces)
     y: closestPoint[1],
     z: closestPoint[2]
   };
-  console.log(camera.rotation.x + " " + camera.rotation.y + " " + camera.rotation.z);
   return newPositions;
 }
 
 function arraysEqual(array1, array2)
 {
-  return JSON.stringify(array1) == JSON.stringify(array2);
+  for(var i = 0; i < array1.length; i++)
+  {
+    if(Math.round(array1[i] * 100000) / 100000.0 != Math.round(array2[i] * 100000) / 100000.0)
+    {
+      return false;
+    }
+  }
+  return true;
 }
 
 /*
@@ -104,6 +110,7 @@ function modifyForFront(camera, controls, cameraPoints, rubiksCubeFaces)
   else if (arraysEqual(point, cameraPoints[0]))
   {
     zRotationValue = ((Math.round(camera.rotation.z / (Math.PI / 2)) % 4) + 4) % 4;
+    console.log(zRotationValue);
     if(zRotationValue == 0)
     {
       resetCameraValue = 11;
@@ -186,4 +193,87 @@ function findClosestPoint(camera, cameraPoints)
 function makePointFromCamera(camera)
 {
   return [camera.position.x, camera.position.y, camera.position.z];
+}
+
+function findCurrentFrontFace(camera)
+{
+  var xPos = camera.position.x;
+  var zPos = camera.position.z;
+  var closestPos = absoluteMax(xPos, zPos);
+  if(closestPos == xPos)
+  {
+    if(xPos < 0)
+    {
+      return 3;
+    }
+    else
+    {
+      return 1;
+    }
+  }
+  else {
+    if(zPos < 0)
+    {
+      return 2;
+    }
+    else
+    {
+      return 0;
+    }
+  }
+}
+
+function absoluteMax(a, b)
+{
+  if (Math.abs(a) > Math.abs(b))
+  {
+    return a;
+  }
+  return b;
+}
+
+function realignFrontFace(rubiksCubeFaces, camera)
+{
+  var frontFace = findCurrentFrontFace(camera);
+  if(frontFace == 1)
+  {
+    camera.position.set(-camera.position.z, camera.position.y, camera.position.x);
+    performAlgorithmSequence(rubiksCubeFaces, "Y");
+    controls.update();
+  }
+  else if(frontFace == 2)
+  {
+    camera.position.set(-camera.position.x, camera.position.y, -camera.position.z);
+    performAlgorithmSequence(rubiksCubeFaces, "Y2");
+    controls.update();
+  }
+  else if(frontFace == 3)
+  {
+    camera.position.set(camera.position.z, camera.position.y, -camera.position.x);
+    performAlgorithmSequence(rubiksCubeFaces, "Y'");
+    controls.update();
+  }
+}
+
+function moveTowardGrid(camera, controls)
+{
+  var zMovement = (Math.sqrt(24) - camera.position.z) / 20;
+  var xMovement;
+  var yMovement;
+  if (camera.position.x < 0)
+  {
+    xMovement = (-Math.sqrt(6) - camera.position.x) / 20;
+  }
+  else {
+    xMovement = (Math.sqrt(6) - camera.position.x) / 20;
+  }
+  if (camera.position.y < 0)
+  {
+    yMovement = (-Math.sqrt(6) - camera.position.y) / 20;
+  }
+  else {
+    yMovement = (Math.sqrt(6) - camera.position.y) / 20;
+  }
+  camera.position.set(camera.position.x + xMovement, camera.position.y + yMovement, camera.position.z + zMovement);
+  controls.update();
 }

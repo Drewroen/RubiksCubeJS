@@ -1,6 +1,6 @@
 function isNotRotating(rotations)
 {
-  return rotations.alg == "";
+  return !rotations.x && !rotations.y && !rotations.z;
 }
 
 function recreateCube(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot)
