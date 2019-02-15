@@ -1,10 +1,4 @@
 var geometry = new THREE.PlaneGeometry(.9, .9, .9);
-var redMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, side: THREE.DoubleSide});
-var orangeMaterial = new THREE.MeshBasicMaterial({color: 0xffa500, side: THREE.DoubleSide});
-var yellowMaterial = new THREE.MeshBasicMaterial({color: 0xffff00, side: THREE.DoubleSide});
-var greenMaterial = new THREE.MeshBasicMaterial({color: 0x008000, side: THREE.DoubleSide});
-var blueMaterial = new THREE.MeshBasicMaterial({color: 0x0000ff, side: THREE.DoubleSide});
-var whiteMaterial = new THREE.MeshBasicMaterial({color: 0xffffff, side: THREE.DoubleSide});
 var blackMaterial = new THREE.MeshBasicMaterial({color: 0x000000, side: THREE.DoubleSide});
 
 function createCubeFaces()
@@ -17,14 +11,14 @@ function createCubeFaces()
     {
       if (i == 0)
       {
-        rubiksCube[i][j] = new THREE.Mesh(geometry, whiteMaterial);
+        rubiksCube[i][j] = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: 0xffffff, side: THREE.DoubleSide}));
         rubiksCube[i][j].position.x = Math.floor(j / 3) - 1;
         rubiksCube[i][j].position.y = j % 3 - 1;
         rubiksCube[i][j].position.z = 1.5;
       }
       else if (i == 1)
       {
-        rubiksCube[i][j] = new THREE.Mesh(geometry, orangeMaterial);
+        rubiksCube[i][j] = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: 0xffa500, side: THREE.DoubleSide}));
         rubiksCube[i][j].position.x = 1.5;
         rubiksCube[i][j].position.y = Math.floor(j / 3) - 1;
         rubiksCube[i][j].position.z = j % 3 - 1;
@@ -32,14 +26,14 @@ function createCubeFaces()
       }
       else if (i == 2)
       {
-        rubiksCube[i][j] = new THREE.Mesh(geometry, yellowMaterial);
+        rubiksCube[i][j] = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: 0xffff00, side: THREE.DoubleSide}));
         rubiksCube[i][j].position.x = Math.floor(j / 3) - 1;
         rubiksCube[i][j].position.y = j % 3 - 1;
         rubiksCube[i][j].position.z = -1.5;
       }
       else if (i == 3)
       {
-        rubiksCube[i][j] = new THREE.Mesh(geometry, redMaterial);
+        rubiksCube[i][j] = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: 0xff0000, side: THREE.DoubleSide}));
         rubiksCube[i][j].position.x = -1.5;
         rubiksCube[i][j].position.y = Math.floor(j / 3) - 1;
         rubiksCube[i][j].position.z = j % 3 - 1;
@@ -47,7 +41,7 @@ function createCubeFaces()
       }
       else if (i == 4)
       {
-        rubiksCube[i][j] = new THREE.Mesh(geometry, greenMaterial);
+        rubiksCube[i][j] = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: 0x008000, side: THREE.DoubleSide}));
         rubiksCube[i][j].position.x = Math.floor(j / 3) - 1;
         rubiksCube[i][j].position.y = 1.5;
         rubiksCube[i][j].position.z = j % 3 - 1;
@@ -55,7 +49,7 @@ function createCubeFaces()
       }
       else if (i == 5)
       {
-        rubiksCube[i][j] = new THREE.Mesh(geometry, blueMaterial);
+        rubiksCube[i][j] = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: 0x0000ff, side: THREE.DoubleSide}));
         rubiksCube[i][j].position.x = Math.floor(j / 3) - 1;
         rubiksCube[i][j].position.y = -1.5;
         rubiksCube[i][j].position.z = j % 3 - 1;

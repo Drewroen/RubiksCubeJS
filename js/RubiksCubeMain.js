@@ -44,6 +44,17 @@ controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.enableZoom = false;
 controls.enablePan = false;
 
+var raycaster = new THREE.Raycaster();
+var mouse = new THREE.Vector2();
+
+document.addEventListener('mousemove', onDocumentMouseMove, false);
+
+function onDocumentMouseMove( event ) {
+				event.preventDefault();
+				mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+			}
+
 //Used to track whether the mouse is down
 var mouseDown = false;
 window.addEventListener('mouseup', function(){
@@ -52,6 +63,17 @@ window.addEventListener('mouseup', function(){
 
 window.addEventListener('mousedown', function(){
   mouseDown = true;
+  var clickedObject = getFirstObject(raycaster);
+  if(clickedObject)
+  {
+    if(isObjectSticker(clickedObject))
+    {
+      console.log("You clicked a sticker!");
+      console.log(clickedObject);
+      setStickerColor(clickedObject, new THREE.Color(0xff0000));
+    }
+  }
+
 });
 
 //Used to track when keys are pressed
@@ -139,8 +161,9 @@ var update = function()
 
   //Update the control camera to point the camera at the cube
   controls.update();
-};
 
+  raycaster.setFromCamera(mouse, camera);
+}
 //Run cube loop (update, render, repeat)
 var AnimationLoop = function()
 {
