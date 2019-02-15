@@ -19,7 +19,7 @@ var camera = new THREE.PerspectiveCamera(CAMERA_FOV, window.innerWidth / window.
 var CAMERA_RADIUS = 6;
 var CAMERA_SNAP_HORIZONTAL = .6;
 var CAMERA_SNAP_VERTICAL_ANGLE = 28;
-var SNAP_SPEED = 20;
+var SNAP_SPEED = 12;
 
 //Sets the initial position of the camera
 camera.position.x = 0;
