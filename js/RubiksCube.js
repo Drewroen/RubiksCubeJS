@@ -11,14 +11,14 @@ function createCubeFaces()
     {
       if (i == 0)
       {
-        rubiksCube[i][j] = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: 0xffffff, side: THREE.DoubleSide}));
+        rubiksCube[i][j] = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: cubeColors.face1, side: THREE.DoubleSide}));
         rubiksCube[i][j].position.x = Math.floor(j / 3) - 1;
         rubiksCube[i][j].position.y = j % 3 - 1;
         rubiksCube[i][j].position.z = 1.5;
       }
       else if (i == 1)
       {
-        rubiksCube[i][j] = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: 0xffa500, side: THREE.DoubleSide}));
+        rubiksCube[i][j] = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: cubeColors.face2, side: THREE.DoubleSide}));
         rubiksCube[i][j].position.x = 1.5;
         rubiksCube[i][j].position.y = Math.floor(j / 3) - 1;
         rubiksCube[i][j].position.z = j % 3 - 1;
@@ -26,14 +26,14 @@ function createCubeFaces()
       }
       else if (i == 2)
       {
-        rubiksCube[i][j] = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: 0xffff00, side: THREE.DoubleSide}));
+        rubiksCube[i][j] = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: cubeColors.face3, side: THREE.DoubleSide}));
         rubiksCube[i][j].position.x = Math.floor(j / 3) - 1;
         rubiksCube[i][j].position.y = j % 3 - 1;
         rubiksCube[i][j].position.z = -1.5;
       }
       else if (i == 3)
       {
-        rubiksCube[i][j] = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: 0xff0000, side: THREE.DoubleSide}));
+        rubiksCube[i][j] = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: cubeColors.face4, side: THREE.DoubleSide}));
         rubiksCube[i][j].position.x = -1.5;
         rubiksCube[i][j].position.y = Math.floor(j / 3) - 1;
         rubiksCube[i][j].position.z = j % 3 - 1;
@@ -41,7 +41,7 @@ function createCubeFaces()
       }
       else if (i == 4)
       {
-        rubiksCube[i][j] = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: 0x008000, side: THREE.DoubleSide}));
+        rubiksCube[i][j] = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: cubeColors.face5, side: THREE.DoubleSide}));
         rubiksCube[i][j].position.x = Math.floor(j / 3) - 1;
         rubiksCube[i][j].position.y = 1.5;
         rubiksCube[i][j].position.z = j % 3 - 1;
@@ -49,7 +49,7 @@ function createCubeFaces()
       }
       else if (i == 5)
       {
-        rubiksCube[i][j] = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: 0x0000ff, side: THREE.DoubleSide}));
+        rubiksCube[i][j] = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: cubeColors.face6, side: THREE.DoubleSide}));
         rubiksCube[i][j].position.x = Math.floor(j / 3) - 1;
         rubiksCube[i][j].position.y = -1.5;
         rubiksCube[i][j].position.z = j % 3 - 1;
@@ -94,39 +94,14 @@ function getCubeFace(rubiksCube, x, y)
   return rubiksCube[x][y].material;
 }
 
-function randomizeFaces(rubiksCube)
+function setCubeFaceColor(rubiksCube, x, y, color)
 {
-  for(var i = 0; i < rubiksCube.length; i++)
-  {
-    for(var j = 0; j < rubiksCube[i].length; j++)
-    {
-      var tempColor = Math.floor(Math.random() * 6);
-      if (tempColor == 0)
-      {
-        setCubeFace(rubiksCube, i, j, redMaterial);
-      }
-      else if (tempColor == 1)
-      {
-        setCubeFace(rubiksCube, i, j, orangeMaterial);
-      }
-      else if (tempColor == 2)
-      {
-        setCubeFace(rubiksCube, i, j, yellowMaterial);
-      }
-      else if (tempColor == 3)
-      {
-        setCubeFace(rubiksCube, i, j, greenMaterial);
-      }
-      else if (tempColor == 4)
-      {
-        setCubeFace(rubiksCube, i, j, blueMaterial);
-      }
-      else if (tempColor == 5)
-      {
-        setCubeFace(rubiksCube, i, j, whiteMaterial);
-      }
-    }
-  }
+  rubiksCube[x][y].material.color = new THREE.Color(color);
+}
+
+function getCubeFaceColor(rubiksCube, x, y)
+{
+  return rubiksCube[x][y].material.color;
 }
 
 function createCubeBlocks()
@@ -164,4 +139,49 @@ function addCubeBlocksToScene(cubeBlocks, scene)
       }
     }
   }
+}
+
+function updateCubeColors(rubiksCubeFaces, cubeColors, cubeColorGUI)
+{
+  for (var i = 0; i < rubiksCubeFaces.length; i++)
+  {
+    for (var j = 0; j < rubiksCubeFaces[i].length; j++)
+    {
+      if(colorsEqual(getCubeFaceColor(rubiksCubeFaces, i, j), new THREE.Color(cubeColors.face1)))
+      {
+        setCubeFaceColor(rubiksCubeFaces, i, j, cubeColorGUI.face1);
+      }
+      if(colorsEqual(getCubeFaceColor(rubiksCubeFaces, i, j), new THREE.Color(cubeColors.face2)))
+      {
+        setCubeFaceColor(rubiksCubeFaces, i, j, cubeColorGUI.face2);
+      }
+      if(colorsEqual(getCubeFaceColor(rubiksCubeFaces, i, j), new THREE.Color(cubeColors.face3)))
+      {
+        setCubeFaceColor(rubiksCubeFaces, i, j, cubeColorGUI.face3);
+      }
+      if(colorsEqual(getCubeFaceColor(rubiksCubeFaces, i, j), new THREE.Color(cubeColors.face4)))
+      {
+        setCubeFaceColor(rubiksCubeFaces, i, j, cubeColorGUI.face4);
+      }
+      if(colorsEqual(getCubeFaceColor(rubiksCubeFaces, i, j), new THREE.Color(cubeColors.face5)))
+      {
+        setCubeFaceColor(rubiksCubeFaces, i, j, cubeColorGUI.face5);
+      }
+      if(colorsEqual(getCubeFaceColor(rubiksCubeFaces, i, j), new THREE.Color(cubeColors.face6)))
+      {
+        setCubeFaceColor(rubiksCubeFaces, i, j, cubeColorGUI.face6);
+      }
+    }
+  }
+  cubeColors.face1 = cubeColorGUI.face1;
+  cubeColors.face2 = cubeColorGUI.face2;
+  cubeColors.face3 = cubeColorGUI.face3;
+  cubeColors.face4 = cubeColorGUI.face4;
+  cubeColors.face5 = cubeColorGUI.face5;
+  cubeColors.face6 = cubeColorGUI.face6;
+}
+
+function colorsEqual(color1, color2)
+{
+  return color1.r == color2.r && color1.g == color2.g && color1.b == color2.b;
 }

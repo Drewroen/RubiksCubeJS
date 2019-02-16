@@ -70,7 +70,7 @@ window.addEventListener('mousedown', function(){
     {
       console.log("You clicked a sticker!");
       console.log(clickedObject);
-      setStickerColor(clickedObject, new THREE.Color(0xff0000));
+      setStickerColor(clickedObject, new THREE.Color(cubeColors.face2));
     }
   }
 
@@ -90,6 +90,24 @@ var rubiksGUI = {
   },
   rotationSpeed: 0.05
 };
+
+var cubeColorGUI = {
+	face1: 0xffffff,
+	face2: 0xffa500,
+	face3: 0xffff00,
+	face4: 0xff0000,
+	face5: 0x008000,
+	face6: 0x0000ff
+}
+
+var cubeColors = {
+	face1: 0xffffff,
+	face2: 0xffa500,
+	face3: 0xffff00,
+	face4: 0xff0000,
+	face5: 0x008000,
+	face6: 0x0000ff
+}
 
 //Used to determine what the cube is doing and the rotation values associated with it
 var rotations = {
@@ -158,6 +176,8 @@ var update = function()
   {
     moveTowardGrid(camera, controls);
   }
+
+	updateCubeColors(rubiksCubeFaces, cubeColors, cubeColorGUI)
 
   //Update the control camera to point the camera at the cube
   controls.update();
