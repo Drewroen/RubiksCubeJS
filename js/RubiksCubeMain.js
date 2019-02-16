@@ -16,10 +16,10 @@ var CAMERA_FAR_PLANE = 1000;
 var camera = new THREE.PerspectiveCamera(CAMERA_FOV, window.innerWidth / window.innerHeight, CAMERA_NEAR_PLANE, CAMERA_FAR_PLANE);
 
 //Sets globals for snapping the cube to a loose grid
-var CAMERA_RADIUS = 6;
+var CAMERA_RADIUS = 7;
 var CAMERA_SNAP_HORIZONTAL = .6;
 var CAMERA_SNAP_VERTICAL_ANGLE = 28;
-var SNAP_SPEED = 12;
+var SNAP_SPEED = 8;
 
 //Sets the initial position of the camera
 camera.position.x = 0;
@@ -46,6 +46,7 @@ controls.enablePan = false;
 
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
+var clickedObject;
 
 document.addEventListener('mousemove', onDocumentMouseMove, false);
 
@@ -59,21 +60,21 @@ function onDocumentMouseMove( event ) {
 var mouseDown = false;
 window.addEventListener('mouseup', function(){
   mouseDown = false;
+	if(objectsEqual(getFirstObject(raycaster), clickedObject))
+	{
+		if(clickedObject)
+		{
+			if(isObjectSticker(clickedObject))
+	    {
+	      setStickerColor(clickedObject, new THREE.Color(getPickedColor(pickedColorGUI, cubeColors)));
+	    }
+		}
+	}
 });
 
 window.addEventListener('mousedown', function(){
   mouseDown = true;
-  var clickedObject = getFirstObject(raycaster);
-  if(clickedObject)
-  {
-    if(isObjectSticker(clickedObject))
-    {
-      console.log("You clicked a sticker!");
-      console.log(clickedObject);
-      setStickerColor(clickedObject, new THREE.Color(cubeColors.face2));
-    }
-  }
-
+  clickedObject = getFirstObject(raycaster);
 });
 
 //Used to track when keys are pressed
@@ -107,6 +108,52 @@ var cubeColors = {
 	face4: 0xff0000,
 	face5: 0x008000,
 	face6: 0x0000ff
+}
+
+var pickedColorGUI = {
+	color1: true,
+	color2: false,
+	color3: false,
+	color4: false,
+	color5: false,
+	color6: false
+}
+
+function getPickedColor(pickedColorGUI, cubeColors)
+{
+	if(pickedColorGUI.color1)
+	{
+		return cubeColors.face1;
+	}
+	else if(pickedColorGUI.color2)
+	{
+		return cubeColors.face2;
+	}
+	else if(pickedColorGUI.color3)
+	{
+		return cubeColors.face3;
+	}
+	else if(pickedColorGUI.color4)
+	{
+		return cubeColors.face4;
+	}
+	else if(pickedColorGUI.color5)
+	{
+		return cubeColors.face5;
+	}
+	else if(pickedColorGUI.color6)
+	{
+		return cubeColors.face6;
+	}
+}
+
+function pickColorBox(pickedColor)
+{
+	for (let color in pickedColorGUI)
+	{
+		pickedColorGUI[color] = false;
+	}
+	pickedColorGUI[pickedColor] = true;
 }
 
 //Used to determine what the cube is doing and the rotation values associated with it

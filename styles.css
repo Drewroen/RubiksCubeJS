@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+canvas {
+  z-index: -1;
+}
+
+.ui {
+  position: absolute;
+}
+
+#SolveButton{
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  width: 24%;
+  height: 8%;
+  transform: translate(-50%, -50%);
+}
+
+#SolveButton button{
+  width: 100%;
+  height: 100%;
+  font-size: 24px;
+}
