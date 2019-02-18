@@ -45,8 +45,14 @@ controls.enableZoom = false;
 controls.enablePan = false;
 
 var raycaster = new THREE.Raycaster();
+var raycasterTouch = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
+var touch = new THREE.Vector2();
 var clickedObject;
+
+//Used to track whether the mouse is down
+var mouseDown = false;
+var touchDown = false;
 
 document.addEventListener('mousemove', onDocumentMouseMove, false);
 
@@ -56,8 +62,19 @@ function onDocumentMouseMove( event ) {
 				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 			}
 
-//Used to track whether the mouse is down
-var mouseDown = false;
+document.addEventListener('touchstart', onDocumentTouchStart, false);
+
+function onDocumentTouchStart( event ) {
+				mouseDown = true;
+				touchDown = true;
+				touch.x = ( event.touches[0].clientX / window.innerWidth ) * 2 - 1;
+				touch.y = - ( event.touches[0].clientY / window.innerHeight ) * 2 + 1;
+			}
+
+window.addEventListener('touchend', function(){
+			  mouseDown = false;
+			});
+
 window.addEventListener('mouseup', function(){
   mouseDown = false;
 	if(objectsEqual(getFirstObject(raycaster), clickedObject))
@@ -72,26 +89,7 @@ window.addEventListener('mouseup', function(){
 	}
 });
 
-window.addEventListener('touchend', function(){
-  mouseDown = false;
-	if(objectsEqual(getFirstObject(raycaster), clickedObject))
-	{
-		if(clickedObject)
-		{
-			if(isObjectSticker(clickedObject))
-	    {
-	      setStickerColor(clickedObject, new THREE.Color(getPickedColor(pickedColorGUI, cubeColors)));
-	    }
-		}
-	}
-});
-
 window.addEventListener('mousedown', function(){
-  mouseDown = true;
-  clickedObject = getFirstObject(raycaster);
-});
-
-window.addEventListener('touchstart', function(){
   mouseDown = true;
   clickedObject = getFirstObject(raycaster);
 });
@@ -251,6 +249,22 @@ var update = function()
   controls.update();
 
   raycaster.setFromCamera(mouse, camera);
+	raycasterTouch.setFromCamera(touch, camera);
+	if(touchDown)
+	{
+		clickedObject = getFirstObject(raycasterTouch);
+		if(objectsEqual(getFirstObject(raycasterTouch), clickedObject))
+		{
+			if(clickedObject)
+			{
+				if(isObjectSticker(clickedObject))
+		    {
+		      setStickerColor(clickedObject, new THREE.Color(getPickedColor(pickedColorGUI, cubeColors)));
+		    }
+			}
+			touchDown = false;
+		}
+	}
 }
 //Run cube loop (update, render, repeat)
 var AnimationLoop = function()
