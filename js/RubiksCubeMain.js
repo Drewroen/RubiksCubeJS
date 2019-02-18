@@ -72,7 +72,26 @@ window.addEventListener('mouseup', function(){
 	}
 });
 
+window.addEventListener('touchend', function(){
+  mouseDown = false;
+	if(objectsEqual(getFirstObject(raycaster), clickedObject))
+	{
+		if(clickedObject)
+		{
+			if(isObjectSticker(clickedObject))
+	    {
+	      setStickerColor(clickedObject, new THREE.Color(getPickedColor(pickedColorGUI, cubeColors)));
+	    }
+		}
+	}
+});
+
 window.addEventListener('mousedown', function(){
+  mouseDown = true;
+  clickedObject = getFirstObject(raycaster);
+});
+
+window.addEventListener('touchstart', function(){
   mouseDown = true;
   clickedObject = getFirstObject(raycaster);
 });
@@ -154,6 +173,8 @@ function pickColorBox(pickedColor)
 		pickedColorGUI[color] = false;
 	}
 	pickedColorGUI[pickedColor] = true;
+
+	colorGUIButtons(document, cubeColors);
 }
 
 //Used to determine what the cube is doing and the rotation values associated with it
@@ -237,5 +258,7 @@ var AnimationLoop = function()
   requestAnimationFrame(AnimationLoop);
   update();
 };
+
+colorGUIButtons(document, cubeColors);
 
 AnimationLoop();

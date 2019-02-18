@@ -11,17 +11,49 @@ canvas {
   position: absolute;
 }
 
-#SolveButton{
+.colorButtons{
   position: absolute;
-  top: 90%;
-  left: 50%;
-  width: 24%;
-  height: 8%;
-  transform: translate(-50%, -50%);
+  left: 0;
+  bottom: 0;
+  width: 165px;
+  height: 105px;
+  margin: 10px;
 }
 
-#SolveButton button{
+.colorDiv{
+  width: 45px;
+  height: 45px;
+  margin: 5px;
+  float: left;
+}
+
+.colorDiv button{
   width: 100%;
   height: 100%;
+}
+
+.colorDiv button, input[type="submit"], input[type="reset"] {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+#test{
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#solve{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 20px;
+  height: 60px;
+  width: 200px;
   font-size: 24px;
 }

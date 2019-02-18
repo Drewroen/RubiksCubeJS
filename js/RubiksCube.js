@@ -141,44 +141,54 @@ function addCubeBlocksToScene(cubeBlocks, scene)
   }
 }
 
+function colorsChanged(cubeColors, cubeColorGUI)
+{
+  return cubeColors.face1 != cubeColorGUI.face1 || cubeColors.face2 != cubeColorGUI.face2 || cubeColors.face3 != cubeColorGUI.face3 || cubeColors.face4 != cubeColorGUI.face4 || cubeColors.face5 != cubeColorGUI.face5 || cubeColors.face6 != cubeColorGUI.face6;
+}
+
 function updateCubeColors(rubiksCubeFaces, cubeColors, cubeColorGUI)
 {
-  for (var i = 0; i < rubiksCubeFaces.length; i++)
+  if(colorsChanged(cubeColors, cubeColorGUI))
   {
-    for (var j = 0; j < rubiksCubeFaces[i].length; j++)
+    for (var i = 0; i < rubiksCubeFaces.length; i++)
     {
-      if(colorsEqual(getCubeFaceColor(rubiksCubeFaces, i, j), new THREE.Color(cubeColors.face1)))
+      for (var j = 0; j < rubiksCubeFaces[i].length; j++)
       {
-        setCubeFaceColor(rubiksCubeFaces, i, j, cubeColorGUI.face1);
-      }
-      if(colorsEqual(getCubeFaceColor(rubiksCubeFaces, i, j), new THREE.Color(cubeColors.face2)))
-      {
-        setCubeFaceColor(rubiksCubeFaces, i, j, cubeColorGUI.face2);
-      }
-      if(colorsEqual(getCubeFaceColor(rubiksCubeFaces, i, j), new THREE.Color(cubeColors.face3)))
-      {
-        setCubeFaceColor(rubiksCubeFaces, i, j, cubeColorGUI.face3);
-      }
-      if(colorsEqual(getCubeFaceColor(rubiksCubeFaces, i, j), new THREE.Color(cubeColors.face4)))
-      {
-        setCubeFaceColor(rubiksCubeFaces, i, j, cubeColorGUI.face4);
-      }
-      if(colorsEqual(getCubeFaceColor(rubiksCubeFaces, i, j), new THREE.Color(cubeColors.face5)))
-      {
-        setCubeFaceColor(rubiksCubeFaces, i, j, cubeColorGUI.face5);
-      }
-      if(colorsEqual(getCubeFaceColor(rubiksCubeFaces, i, j), new THREE.Color(cubeColors.face6)))
-      {
-        setCubeFaceColor(rubiksCubeFaces, i, j, cubeColorGUI.face6);
+        if(colorsEqual(getCubeFaceColor(rubiksCubeFaces, i, j), new THREE.Color(cubeColors.face1)))
+        {
+          setCubeFaceColor(rubiksCubeFaces, i, j, cubeColorGUI.face1);
+        }
+        if(colorsEqual(getCubeFaceColor(rubiksCubeFaces, i, j), new THREE.Color(cubeColors.face2)))
+        {
+          setCubeFaceColor(rubiksCubeFaces, i, j, cubeColorGUI.face2);
+        }
+        if(colorsEqual(getCubeFaceColor(rubiksCubeFaces, i, j), new THREE.Color(cubeColors.face3)))
+        {
+          setCubeFaceColor(rubiksCubeFaces, i, j, cubeColorGUI.face3);
+        }
+        if(colorsEqual(getCubeFaceColor(rubiksCubeFaces, i, j), new THREE.Color(cubeColors.face4)))
+        {
+          setCubeFaceColor(rubiksCubeFaces, i, j, cubeColorGUI.face4);
+        }
+        if(colorsEqual(getCubeFaceColor(rubiksCubeFaces, i, j), new THREE.Color(cubeColors.face5)))
+        {
+          setCubeFaceColor(rubiksCubeFaces, i, j, cubeColorGUI.face5);
+        }
+        if(colorsEqual(getCubeFaceColor(rubiksCubeFaces, i, j), new THREE.Color(cubeColors.face6)))
+        {
+          setCubeFaceColor(rubiksCubeFaces, i, j, cubeColorGUI.face6);
+        }
       }
     }
+    cubeColors.face1 = cubeColorGUI.face1;
+    cubeColors.face2 = cubeColorGUI.face2;
+    cubeColors.face3 = cubeColorGUI.face3;
+    cubeColors.face4 = cubeColorGUI.face4;
+    cubeColors.face5 = cubeColorGUI.face5;
+    cubeColors.face6 = cubeColorGUI.face6;
+
+    colorGUIButtons(document, cubeColors);
   }
-  cubeColors.face1 = cubeColorGUI.face1;
-  cubeColors.face2 = cubeColorGUI.face2;
-  cubeColors.face3 = cubeColorGUI.face3;
-  cubeColors.face4 = cubeColorGUI.face4;
-  cubeColors.face5 = cubeColorGUI.face5;
-  cubeColors.face6 = cubeColorGUI.face6;
 }
 
 function colorsEqual(color1, color2)
