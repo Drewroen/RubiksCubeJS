@@ -48,6 +48,10 @@ var raycaster = new THREE.Raycaster();
 var raycasterTouch = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 var touch = new THREE.Vector2();
+touch.x = -1000;
+touch.y = -1000;
+mouse.x = -1000;
+mouse.y = -1000;
 var clickedObject;
 
 //Used to track whether the mouse is down
@@ -250,9 +254,11 @@ var update = function()
 
   raycaster.setFromCamera(mouse, camera);
 	raycasterTouch.setFromCamera(touch, camera);
+
 	if(touchDown)
 	{
 		clickedObject = getFirstObject(raycasterTouch);
+		console.log(clickedObject);
 		if(objectsEqual(getFirstObject(raycasterTouch), clickedObject))
 		{
 			if(clickedObject)
