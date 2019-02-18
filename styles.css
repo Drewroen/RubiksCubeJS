@@ -14,10 +14,15 @@ canvas {
 .colorButtons{
   position: absolute;
   left: 0;
-  bottom: 0;
-  width: 165px;
-  height: 105px;
-  margin: 10px;
+  top: 0;
+  width: 188px;
+  height: 135px;
+  padding: 10px;
+  margin: 5px;
+  background: white;
+  border-radius: 7px;
+  border-style: solid;
+  border-width: 1.5px;
 }
 
 .colorDiv{
@@ -27,33 +32,36 @@ canvas {
   float: left;
 }
 
+.selectedColor{
+  border-width: 5px;
+}
+
+.colorButton{
+  border-radius: 7px;
+  border-style: solid;
+  border-width: 1.5px;
+  border-color: black;
+}
+
+.colorButton:hover{
+  border-width: 3px;
+}
+
 .colorDiv button{
   width: 100%;
   height: 100%;
 }
 
-.colorDiv button, input[type="submit"], input[type="reset"] {
-	background: none;
-	color: inherit;
-	border: none;
-	padding: 0;
-	font: inherit;
-	cursor: pointer;
-	outline: inherit;
-}
-
-#test{
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-
 #solve{
   position: absolute;
-  right: 0;
-  bottom: 0;
-  margin: 20px;
-  height: 60px;
-  width: 200px;
-  font-size: 24px;
+  left: 50%;
+  bottom: 30px;
+  height: 75px;
+  width: 250px;
+  font-size: 36px;
+  transform: translateX(-50%);
+}
+
+#selectedColor{
+  border-width: 3px;
 }

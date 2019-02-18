@@ -17,8 +17,8 @@ var camera = new THREE.PerspectiveCamera(CAMERA_FOV, window.innerWidth / window.
 
 //Sets globals for snapping the cube to a loose grid
 var CAMERA_RADIUS = 7;
-var CAMERA_SNAP_HORIZONTAL = .6;
-var CAMERA_SNAP_VERTICAL_ANGLE = 28;
+var CAMERA_SNAP_HORIZONTAL = .7;
+var CAMERA_SNAP_VERTICAL_ANGLE = 20;
 var SNAP_SPEED = 8;
 
 //Sets the initial position of the camera
@@ -258,7 +258,6 @@ var update = function()
 	if(touchDown)
 	{
 		clickedObject = getFirstObject(raycasterTouch);
-		console.log(clickedObject);
 		if(objectsEqual(getFirstObject(raycasterTouch), clickedObject))
 		{
 			if(clickedObject)
