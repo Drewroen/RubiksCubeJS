@@ -14,7 +14,7 @@ canvas {
 .guiButtons{
   position: absolute;
   width: 100%;
-  bottom: 0;
+  bottom: 0px;
   left: 50%;
   transform: translateX(-50%);
   padding: 10px;
@@ -79,8 +79,4 @@ canvas {
 .modal-dialog {
     margin: 2px auto;
     z-index: 1100 !important;
-}
-
-.jscolor {
-  z-index: 1140 !important;
 }
