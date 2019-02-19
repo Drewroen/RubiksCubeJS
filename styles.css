@@ -4,17 +4,27 @@ body {
 }
 
 canvas {
-  z-index: -1;
+  z-index: -20 !important;
 }
 
 .ui {
   position: absolute;
 }
 
-.guiButtons{
+.guiButtonsBottom{
   position: absolute;
   width: 100%;
   bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.guiButtonsTop{
+  position: absolute;
+  width: 100%;
+  top: 0px;
   left: 50%;
   transform: translateX(-50%);
   padding: 10px;
