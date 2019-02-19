@@ -4,34 +4,65 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Rubik's Cube Solver</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 		<link rel="stylesheet" href="styles.css">
 	</head>
 
 	<body>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-		<div class="colorButtons">
-			<div class="colorDiv">
-			</div>
-			<div class="colorDiv">
-			</div>
-			<div class="colorDiv">
-			</div>
-			<div class="colorDiv">
-			</div>
-			<div class="colorDiv">
-			</div>
-			<div class="colorDiv">
-			</div>
+		<div class="guiButtons">
+				<button class="colorButton btn btn-secondary" onclick="pickColorBox('color1');"></button>
+				<button class="colorButton btn btn-secondary" onclick="pickColorBox('color2');"></button>
+				<button class="colorButton btn btn-secondary" onclick="pickColorBox('color3');"></button>
+				<button class="colorButton btn btn-secondary" onclick="pickColorBox('color4');"></button>
+				<button class="colorButton btn btn-secondary" onclick="pickColorBox('color5');"></button>
+				<button class="colorButton btn btn-secondary" onclick="pickColorBox('color6');"></button>
+				<button id="settings" class="btn btn-info fas fa-cog" data-toggle="modal" data-target="#settingsModal"></button>
+				<button id="solve" class="btn btn-success">START SOLVE</button>
 		</div>
 
-		<button id="solve" class="btn btn-success">SOLVE</button>
+		<!-- Modal -->
+		<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="settingsTitle">Settings</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+						<div class="form-group">
+            <label for="recipient-name" class="col-form-label">Cube Colors</label>
+						<hr>
+						<input class="colorInput" type="hidden" id="color_value1" onchange="updateColor(value, 0);">
+        		<button class="colorSetting jscolor {valueElement: 'color_value1'}">Pick a color</button>
+						<input class="colorInput" type="hidden" id="color_value2" onchange="updateColor(value, 1);">
+        		<button class="colorSetting jscolor {valueElement: 'color_value2'}">Pick a color</button>
+						<input class="colorInput" type="hidden" id="color_value3" onchange="updateColor(value, 2);">
+        		<button class="colorSetting jscolor {valueElement: 'color_value3'}">Pick a color</button>
+						<input class="colorInput" type="hidden" id="color_value4" onchange="updateColor(value, 3);">
+        		<button class="colorSetting jscolor {valueElement: 'color_value4'}">Pick a color</button>
+						<input class="colorInput" type="hidden" id="color_value5" onchange="updateColor(value, 4);">
+        		<button class="colorSetting jscolor {valueElement: 'color_value5'}">Pick a color</button>
+						<input class="colorInput" type="hidden" id="color_value6" onchange="updateColor(value, 5);">
+        		<button class="jscolor {valueElement: 'color_value6'}">Pick a color</button>
+          </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary">Save changes</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 
 
-		<script src="js/ButtonColors.js"></script>
+		<script src="js/HTMLFunctions.js"></script>
 		<script src="js/three.js"></script>
+		<script src="js/jscolor.js"></script>
 		<script src="js/OrbitControls.js"></script>
 		<script src="js/TrackballControls.js"></script>
 		<script src="js/CameraMath.js"></script>

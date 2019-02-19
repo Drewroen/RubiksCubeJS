@@ -11,40 +11,30 @@ canvas {
   position: absolute;
 }
 
-.colorButtons{
+.guiButtons{
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 188px;
-  height: 135px;
+  width: 100%;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   padding: 10px;
-  margin: 5px;
-  background: white;
-  border-radius: 7px;
-  border-style: solid;
-  border-width: 1.5px;
+  background: rgba(0, 0, 0, 0.2);
 }
 
-.colorDiv{
-  width: 45px;
-  height: 45px;
-  margin: 5px;
-  float: left;
-}
-
-.selectedColor{
-  border-width: 5px;
-}
-
-.colorButton{
-  border-radius: 7px;
-  border-style: solid;
-  border-width: 1.5px;
+#selectedColor{
   border-color: black;
 }
 
+.colorButton{
+  border-width: 1.5px;
+  width: 50px;
+  height: 50px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 .colorButton:hover{
-  border-width: 3px;
+  border-color: black;
 }
 
 .colorDiv button{
@@ -53,15 +43,44 @@ canvas {
 }
 
 #solve{
-  position: absolute;
-  left: 50%;
   bottom: 30px;
-  height: 75px;
   width: 250px;
-  font-size: 36px;
-  transform: translateX(-50%);
+  height: 50px;
+  font-size: 24px;
+  border-width: 1.5px;
+  border-color: #03661d;
+  float: right;
+  margin-right: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
-#selectedColor{
-  border-width: 3px;
+#settings{
+  bottom: 30px;
+  width: 65px;
+  height: 50px;
+  font-size: 24px;
+  border-width: 1.5px;
+  border-color: #247b9e;
+  margin-right: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  float: right;
+}
+
+.btn:focus,.btn:active {
+   outline: none;
+   box-shadow: none;
+}
+
+.modal-backdrop {
+    z-index: 1040 !important;
+}
+.modal-dialog {
+    margin: 2px auto;
+    z-index: 1100 !important;
+}
+
+.jscolor {
+  z-index: 1140 !important;
 }
