@@ -21,6 +21,9 @@ var CAMERA_SNAP_HORIZONTAL = .7;
 var CAMERA_SNAP_VERTICAL_ANGLE = 20;
 var SNAP_SPEED = 8;
 
+
+var TOUCH_THRESHOLD = .1;
+
 //Sets the initial position of the camera
 camera.position.x = 0;
 camera.position.y = 0;
@@ -48,6 +51,11 @@ var raycaster = new THREE.Raycaster();
 var raycasterTouch = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 var touch = new THREE.Vector2();
+var touchCameraPosition = {
+	x: camera.position.x,
+	y: camera.position.y,
+	z: camera.position.z
+}
 touch.x = -1000;
 touch.y = -1000;
 mouse.x = -1000;
@@ -72,10 +80,29 @@ function onDocumentTouchStart( event ) {
 				touchDown = true;
 				touch.x = ( event.touches[0].clientX / window.innerWidth ) * 2 - 1;
 				touch.y = - ( event.touches[0].clientY / window.innerHeight ) * 2 + 1;
+				touchCameraPosition.x = camera.position.x;
+				touchCameraPosition.y = camera.position.y;
+				touchCameraPosition.z = camera.position.z;
+				console.log(touchCameraPosition.x);
+				clickedObject = getFirstObject(raycasterTouch);
+				console.log(clickedObject);
 			}
 
 window.addEventListener('touchend', function(){
 			  mouseDown = false;
+				clickedObject = getFirstObject(raycasterTouch);
+				console.log(clickedObject);
+				if(camera.position.x - touchCameraPosition.x < TOUCH_THRESHOLD && camera.position.y - touchCameraPosition.y < TOUCH_THRESHOLD && camera.position.z - touchCameraPosition.z < TOUCH_THRESHOLD)
+				{
+					if(clickedObject)
+					{
+						if(isObjectSticker(clickedObject))
+				    {
+				      setStickerColor(clickedObject, new THREE.Color(getPickedColor(pickedColorGUI, cubeColors)));
+				    }
+					}
+					touchDown = false;
+				}
 			});
 
 window.addEventListener('mouseup', function(){
@@ -105,12 +132,14 @@ document.addEventListener('keydown', function(event){
 //The GUI for performing an algorithm and setting parameters
 var rubiksGUI = {
   algorithm: "L L' M M' R' R X' X U' U E E' D D' Y' Y F F' S S' B' B Z Z'",
-  algorithmSubmit: function(){
-    algArray = rubiksGUI.algorithm.split(" ");
-    rotations.longAlg = rotations.longAlg.concat(algArray);
-  },
   rotationSpeed: 0.05
 };
+
+function submitAlgorithm(rubiksGUI)
+{
+	var algArray = rubiksGUI.algorithm.split(" ");
+	rotations.longAlg = rotations.longAlg.concat(algArray);
+}
 
 var cubeColorGUI = {
 	face1: 0xffffff,
@@ -206,8 +235,6 @@ addCubeFacesToScene(rubiksCubeFaces, scene);
 //Update logic
 var update = function()
 {
-
-	console.log(rubiksGUI.rotationSpeed);
   //Render the scene and camera
   renderer.render(scene, camera);
 
@@ -256,6 +283,7 @@ var update = function()
   raycaster.setFromCamera(mouse, camera);
 	raycasterTouch.setFromCamera(touch, camera);
 
+/*
 	if(touchDown)
 	{
 		clickedObject = getFirstObject(raycasterTouch);
@@ -271,6 +299,7 @@ var update = function()
 			touchDown = false;
 		}
 	}
+	*/
 }
 //Run cube loop (update, render, repeat)
 var AnimationLoop = function()
