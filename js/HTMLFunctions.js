@@ -35,23 +35,6 @@ function colorGUIButtons(document, cubeColors)
   }
 }
 
-function updateColor(color, face)
-{
-  console.log(color);
-  switch(face)
-  {
-    case(0): cubeColorGUI.face1 = parseInt(color, 16); break;
-    case(1): cubeColorGUI.face2 = parseInt(color, 16); break;
-    case(2): cubeColorGUI.face3 = parseInt(color, 16); break;
-    case(3): cubeColorGUI.face4 = parseInt(color, 16); break;
-    case(4): cubeColorGUI.face5 = parseInt(color, 16); break;
-    case(5): cubeColorGUI.face6 = parseInt(color, 16); break;
-  }
-
-  colorGUIButtons(document, cubeColors);
-}
-
-
 function toHex(num) {
   var hex = Number(num).toString(16);
   hex = "000000".substr(0, 6 - hex.length) + hex;
