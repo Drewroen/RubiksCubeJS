@@ -10,8 +10,6 @@ function onDocumentTouchStart(event) {
 				touchCameraPosition.x = camera.position.x;
 				touchCameraPosition.y = camera.position.y;
 				touchCameraPosition.z = camera.position.z;
-				console.log(touchCameraPosition.x);
-				console.log(clickedObject);
 			}
 
 function onDocumentTouchEnd()
