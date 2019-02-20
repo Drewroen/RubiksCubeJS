@@ -22,7 +22,7 @@ var CAMERA_SNAP_VERTICAL_ANGLE = 20;
 var SNAP_SPEED = 8;
 
 
-var TOUCH_THRESHOLD = .1;
+var TOUCH_THRESHOLD = .4;
 
 //Sets the initial position of the camera
 camera.position.x = 0;
@@ -92,7 +92,7 @@ window.addEventListener('touchend', function(){
 			  mouseDown = false;
 				clickedObject = getFirstObject(raycasterTouch);
 				console.log(clickedObject);
-				if(camera.position.x - touchCameraPosition.x < TOUCH_THRESHOLD && camera.position.y - touchCameraPosition.y < TOUCH_THRESHOLD && camera.position.z - touchCameraPosition.z < TOUCH_THRESHOLD)
+				if(Math.abs(camera.position.x - touchCameraPosition.x) < TOUCH_THRESHOLD && Math.abs(camera.position.y - touchCameraPosition.y) < TOUCH_THRESHOLD && Math.abs(camera.position.z - touchCameraPosition.z) < TOUCH_THRESHOLD)
 				{
 					if(clickedObject)
 					{
