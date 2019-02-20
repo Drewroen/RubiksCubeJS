@@ -39,3 +39,10 @@ var touchCameraPosition = {
 	y: camera.position.y,
 	z: camera.position.z
 }
+
+//Creates the 3D Rubik's Cube
+addCubeBlocksToScene(rubiksCubeBlocks, scene);
+addCubeFacesToScene(rubiksCubeFaces, scene);
+
+//Colors the GUI buttons
+colorGUIButtons(document, cubeColors);
