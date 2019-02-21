@@ -23,7 +23,7 @@
 				<button class="colorButton btn btn-secondary" onclick="pickedColorGUI = 4; colorGUIButtons(document, cubeColors);"></button>
 				<button class="colorButton btn btn-secondary" onclick="pickedColorGUI = 5; colorGUIButtons(document, cubeColors);"></button>
 				<button class="colorButton btn btn-secondary" onclick="pickedColorGUI = 6; colorGUIButtons(document, cubeColors);"></button>
-				<button id="solve" class="btn btn-success" onclick="prepareSolving()">START SOLVE</button>
+				<button id="solve" class="btn btn-success" onclick="prepareSolving(rubiksCubeFaces)">START SOLVE</button>
 		</div>
 
 		<div id="guiButtonsTop">
@@ -57,6 +57,7 @@
 						<input class="colorInput" type="hidden" id="color_value6" onchange="cubeColorGUI.face6 = parseInt(value, 16);">
         		<button class="colorButton btn btn-secondary colorSetting jscolor {valueElement: 'color_value6'}"></button>
 						<br/>
+						<br/>
 						<label for="formControlRange">Cube Rotation Speed</label>
 						<br/>
 						<input id="rotationSpeedSlider" type="range" min="0.0025" max="0.1" value="0.05" step="0.0025" id="slider" oninput="rotationSpeed=value">
@@ -77,12 +78,15 @@
 		<script src="js/RubiksCubeFunctions.js"></script>
 		<script src="js/RaycasterFunctions.js"></script>
 		<script src="js/GUIFunctions.js"></script>
+		<script src="js/SceneFunctions.js"></script>
 
 		<script src="js/Globals.js"></script>
 		<script src="js/EventListeners.js"></script>
 		<script src="js/Variables.js"></script>
 		<script src="js/Scene.js"></script>
 
-		<script src="js/RubiksCubeMain.js"></script>
+		<script src="js/Solve.js"></script>
+
+		<script src="js/Main.js"></script>
 	</body>
 </html>

@@ -38,8 +38,8 @@ function validateCube(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot
   if(Math.abs(pivot.rotation.x) > Math.PI / 2 || Math.abs(pivot.rotation.y) > Math.PI / 2 || Math.abs(pivot.rotation.z) > Math.PI / 2)
   {
     recreateCube(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot);
-    performAlgorithmSequence(rubiksCubeFaces, rotations.alg);
-    rotations.alg = "";
+    performAlgorithmSequence(rubiksCubeFaces, algorithm.currentTurn);
+    algorithm.currentTurn = "";
   }
 }
 
@@ -71,18 +71,18 @@ function performTurn(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot,
     case "M'": cubeMiddlePrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
     case "S": cubeStanding(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
     case "S'": cubeStandingPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
-    case "F2": cubeFront(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("F"); break;
-    case "X2": cubeXAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("X"); break;
-    case "Y2": cubeYAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("Y"); break;
-    case "Z2": cubeZAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("Z"); break;
-    case "R2": cubeRight(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("R"); break;
-    case "L2": cubeLeft(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("L"); break;
-    case "B2": cubeBack(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("B"); break;
-    case "U2": cubeUp(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("U"); break;
-    case "D2": cubeDown(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("D"); break;
-    case "E2": cubeEquator(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("E"); break;
-    case "M2": cubeMiddle(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("M"); break;
-    case "S2": cubeStanding(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); rotations.longAlg.unshift("S"); break;
+    case "F2": cubeFront(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("F"); break;
+    case "X2": cubeXAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("X"); break;
+    case "Y2": cubeYAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("Y"); break;
+    case "Z2": cubeZAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("Z"); break;
+    case "R2": cubeRight(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("R"); break;
+    case "L2": cubeLeft(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("L"); break;
+    case "B2": cubeBack(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("B"); break;
+    case "U2": cubeUp(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("U"); break;
+    case "D2": cubeDown(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("D"); break;
+    case "E2": cubeEquator(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("E"); break;
+    case "M2": cubeMiddle(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("M"); break;
+    case "S2": cubeStanding(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("S"); break;
   }
 }
 
@@ -91,7 +91,7 @@ function cubeLeft(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot)
   if(isNotRotating(rotations))
   {
     rotations.x = 1;
-    rotations.alg = "L";
+    algorithm.currentTurn = "L";
     for(var i = 0; i < 3; i++)
     {
       pivot.add(rubiksCubeFaces[0][i]);
@@ -112,7 +112,7 @@ function cubeLeftPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivo
   if(isNotRotating(rotations))
   {
     rotations.x = -1;
-    rotations.alg = "L'";
+    algorithm.currentTurn = "L'";
     for(var i = 0; i < 3; i++)
     {
       pivot.add(rubiksCubeFaces[0][i]);
@@ -133,7 +133,7 @@ function cubeRight(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot)
   if(isNotRotating(rotations))
   {
     rotations.x = -1;
-    rotations.alg = "R";
+    algorithm.currentTurn = "R";
     for(var i = 0; i < 3; i++)
     {
       pivot.add(rubiksCubeFaces[0][i+6]);
@@ -154,7 +154,7 @@ function cubeRightPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, piv
   if(isNotRotating(rotations))
   {
     rotations.x = 1;
-    rotations.alg = "R'";
+    algorithm.currentTurn = "R'";
     for(var i = 0; i < 3; i++)
     {
       pivot.add(rubiksCubeFaces[0][i+6]);
@@ -175,7 +175,7 @@ function cubeMiddle(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot)
   if(isNotRotating(rotations))
   {
     rotations.x = 1;
-    rotations.alg = "M";
+    algorithm.currentTurn = "M";
     for(var i = 0; i < 3; i++)
     {
       pivot.add(rubiksCubeFaces[0][i+3]);
@@ -195,7 +195,7 @@ function cubeMiddlePrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pi
   if(isNotRotating(rotations))
   {
     rotations.x = -1;
-    rotations.alg = "M'";
+    algorithm.currentTurn = "M'";
     for(var i = 0; i < 3; i++)
     {
       pivot.add(rubiksCubeFaces[0][i+3]);
@@ -215,7 +215,7 @@ function cubeXAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot)
   if(isNotRotating(rotations))
   {
     rotations.x = -1;
-    rotations.alg = "X";
+    algorithm.currentTurn = "X";
     for(var i = 0; i < 3; i++)
     {
       for(var j = 0; j < 3; j++)
@@ -241,7 +241,7 @@ function cubeXAxisPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, piv
   if(isNotRotating(rotations))
   {
     rotations.x = 1;
-    rotations.alg = "X'";
+    algorithm.currentTurn = "X'";
     for(var i = 0; i < 3; i++)
     {
       for(var j = 0; j < 3; j++)
@@ -267,7 +267,7 @@ function cubeYAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot)
   if(isNotRotating(rotations))
   {
     rotations.y = -1;
-    rotations.alg = "Y";
+    algorithm.currentTurn = "Y";
     for(var i = 0; i < 3; i++)
     {
       for(var j = 0; j < 3; j++)
@@ -293,7 +293,7 @@ function cubeYAxisPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, piv
   if(isNotRotating(rotations))
   {
     rotations.y = 1;
-    rotations.alg = "Y'";
+    algorithm.currentTurn = "Y'";
     for(var i = 0; i < 3; i++)
     {
       for(var j = 0; j < 3; j++)
@@ -319,7 +319,7 @@ function cubeUp(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot)
   if(isNotRotating(rotations))
   {
     rotations.y = -1;
-    rotations.alg = "U";
+    algorithm.currentTurn = "U";
     for(var i = 0; i < 3; i++)
     {
       pivot.add(rubiksCubeFaces[0][(3*i)+2]);
@@ -340,7 +340,7 @@ function cubeUpPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot)
   if(isNotRotating(rotations))
   {
     rotations.y = 1;
-    rotations.alg = "U'";
+    algorithm.currentTurn = "U'";
     for(var i = 0; i < 3; i++)
     {
       pivot.add(rubiksCubeFaces[0][(3*i)+2]);
@@ -361,7 +361,7 @@ function cubeDown(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot)
   if(isNotRotating(rotations))
   {
     rotations.y = 1;
-    rotations.alg = "D";
+    algorithm.currentTurn = "D";
     for(var i = 0; i < 3; i++)
     {
       pivot.add(rubiksCubeFaces[0][(3*i)]);
@@ -382,7 +382,7 @@ function cubeDownPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivo
   if(isNotRotating(rotations))
   {
     rotations.y = -1;
-    rotations.alg = "D'";
+    algorithm.currentTurn = "D'";
     for(var i = 0; i < 3; i++)
     {
       pivot.add(rubiksCubeFaces[0][(3*i)]);
@@ -403,7 +403,7 @@ function cubeEquator(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot)
   if(isNotRotating(rotations))
   {
     rotations.y = 1;
-    rotations.alg = "E";
+    algorithm.currentTurn = "E";
     for(var i = 0; i < 3; i++)
     {
       pivot.add(rubiksCubeFaces[0][(3*i)+1]);
@@ -423,7 +423,7 @@ function cubeEquatorPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, p
   if(isNotRotating(rotations))
   {
     rotations.y = -1;
-    rotations.alg = "E'";
+    algorithm.currentTurn = "E'";
     for(var i = 0; i < 3; i++)
     {
       pivot.add(rubiksCubeFaces[0][(3*i)+1]);
@@ -443,7 +443,7 @@ function cubeZAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot)
   if(isNotRotating(rotations))
   {
     rotations.z = -1;
-    rotations.alg = "Z";
+    algorithm.currentTurn = "Z";
     for(var i = 0; i < 3; i++)
     {
       for(var j = 0; j < 3; j++)
@@ -469,7 +469,7 @@ function cubeZAxisPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, piv
   if(isNotRotating(rotations))
   {
     rotations.z = 1;
-    rotations.alg = "Z'";
+    algorithm.currentTurn = "Z'";
     for(var i = 0; i < 3; i++)
     {
       for(var j = 0; j < 3; j++)
@@ -495,7 +495,7 @@ function cubeFront(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot)
   if(isNotRotating(rotations))
   {
     rotations.z = -1;
-    rotations.alg = "F";
+    algorithm.currentTurn = "F";
     for(var i = 0; i < 3; i++)
     {
       pivot.add(rubiksCubeFaces[1][(3*i)+2]);
@@ -516,7 +516,7 @@ function cubeFrontPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, piv
   if(isNotRotating(rotations))
   {
     rotations.z = 1;
-    rotations.alg = "F'";
+    algorithm.currentTurn = "F'";
     for(var i = 0; i < 3; i++)
     {
       pivot.add(rubiksCubeFaces[1][(3*i)+2]);
@@ -537,7 +537,7 @@ function cubeBack(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot)
   if(isNotRotating(rotations))
   {
     rotations.z = 1;
-    rotations.alg = "B";
+    algorithm.currentTurn = "B";
     for(var i = 0; i < 3; i++)
     {
       pivot.add(rubiksCubeFaces[1][(3*i)]);
@@ -558,7 +558,7 @@ function cubeBackPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivo
   if(isNotRotating(rotations))
   {
     rotations.z = -1;
-    rotations.alg = "B'";
+    algorithm.currentTurn = "B'";
     for(var i = 0; i < 3; i++)
     {
       pivot.add(rubiksCubeFaces[1][(3*i)]);
@@ -579,7 +579,7 @@ function cubeStanding(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot
   if(isNotRotating(rotations))
   {
     rotations.z = -1;
-    rotations.alg = "S";
+    algorithm.currentTurn = "S";
     for(var i = 0; i < 3; i++)
     {
       pivot.add(rubiksCubeFaces[1][(3*i)+1]);
@@ -599,7 +599,7 @@ function cubeStandingPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, 
   if(isNotRotating(rotations))
   {
     rotations.z = 1;
-    rotations.alg = "S'";
+    algorithm.currentTurn = "S'";
     for(var i = 0; i < 3; i++)
     {
       pivot.add(rubiksCubeFaces[1][(3*i)+1]);

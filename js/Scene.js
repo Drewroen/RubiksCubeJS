@@ -25,6 +25,13 @@ controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.enableZoom = false;
 controls.enablePan = false;
 
+//Makes the JavaScript applet resizable
+window.addEventListener('resize', function(){
+	camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
 //Creates the raycaster for mouse and touch
 var raycasterMouse = new THREE.Raycaster();
 
@@ -46,3 +53,5 @@ addCubeFacesToScene(rubiksCubeFaces, scene);
 
 //Colors the GUI buttons
 colorGUIButtons(document, cubeColors);
+
+updateSceneState(SCENE_INPUT);
