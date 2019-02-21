@@ -5,7 +5,7 @@ function solve(rubiksCubeFaces)
   {
     return "This is an invalid cube!";
   }
-  
+
   return "L L' M M' R' R X' X U' U E E' D D' Y' Y F F' S S' B' B Z Z'";
 }
 

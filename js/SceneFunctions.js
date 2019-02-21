@@ -39,4 +39,13 @@ function updateSceneState(state)
 		window.removeEventListener('mousedown', onDocumentMouseDown);
 		hideGUIElements(document);
 	}
+	else if (state == SCENE_INFO)
+	{
+		controls.enabled = false;
+		window.removeEventListener('mousemove', onDocumentMouseMove, false);
+		window.removeEventListener('touchstart', onDocumentTouchStart, false);
+		window.removeEventListener('touchend', onDocumentTouchEnd);
+		window.removeEventListener('mouseup', onDocumentMouseUp);
+		window.removeEventListener('mousedown', onDocumentMouseDown);
+	}
 }

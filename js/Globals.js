@@ -27,3 +27,4 @@ var TOUCH_THRESHOLD = .4;
 var SCENE_INPUT = 0;
 var SCENE_SETTINGS = 1;
 var SCENE_SOLVE = 2;
+var SCENE_INFO = 3;
