@@ -2,7 +2,6 @@
 //Meant for debugging purposes only
 //Will NOT be in the final product
 document.addEventListener('keydown', function(event){
-  showSolveModal(document, "HEY!");
 });
 
 //Update logic
@@ -23,8 +22,15 @@ var update = function()
 	    algorithm.currentTurn = algorithm.fullAlgorithm.shift();
 	    if(algorithm.currentTurn)
 	    {
-	      algorithm.performing = true;
-	      performTurn(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot, algorithm.currentTurn);
+        if(isNotation(algorithm.currentTurn))
+        {
+          algorithm.performing = true;
+  	      performTurn(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot, algorithm.currentTurn);
+        }
+        else
+        {
+          showSolveModal(document, splitUnderscores(algorithm.currentTurn));
+        }
 	    }
 	    else
 	    {
