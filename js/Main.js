@@ -25,7 +25,7 @@ var update = function()
         if(isNotation(algorithm.currentTurn))
         {
           algorithm.performing = true;
-  	      performTurn(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot, algorithm.currentTurn);
+  	      performTurn(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot, algorithm.currentTurn, algorithm);
         }
         else
         {

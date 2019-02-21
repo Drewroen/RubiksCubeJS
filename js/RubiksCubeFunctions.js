@@ -43,7 +43,7 @@ function validateCube(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot
   }
 }
 
-function performTurn(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot, algorithm)
+function performTurn(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot, algorithm, algorithmArray)
 {
   switch(algorithm)
   {
@@ -71,18 +71,18 @@ function performTurn(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot,
     case "M'": cubeMiddlePrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
     case "S": cubeStanding(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
     case "S'": cubeStandingPrime(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); break;
-    case "F2": cubeFront(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("F"); break;
-    case "X2": cubeXAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("X"); break;
-    case "Y2": cubeYAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("Y"); break;
-    case "Z2": cubeZAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("Z"); break;
-    case "R2": cubeRight(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("R"); break;
-    case "L2": cubeLeft(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("L"); break;
-    case "B2": cubeBack(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("B"); break;
-    case "U2": cubeUp(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("U"); break;
-    case "D2": cubeDown(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("D"); break;
-    case "E2": cubeEquator(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("E"); break;
-    case "M2": cubeMiddle(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("M"); break;
-    case "S2": cubeStanding(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithm.fullAlgorithm.unshift("S"); break;
+    case "F2": cubeFront(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithmArray.fullAlgorithm.unshift("F"); break;
+    case "X2": cubeXAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithmArray.fullAlgorithm.unshift("X"); break;
+    case "Y2": cubeYAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithmArray.fullAlgorithm.unshift("Y"); break;
+    case "Z2": cubeZAxis(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithmArray.fullAlgorithm.unshift("Z"); break;
+    case "R2": cubeRight(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithmArray.fullAlgorithm.unshift("R"); break;
+    case "L2": cubeLeft(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithmArray.fullAlgorithm.unshift("L"); break;
+    case "B2": cubeBack(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithmArray.fullAlgorithm.unshift("B"); break;
+    case "U2": cubeUp(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithmArray.fullAlgorithm.unshift("U"); break;
+    case "D2": cubeDown(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithmArray.fullAlgorithm.unshift("D"); break;
+    case "E2": cubeEquator(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithmArray.fullAlgorithm.unshift("E"); break;
+    case "M2": cubeMiddle(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithmArray.fullAlgorithm.unshift("M"); break;
+    case "S2": cubeStanding(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot); algorithmArray.fullAlgorithm.unshift("S"); break;
   }
 }
 

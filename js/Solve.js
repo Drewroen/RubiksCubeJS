@@ -6,7 +6,7 @@ function solve(rubiksCubeFaces)
     return "This is an invalid cube!";
   }
 
-  return "Here_are_some_moves_on_the_X_Axis. L L' M M' R' R X' X Here_are_some_moves_on_the_Y_Axis. U' U E E' D D' Y' Y Here_are_some_moves_on_the_Z_Axis. F F' S S' B' B Z Z'";
+  return "F2";
 }
 
 function validateCubeArray(rubiksCubeArray)
