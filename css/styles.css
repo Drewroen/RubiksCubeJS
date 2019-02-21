@@ -18,7 +18,7 @@ canvas {
   left: 50%;
   transform: translateX(-50%);
   padding: 10px;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 #guiButtonsTop{
@@ -38,8 +38,9 @@ canvas {
   border-width: 1.5px;
   width: 50px;
   height: 50px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin: 5px;
+  margin-bottom: 8px;
+  float: left;
 }
 
 .colorButton:hover{
@@ -52,7 +53,6 @@ canvas {
 }
 
 #solve{
-  bottom: 30px;
   width: 250px;
   height: 50px;
   font-size: 24px;
@@ -60,8 +60,6 @@ canvas {
   border-color: #03661d;
   float: right;
   margin-right: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
 }
 
 #settings{
@@ -71,9 +69,7 @@ canvas {
   font-size: 24px;
   border-width: 1.5px;
   border-color: #247b9e;
-  margin-right: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin: 5px;
   float: right;
 }
 
@@ -98,4 +94,55 @@ canvas {
 {
   width: 20px;
   height: 20px;
+}
+
+@media only screen and (orientation: landscape) and  (max-width: 850px){
+  #guiButtonsBottom {
+    text-align: center;
+  }
+
+  .colorButton {
+    width: 30px;
+    height: 30px;
+    float: left;
+  }
+
+  #solve{
+    width: 150px;
+    height: 40px;
+    font-size: 15px;
+  }
+}
+
+@media screen and (orientation: portrait) and (max-width: 650px) {
+  #guiButtonsBottom {
+    text-align: center;
+  }
+
+  #solve {
+    float: none;
+  }
+
+  .colorButton {
+    float: none;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media screen and (max-width: 340px) {
+  #guiButtonsBottom {
+    text-align: center;
+  }
+
+  .colorButton {
+    width: 30px;
+    height: 30px;
+  }
+
+  #solve{
+    width: 150px;
+    height: 40px;
+    font-size: 15px;
+  }
 }
