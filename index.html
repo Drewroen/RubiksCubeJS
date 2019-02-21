@@ -16,17 +16,17 @@
 	</head>
 
 	<body>
-		<div class="guiButtonsBottom">
-				<button class="colorButton btn btn-secondary" onclick="pickColorBox('color1');"></button>
-				<button class="colorButton btn btn-secondary" onclick="pickColorBox('color2');"></button>
-				<button class="colorButton btn btn-secondary" onclick="pickColorBox('color3');"></button>
-				<button class="colorButton btn btn-secondary" onclick="pickColorBox('color4');"></button>
-				<button class="colorButton btn btn-secondary" onclick="pickColorBox('color5');"></button>
-				<button class="colorButton btn btn-secondary" onclick="pickColorBox('color6');"></button>
-				<button id="solve" class="btn btn-success" onclick="submitAlgorithm()">START SOLVE</button>
+		<div id="guiButtonsBottom">
+				<button class="colorButton btn btn-secondary" onclick="pickedColorGUI = 1; colorGUIButtons(document, cubeColors);"></button>
+				<button class="colorButton btn btn-secondary" onclick="pickedColorGUI = 2; colorGUIButtons(document, cubeColors);"></button>
+				<button class="colorButton btn btn-secondary" onclick="pickedColorGUI = 3; colorGUIButtons(document, cubeColors);"></button>
+				<button class="colorButton btn btn-secondary" onclick="pickedColorGUI = 4; colorGUIButtons(document, cubeColors);"></button>
+				<button class="colorButton btn btn-secondary" onclick="pickedColorGUI = 5; colorGUIButtons(document, cubeColors);"></button>
+				<button class="colorButton btn btn-secondary" onclick="pickedColorGUI = 6; colorGUIButtons(document, cubeColors);"></button>
+				<button id="solve" class="btn btn-success" onclick="prepareSolving()">START SOLVE</button>
 		</div>
 
-		<div class="guiButtonsTop">
+		<div id="guiButtonsTop">
 				<button id="settings" class="btn btn-info fas fa-cog" data-toggle="modal" data-target="#settingsModal"></button>
 		</div>
 
@@ -42,7 +42,8 @@
 		      </div>
 		      <div class="modal-body">
 						<div class="form-group">
-            <label for="recipient-name" class="col-form-label">Cube Colors:</label>
+            <label for="recipient-name" class="col-form-label">Cube Color</label>
+						<br/>
 						<input class="colorInput" type="hidden" id="color_value1" onchange="cubeColorGUI.face1 = parseInt(value, 16);">
         		<button class="colorButton btn btn-secondary colorSetting jscolor {valueElement: 'color_value1'}"></button>
 						<input class="colorInput" type="hidden" id="color_value2" onchange="cubeColorGUI.face2 = parseInt(value, 16);">
@@ -55,8 +56,9 @@
         		<button class="colorButton btn btn-secondary colorSetting jscolor {valueElement: 'color_value5'}"></button>
 						<input class="colorInput" type="hidden" id="color_value6" onchange="cubeColorGUI.face6 = parseInt(value, 16);">
         		<button class="colorButton btn btn-secondary colorSetting jscolor {valueElement: 'color_value6'}"></button>
-
-						<label for="formControlRange">Cube Rotation Speed:</label>
+						<br/>
+						<label for="formControlRange">Cube Rotation Speed</label>
+						<br/>
 						<input id="rotationSpeedSlider" type="range" min="0.0025" max="0.1" value="0.05" step="0.0025" id="slider" oninput="rotationSpeed=value">
 
 
@@ -71,10 +73,10 @@
 
 		<script src="js/RubiksCube.js"></script>
 		<script src="js/HTMLFunctions.js"></script>
-		<script src="js/GUIFunctions.js"></script>
 		<script src="js/CameraFunctions.js"></script>
 		<script src="js/RubiksCubeFunctions.js"></script>
 		<script src="js/RaycasterFunctions.js"></script>
+		<script src="js/GUIFunctions.js"></script>
 
 		<script src="js/Globals.js"></script>
 		<script src="js/EventListeners.js"></script>

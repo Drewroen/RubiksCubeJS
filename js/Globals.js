@@ -22,3 +22,7 @@ var CANVAS_BACKGROUND_COLOR = 0xdddddd;
 
 //Sets global for the touch threshold
 var TOUCH_THRESHOLD = .4;
+
+var SCENE_INPUT = 0;
+var SCENE_SETTINGS = 1;
+var SCENE_SOLVE = 2;

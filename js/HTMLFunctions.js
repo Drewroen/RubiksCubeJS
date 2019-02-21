@@ -23,15 +23,14 @@ function colorGUIButtons(document, cubeColors)
   settingsButtons[4].value = toHex(cubeColors.face5);
   settingsButtons[5].value = toHex(cubeColors.face6);
 
-
-  switch(getPickedColor(pickedColorGUI, cubeColors))
+  switch(pickedColorGUI)
   {
-    case (cubeColors.face1): newButtons[0].id = "selectedColor"; break;
-    case (cubeColors.face2): newButtons[1].id = "selectedColor"; break;
-    case (cubeColors.face3): newButtons[2].id = "selectedColor"; break;
-    case (cubeColors.face4): newButtons[3].id = "selectedColor"; break;
-    case (cubeColors.face5): newButtons[4].id = "selectedColor"; break;
-    case (cubeColors.face6): newButtons[5].id = "selectedColor"; break;
+    case (1): newButtons[0].id = "selectedColor"; break;
+    case (2): newButtons[1].id = "selectedColor"; break;
+    case (3): newButtons[2].id = "selectedColor"; break;
+    case (4): newButtons[3].id = "selectedColor"; break;
+    case (5): newButtons[4].id = "selectedColor"; break;
+    case (6): newButtons[5].id = "selectedColor"; break;
   }
 }
 
@@ -39,4 +38,24 @@ function toHex(num) {
   var hex = Number(num).toString(16);
   hex = "000000".substr(0, 6 - hex.length) + hex;
   return hex;
+}
+
+$('#settingsModal').on('shown.bs.modal', function () {
+  updateSceneState(SCENE_SETTINGS);
+});
+
+$('#settingsModal').on('hide.bs.modal', function () {
+  updateSceneState(SCENE_INPUT);
+});
+
+function hideGUIElements(document)
+{
+  document.getElementById("guiButtonsTop").style.display = "none";
+  document.getElementById("guiButtonsBottom").style.display = "none";
+}
+
+function showGUIElements(document)
+{
+  document.getElementById("guiButtonsTop").style.display = "block";
+  document.getElementById("guiButtonsBottom").style.display = "block";
 }

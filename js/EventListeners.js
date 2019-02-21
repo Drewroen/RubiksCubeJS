@@ -22,7 +22,7 @@ function onDocumentTouchEnd()
 		{
 			if(isObjectSticker(clickedObject))
 	    {
-	      setStickerColor(clickedObject, new THREE.Color(getPickedColor(pickedColorGUI, cubeColors)));
+	      setStickerColor(clickedObject, new THREE.Color(getPickedColor(pickedColorGUI, cubeColorGUI)));
 	    }
 		}
 	}
@@ -37,7 +37,7 @@ function onDocumentMouseUp()
 		{
 			if(isObjectSticker(clickedObject))
 	    {
-	      setStickerColor(clickedObject, new THREE.Color(getPickedColor(pickedColorGUI, cubeColors)));
+	      setStickerColor(clickedObject, new THREE.Color(getPickedColor(pickedColorGUI, cubeColorGUI)));
 	    }
 		}
 	}

@@ -1,36 +1,12 @@
-function getPickedColor(pickedColorGUI, cubeColors)
+function getPickedColor(pickedColorGUI, cubeColorGUI)
 {
-	if(pickedColorGUI.color1)
-	{
-		return cubeColors.face1;
-	}
-	else if(pickedColorGUI.color2)
-	{
-		return cubeColors.face2;
-	}
-	else if(pickedColorGUI.color3)
-	{
-		return cubeColors.face3;
-	}
-	else if(pickedColorGUI.color4)
-	{
-		return cubeColors.face4;
-	}
-	else if(pickedColorGUI.color5)
-	{
-		return cubeColors.face5;
-	}
-	else if(pickedColorGUI.color6)
-	{
-		return cubeColors.face6;
-	}
-}
-
-function pickColorBox(pickedColor)
-{
-	for (let color in pickedColorGUI)
-	{
-		pickedColorGUI[color] = false;
-	}
-	pickedColorGUI[pickedColor] = true;
+  switch(pickedColorGUI)
+  {
+    case(1): return cubeColorGUI.face1; break;
+    case(2): return cubeColorGUI.face2; break;
+    case(3): return cubeColorGUI.face3; break;
+    case(4): return cubeColorGUI.face4; break;
+    case(5): return cubeColorGUI.face5; break;
+    case(6): return cubeColorGUI.face6; break;
+  }
 }

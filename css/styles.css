@@ -11,7 +11,7 @@ canvas {
   position: absolute;
 }
 
-.guiButtonsBottom{
+#guiButtonsBottom{
   position: absolute;
   width: 100%;
   bottom: 0px;
@@ -21,7 +21,7 @@ canvas {
   background: rgba(0, 0, 0, 0.1);
 }
 
-.guiButtonsTop{
+#guiButtonsTop{
   position: absolute;
   width: 100%;
   top: 0px;

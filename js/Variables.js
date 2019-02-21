@@ -1,4 +1,6 @@
-var algorithm = "L L' M M' R' R X' X U' U E E' D D' Y' Y F F' S S' B' B Z Z'";
+var sceneState = SCENE_INPUT;
+
+var algorithmInput = "L L' M M' R' R X' X U' U E E' D D' Y' Y F F' S S' B' B Z Z'";
 var rotationSpeed = 0.05;
 
 var cubeColorGUI = {
@@ -19,14 +21,7 @@ var cubeColors = {
 	face6: 0x0000ff
 }
 
-var pickedColorGUI = {
-	color1: true,
-	color2: false,
-	color3: false,
-	color4: false,
-	color5: false,
-	color6: false
-}
+var pickedColorGUI = 1;
 
 var rubiksCubeFaces = createCubeFaces();
 var rubiksCubeBlocks = createCubeBlocks();
@@ -36,7 +31,10 @@ var rotations = {
   x: 0,
   y: 0,
   z: 0,
-  alg: "",
-  longAlg: [],
-  performingAlg: false
+}
+
+var algorithm = {
+	currentTurn: "",
+  fullAlgorithm: [],
+  performing: false
 }
