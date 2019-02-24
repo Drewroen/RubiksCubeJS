@@ -2,6 +2,7 @@
 //Meant for debugging purposes only
 //Will NOT be in the final product
 document.addEventListener('keydown', function(event){
+  scramble(rubiksCubeFaces);
 });
 
 //Update logic

@@ -6,6 +6,14 @@ function prepareSolving(rubiksCubeFaces)
 	updateSceneState(SCENE_SOLVE);
 }
 
+function scramble(rubiksCubeFaces)
+{
+	var solution = "L U' F L D2 R B' D R' U2 R2 D2 B2 L U2 L2 U2 F2 B"
+	var algArray = solution.split(" ");
+	algorithm.fullAlgorithm = algorithm.fullAlgorithm.concat(algArray);
+	updateSceneState(SCENE_SOLVE);
+}
+
 function updateSceneState(state)
 {
 	sceneState = state;
