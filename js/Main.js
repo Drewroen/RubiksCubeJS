@@ -2,7 +2,10 @@
 //Meant for debugging purposes only
 //Will NOT be in the final product
 document.addEventListener('keydown', function(event){
-  scramble(rubiksCubeFaces);
+  if(event.which == 83)
+  {
+    scramble(rubiksCubeFaces);
+  }
 });
 
 //Update logic
