@@ -7,18 +7,18 @@ var CORNER_DOWN_RIGHT_BACK = 5;
 var CORNER_DOWN_LEFT_FRONT = 6;
 var CORNER_DOWN_RIGHT_FRONT = 7;
 
-var SIDE_UP_FRONT = 0;
-var SIDE_UP_RIGHT = 1;
-var SIDE_UP_BACK = 2;
-var SIDE_UP_LEFT = 3;
-var SIDE_MIDDLE_LEFT_BACK = 4;
-var SIDE_MIDDLE_RIGHT_BACK = 5;
-var SIDE_MIDDLE_LEFT_FRONT = 6;
-var SIDE_MIDDLE_RIGHT_FRONT = 7;
-var SIDE_DOWN_FRONT = 8;
-var SIDE_DOWN_RIGHT = 9;
-var SIDE_DOWN_BACK = 10;
-var SIDE_DOWN_LEFT = 11;
+var EDGE_UP_FRONT = 0;
+var EDGE_UP_RIGHT = 1;
+var EDGE_UP_BACK = 2;
+var EDGE_UP_LEFT = 3;
+var EDGE_MIDDLE_LEFT_BACK = 4;
+var EDGE_MIDDLE_RIGHT_BACK = 5;
+var EDGE_MIDDLE_LEFT_FRONT = 6;
+var EDGE_MIDDLE_RIGHT_FRONT = 7;
+var EDGE_DOWN_FRONT = 8;
+var EDGE_DOWN_RIGHT = 9;
+var EDGE_DOWN_BACK = 10;
+var EDGE_DOWN_LEFT = 11;
 
 function solve(rubiksCubeFaces)
 {
@@ -53,6 +53,14 @@ function solve(rubiksCubeFaces)
   if(!validateUniqueCorners(unsolvedCube))
   {
     return "Error:_A_corner_piece_is_included_twice._Check_the_corner_pieces_to_make_sure_they_are_correct.";
+  }
+  if(!checkAllEdgesValid(unsolvedCube))
+  {
+    return "Error:_An_edge_is_invalid._Check_the_edge_pieces_to_make_sure_they_are_correct.";
+  }
+  if(!validateUniqueEdges(unsolvedCube))
+  {
+    return "Error:_An_edge_piece_is_included_twice._Check_the_edge_pieces_to_make_sure_they_are_correct.";
   }
   unsolvedCube = normalizeCube(unsolvedCube);
   printCube(unsolvedCube);
@@ -203,11 +211,37 @@ function checkExistingCorner(corner)
   return false;
 }
 
+function checkExistingEdge(edge)
+{
+  var edges = ["40", "41", "42", "43", "01", "12", "23", "30", "50", "51", "52", "53"];
+  for(var i = 0; i < 2; i++)
+  {
+    edge = edge.substr(1, 2) + edge.substr(0, 1);
+    if (edges.includes(edge))
+    {
+      return true;
+    }
+  }
+  return false;
+}
+
 function checkAllCornersValid(rubiksCubeFaces)
 {
   for(var i = CORNER_UP_LEFT_BACK; i <= CORNER_DOWN_RIGHT_FRONT; i++)
   {
     if(!checkExistingCorner(getCorner(rubiksCubeFaces, i)))
+    {
+      return false;
+    }
+  }
+  return true;
+}
+
+function checkAllEdgesValid(rubiksCubeFaces)
+{
+  for(var i = EDGE_UP_FRONT; i <= EDGE_DOWN_LEFT; i++)
+  {
+    if(!checkExistingEdge(getEdge(rubiksCubeFaces, i)))
     {
       return false;
     }
@@ -225,11 +259,28 @@ function getNormalizedCornerArray(rubiksCubeFaces)
   return corners;
 }
 
+function getNormalizedEdgeArray(rubiksCubeFaces)
+{
+  var edges = [];
+  for(var i = EDGE_UP_FRONT; i <= EDGE_DOWN_LEFT; i++)
+  {
+    edges.push(normalizeEdge(getEdge(rubiksCubeFaces, i)));
+  }
+  return edges;
+}
+
 function validateUniqueCorners(rubiksCubeFaces)
 {
   var corners = ["410", "421", "432", "403", "501", "512", "523", "530"];
   var cubeCorners = getNormalizedCornerArray(rubiksCubeFaces);
   return $(corners).not(cubeCorners).length === 0 && $(cubeCorners).not(corners).length === 0;
+}
+
+function validateUniqueEdges(rubiksCubeFaces)
+{
+  var edges = ["40", "41", "42", "43", "01", "12", "23", "30", "50", "51", "52", "53"];
+  var cubeEdges = getNormalizedEdgeArray(rubiksCubeFaces);
+  return $(edges).not(cubeEdges).length === 0 && $(cubeEdges).not(edges).length === 0;
 }
 
 function normalizeCorner(corner)
@@ -241,6 +292,20 @@ function normalizeCorner(corner)
     if (corners.includes(corner))
     {
       return corner;
+    }
+  }
+  return 0;
+}
+
+function normalizeEdge(edge)
+{
+  var edges = ["40", "41", "42", "43", "01", "12", "23", "30", "50", "51", "52", "53"];
+  for(var i = 0; i < 2; i++)
+  {
+    edge = edge.substr(1, 2) + edge.substr(0, 1);
+    if (edges.includes(edge))
+    {
+      return edge;
     }
   }
   return 0;
@@ -261,6 +326,27 @@ function getCorner(rubiksCubeFaces, cornerGlobal)
     case CORNER_DOWN_LEFT_BACK: cornerArr = [rubiksCubeFaces[5][0], rubiksCubeFaces[2][0], rubiksCubeFaces[3][0]]; break;
   }
   return createPieceString(cornerArr);
+}
+
+function getEdge(rubiksCubeFaces, edgeGlobal)
+{
+  var edgeArr = [];
+  switch(edgeGlobal)
+  {
+    case EDGE_UP_FRONT: edgeArr = [rubiksCubeFaces[4][5], rubiksCubeFaces[0][5]]; break;
+    case EDGE_UP_RIGHT: edgeArr = [rubiksCubeFaces[4][7], rubiksCubeFaces[1][7]]; break;
+    case EDGE_UP_BACK: edgeArr = [rubiksCubeFaces[4][3], rubiksCubeFaces[2][5]]; break;
+    case EDGE_UP_LEFT: edgeArr = [rubiksCubeFaces[4][1], rubiksCubeFaces[3][7]]; break;
+    case EDGE_MIDDLE_LEFT_BACK: edgeArr = [rubiksCubeFaces[2][1], rubiksCubeFaces[3][3]]; break;
+    case EDGE_MIDDLE_RIGHT_BACK: edgeArr = [rubiksCubeFaces[1][3], rubiksCubeFaces[2][7]]; break;
+    case EDGE_MIDDLE_LEFT_FRONT: edgeArr = [rubiksCubeFaces[3][5], rubiksCubeFaces[0][1]]; break;
+    case EDGE_MIDDLE_RIGHT_FRONT: edgeArr = [rubiksCubeFaces[0][7], rubiksCubeFaces[1][5]]; break;
+    case EDGE_DOWN_FRONT: edgeArr = [rubiksCubeFaces[5][5], rubiksCubeFaces[0][3]]; break;
+    case EDGE_DOWN_RIGHT: edgeArr = [rubiksCubeFaces[5][7], rubiksCubeFaces[1][1]]; break;
+    case EDGE_DOWN_BACK: edgeArr = [rubiksCubeFaces[5][3], rubiksCubeFaces[2][3]]; break;
+    case EDGE_DOWN_LEFT: edgeArr = [rubiksCubeFaces[5][1], rubiksCubeFaces[3][1]]; break;
+  }
+  return createPieceString(edgeArr);
 }
 
 function createPieceString(arr)
