@@ -29,11 +29,11 @@ function solve(rubiksCubeFaces)
 
     Then, normalize the cube            DONE
 
-    Every side is a correct piece
+    Every side is a correct piece       DONE
     Every corner is a correct piece     DONE
 
     Correct permutation
-    Correct corner rotation
+    Correct corner rotation             DONE
     Correct edge flip
   */
   var unsolvedCube = createBasicCubeArray(rubiksCubeFaces);
@@ -62,6 +62,15 @@ function solve(rubiksCubeFaces)
   {
     return "Error:_An_edge_piece_is_included_twice._Check_the_edge_pieces_to_make_sure_they_are_correct.";
   }
+  if(!validateCornerRotation(unsolvedCube))
+  {
+    return "Error:_A_corner_piece_is_rotated._Confirm_you_entered_the_pieces_correctly._If_you_did,_you_need_to_disassemble_your_cube_and_put_it_back_together.";
+  }
+  if(!validateEdgeRotation(unsolvedCube))
+  {
+    return "Error:_An_edge_piece_is_rotated._Confirm_you_entered_the_pieces_correctly._If_you_did,_you_need_to_disassemble_your_cube_and_put_it_back_together.";
+  }
+
   unsolvedCube = normalizeCube(unsolvedCube);
   printCube(unsolvedCube);
   return "Valid_cube.";
@@ -338,8 +347,8 @@ function getEdge(rubiksCubeFaces, edgeGlobal)
     case EDGE_UP_BACK: edgeArr = [rubiksCubeFaces[4][3], rubiksCubeFaces[2][5]]; break;
     case EDGE_UP_LEFT: edgeArr = [rubiksCubeFaces[4][1], rubiksCubeFaces[3][7]]; break;
     case EDGE_MIDDLE_LEFT_BACK: edgeArr = [rubiksCubeFaces[2][1], rubiksCubeFaces[3][3]]; break;
-    case EDGE_MIDDLE_RIGHT_BACK: edgeArr = [rubiksCubeFaces[1][3], rubiksCubeFaces[2][7]]; break;
-    case EDGE_MIDDLE_LEFT_FRONT: edgeArr = [rubiksCubeFaces[3][5], rubiksCubeFaces[0][1]]; break;
+    case EDGE_MIDDLE_RIGHT_BACK: edgeArr = [rubiksCubeFaces[2][7], rubiksCubeFaces[1][3]]; break;
+    case EDGE_MIDDLE_LEFT_FRONT: edgeArr = [rubiksCubeFaces[0][1], rubiksCubeFaces[3][5]]; break;
     case EDGE_MIDDLE_RIGHT_FRONT: edgeArr = [rubiksCubeFaces[0][7], rubiksCubeFaces[1][5]]; break;
     case EDGE_DOWN_FRONT: edgeArr = [rubiksCubeFaces[5][5], rubiksCubeFaces[0][3]]; break;
     case EDGE_DOWN_RIGHT: edgeArr = [rubiksCubeFaces[5][7], rubiksCubeFaces[1][1]]; break;
@@ -357,4 +366,84 @@ function createPieceString(arr)
     out += arr[i];
   }
   return out;
+}
+
+function validateCornerRotation(rubiksCubeArray)
+{
+  var rotationCount = 0;
+  var corners = ["410", "421", "432", "403", "501", "512", "523", "530"];
+  for(var i = CORNER_UP_LEFT_BACK; i <= CORNER_DOWN_RIGHT_FRONT; i++)
+  {
+    var corner = getCorner(rubiksCubeArray, i);
+    for(var j = 1; j <= 3; j++)
+    {
+      corner = corner.substr(1, 3) + corner.substr(0, 1);
+      if (corners.includes(corner))
+      {
+        rotationCount += j;
+      }
+    }
+  }
+  return rotationCount % 3 == 0;
+}
+
+function validateEdgeRotation(rubiksCubeArray)
+{
+  var rotationCount = 0;
+  var edges = ["40", "41", "42", "43", "01", "12", "23", "30", "50", "51", "52", "53"];
+  for(var i = EDGE_UP_FRONT; i <= EDGE_UP_LEFT; i++)
+  {
+    var edge = getEdge(rubiksCubeArray, i);
+    var edgePart1 = edge.substring(0, 1);
+    var edgePart2 = edge.substring(1, 2);
+    if(edgePart2 == "4" || edgePart2 == "5")
+    {
+      rotationCount++;
+    }
+    else if(!edgePart1 == "4" && !edgePart2 == "5")
+    {
+      if(edgePart2 == "0" || edgePart2 == "2")
+      {
+        rotationCount++;
+      }
+    }
+  }
+
+  for(var i = EDGE_MIDDLE_LEFT_BACK; i <= EDGE_MIDDLE_RIGHT_FRONT; i++)
+  {
+    var edge = getEdge(rubiksCubeArray, i);
+    var edgePart1 = edge.substring(0, 1);
+    var edgePart2 = edge.substring(1, 2);
+    if(edgePart2 == "0" || edgePart2 == "2")
+    {
+      rotationCount++;
+    }
+    else if(!edgePart1 == "0" && !edgePart2 == "2")
+    {
+      if(edgePart2 == "4" || edgePart2 == "5")
+      {
+        rotationCount++;
+      }
+    }
+  }
+
+  for(var i = EDGE_DOWN_FRONT; i <= EDGE_DOWN_LEFT; i++)
+  {
+    var edge = getEdge(rubiksCubeArray, i);
+    var edgePart1 = edge.substring(0, 1);
+    var edgePart2 = edge.substring(1, 2);
+    if(edgePart2 == "4" || edgePart2 == "5")
+    {
+      rotationCount++;
+    }
+    else if(!edgePart1 == "4" && !edgePart2 == "5")
+    {
+      if(edgePart2 == "0" || edgePart2 == "2")
+      {
+        rotationCount++;
+      }
+    }
+  }
+
+  return rotationCount % 2 == 0;
 }
