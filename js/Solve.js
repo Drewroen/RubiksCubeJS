@@ -447,3 +447,8 @@ function validateEdgeRotation(rubiksCubeArray)
 
   return rotationCount % 2 == 0;
 }
+
+function validPermutation(rubiksCubeArray)
+{
+  
+}
