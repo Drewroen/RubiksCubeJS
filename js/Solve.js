@@ -37,7 +37,6 @@ function solve(rubiksCubeFaces)
     Correct edge flip
   */
   var unsolvedCube = createBasicCubeArray(rubiksCubeFaces);
-  printCube(normalizeCube(unsolvedCube));
   if(!validateNineStickers(unsolvedCube))
   {
     return "Error:_Not_9_of_each_color.";
@@ -46,6 +45,7 @@ function solve(rubiksCubeFaces)
   {
     return "Error:_Duplicate_centers.";
   }
+  normalizeCube(unsolvedCube);
   if(!checkAllCornersValid(unsolvedCube))
   {
     return "Error:_A_corner_is_invalid._Check_the_corner_pieces_to_make_sure_they_are_correct.";
@@ -70,7 +70,10 @@ function solve(rubiksCubeFaces)
   {
     return "Error:_An_edge_piece_is_rotated._Confirm_you_entered_the_pieces_correctly._If_you_did,_you_need_to_disassemble_your_cube_and_put_it_back_together.";
   }
-
+  if(!validatePermutation(unsolvedCube))
+  {
+    return "Error:_Pieces_of_the_cube_are_permutated_incorrectly._Confirm_you_entered_the_pieces_correctly._If_you_did,_you_need_to_disassemble_your_cube_and_put_it_back_together.";
+  }
   unsolvedCube = normalizeCube(unsolvedCube);
   printCube(unsolvedCube);
   return "Valid_cube.";
@@ -448,7 +451,88 @@ function validateEdgeRotation(rubiksCubeArray)
   return rotationCount % 2 == 0;
 }
 
-function validPermutation(rubiksCubeArray)
+function validatePermutation(rubiksCubeArray)
 {
-  
+  var edges = generateEdgeSwapArray(rubiksCubeArray);
+  var corners = generateCornerSwapArray(rubiksCubeArray);
+  var swaps = countSwaps(edges) + countSwaps(corners);
+  return swaps % 2 == 0;
+}
+
+function countSwaps(arr)
+{
+  var length = arr.length;
+  var swaps = 0;
+  for (var i = 0; i < length; i++)
+  {
+    for (var j = 0; j < length - i - 1; j++)
+    {
+      if(arr[j] > arr[j+1])
+      {
+        var temp = arr[j];
+        arr[j] = arr[j+1];
+        arr[j+1] = temp;
+        swaps++;
+      }
+    }
+  }
+  return swaps;
+}
+
+function generateEdgeSwapArray(rubiksCubeArray)
+{
+  var edgeOrder = [EDGE_UP_FRONT, EDGE_MIDDLE_LEFT_FRONT, EDGE_DOWN_LEFT, EDGE_DOWN_BACK, EDGE_MIDDLE_LEFT_BACK, EDGE_UP_LEFT, EDGE_UP_BACK, EDGE_MIDDLE_RIGHT_BACK, EDGE_DOWN_RIGHT, EDGE_DOWN_FRONT, EDGE_MIDDLE_RIGHT_FRONT, EDGE_UP_RIGHT];
+  var edgeSwapCountArray = [];
+  for (var i = 0; i < edgeOrder.length; i++)
+  {
+    edgeSwapCountArray.push(convertEdgeToPermutationValue(normalizeEdge(getEdge(rubiksCubeArray, edgeOrder[i]))));
+  }
+  console.log(edgeSwapCountArray);
+  return edgeSwapCountArray;
+}
+
+function generateCornerSwapArray(rubiksCubeArray)
+{
+  var cornerOrder = [CORNER_UP_RIGHT_FRONT, CORNER_UP_RIGHT_BACK, CORNER_UP_LEFT_BACK, CORNER_UP_LEFT_FRONT, CORNER_DOWN_LEFT_FRONT, CORNER_DOWN_LEFT_BACK, CORNER_DOWN_RIGHT_BACK, CORNER_DOWN_RIGHT_FRONT];
+  var cornerSwapCountArray = [];
+  for (var i = 0; i < cornerOrder.length; i++)
+  {
+    cornerSwapCountArray.push(convertCornerToPermutationValue(normalizeCorner(getCorner(rubiksCubeArray, cornerOrder[i]))));
+  }
+  console.log(cornerSwapCountArray);
+  return cornerSwapCountArray
+}
+
+function convertEdgeToPermutationValue(val)
+{
+  switch(val)
+  {
+    case "40": return 0; break;
+    case "30": return 1; break;
+    case "53": return 2; break;
+    case "52": return 3; break;
+    case "23": return 4; break;
+    case "43": return 5; break;
+    case "42": return 6; break;
+    case "12": return 7; break;
+    case "51": return 8; break;
+    case "50": return 9; break;
+    case "01": return 10; break;
+    case "41": return 11; break;
+  }
+}
+
+function convertCornerToPermutationValue(val)
+{
+  switch(val)
+  {
+    case "410": return 0; break;
+    case "421": return 1; break;
+    case "432": return 2; break;
+    case "403": return 3; break;
+    case "530": return 4; break;
+    case "523": return 5; break;
+    case "512": return 6; break;
+    case "501": return 7; break;
+  }
 }
