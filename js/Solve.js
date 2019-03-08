@@ -22,61 +22,130 @@ var EDGE_DOWN_LEFT = 11;
 
 function solve(rubiksCubeFaces)
 {
-  /*
-  Validating a solvable cube
-    9 of each color                     DONE
-    Centers are unique                  DONE
-
-    Then, normalize the cube            DONE
-
-    Every side is a correct piece       DONE
-    Every corner is a correct piece     DONE
-
-    Correct permutation
-    Correct corner rotation             DONE
-    Correct edge flip
-  */
+  var solution = "";
   var unsolvedCube = createBasicCubeArray(rubiksCubeFaces);
+
   if(!validateNineStickers(unsolvedCube))
   {
     return "Error:_Not_9_of_each_color.";
   }
+
   if(!validateCenters(unsolvedCube))
   {
     return "Error:_Duplicate_centers.";
   }
+
   normalizeCube(unsolvedCube);
+
   if(!checkAllCornersValid(unsolvedCube))
   {
     return "Error:_A_corner_is_invalid._Check_the_corner_pieces_to_make_sure_they_are_correct.";
   }
+
   if(!validateUniqueCorners(unsolvedCube))
   {
     return "Error:_A_corner_piece_is_included_twice._Check_the_corner_pieces_to_make_sure_they_are_correct.";
   }
+
   if(!checkAllEdgesValid(unsolvedCube))
   {
     return "Error:_An_edge_is_invalid._Check_the_edge_pieces_to_make_sure_they_are_correct.";
   }
+
   if(!validateUniqueEdges(unsolvedCube))
   {
     return "Error:_An_edge_piece_is_included_twice._Check_the_edge_pieces_to_make_sure_they_are_correct.";
   }
+
   if(!validateCornerRotation(unsolvedCube))
   {
-    return "Error:_A_corner_piece_is_rotated._Confirm_you_entered_the_pieces_correctly._If_you_did,_you_need_to_disassemble_your_cube_and_put_it_back_together.";
+    return "Error:_A_corner_piece_is_rotated_incorrectly._Confirm_you_entered_the_pieces_correctly._If_you_did,_you_need_to_disassemble_your_cube_and_put_it_back_together.";
   }
+
   if(!validateEdgeRotation(unsolvedCube))
   {
-    return "Error:_An_edge_piece_is_rotated._Confirm_you_entered_the_pieces_correctly._If_you_did,_you_need_to_disassemble_your_cube_and_put_it_back_together.";
+    return "Error:_An_edge_piece_is_rotated_incorrectly._Confirm_you_entered_the_pieces_correctly._If_you_did,_you_need_to_disassemble_your_cube_and_put_it_back_together.";
   }
+
   if(!validatePermutation(unsolvedCube))
   {
     return "Error:_Pieces_of_the_cube_are_permutated_incorrectly._Confirm_you_entered_the_pieces_correctly._If_you_did,_you_need_to_disassemble_your_cube_and_put_it_back_together.";
   }
-  unsolvedCube = normalizeCube(unsolvedCube);
-  printCube(unsolvedCube);
-  return "Valid_cube.";
+  solution += "Valid_cube. ";
+  var threeMoveSolution = checkForThreeMoveSequence(unsolvedCube)
+  if(threeMoveSolution)
+  {
+    solution += threeMoveSolution;
+  }
+
+  return solution;
+}
+
+function checkForThreeMoveSequence(unsolvedCube)
+{
+  var unsolvedCubeTest;
+  var moves = ["F", "F'", "R", "R'", "L", "L'","B","B'","U","U'","D","D'","E","E'","M","M'","S","S'", "F2","R2","L2","B2","U2","D2","E2","M2","S2"];
+  var solution = "";
+  for(var i = 0; i < moves.length; i++)
+  {
+    unsolvedCubeTest = copyCubeArray(unsolvedCube);
+    performSolveAlgorithmSequence(unsolvedCubeTest, moves[i]);
+    if(solved(unsolvedCubeTest))
+    {
+      solution += "This_cube_is_one_move_away. ";
+      solution += moves[i] + " ";
+      return solution;
+    }
+  }
+
+  for(var i = 0; i < moves.length; i++)
+  {
+    for(var j = 0; j < moves.length; j++)
+    {
+      unsolvedCubeTest = copyCubeArray(unsolvedCube);
+      performSolveAlgorithmSequence(unsolvedCubeTest, moves[i] + " " + moves[j]);
+      if(solved(unsolvedCubeTest))
+      {
+        solution += "This_cube_is_two_moves_away. ";
+        solution += moves[i] + " " + moves[j] + " ";
+        return solution;
+      }
+    }
+  }
+
+  for(var i = 0; i < moves.length; i++)
+  {
+    for(var j = 0; j < moves.length; j++)
+    {
+      for(var k = 0; k < moves.length; k++)
+      {
+        unsolvedCubeTest = copyCubeArray(unsolvedCube);
+        performSolveAlgorithmSequence(unsolvedCubeTest, moves[i] + " " + moves[j] + " " + moves[k]);
+        if(solved(unsolvedCubeTest))
+        {
+          solution += "This_cube_is_three_moves_away. ";
+          solution += moves[i] + " " + moves[j] + " " + moves[k] + " ";
+          return solution;
+        }
+      }
+    }
+  }
+  return solution;
+}
+
+function solved(rubiksCubeArray)
+{
+  for(var i = 0; i < 6; i++)
+  {
+    for(var j = 0; j < 9; j++)
+    {
+      if(rubiksCubeArray[i][0] != rubiksCubeArray[i][j])
+      {
+        return false;
+      }
+    }
+  }
+  return true;
 }
 
 function normalizeCube(rubiksCubeArray)
@@ -397,13 +466,35 @@ function validateEdgeRotation(rubiksCubeArray)
   for(var i = EDGE_UP_FRONT; i <= EDGE_UP_LEFT; i++)
   {
     var edge = getEdge(rubiksCubeArray, i);
+    console.log("EDGE ON TOP:");
+    console.log(edge);
     var edgePart1 = edge.substring(0, 1);
     var edgePart2 = edge.substring(1, 2);
     if(edgePart2 == "4" || edgePart2 == "5")
     {
       rotationCount++;
     }
-    else if(!edgePart1 == "4" && !edgePart2 == "5")
+    else if(edgePart1 != "4" && edgePart1 != "5")
+    {
+      console.log("Not 4 or 5");
+      if(edgePart2 == "0" || edgePart2 == "2")
+      {
+        rotationCount++;
+      }
+    }
+  }
+  console.log(rotationCount);
+
+  for(var i = EDGE_MIDDLE_LEFT_BACK; i <= EDGE_MIDDLE_RIGHT_FRONT; i++)
+  {
+    var edge = getEdge(rubiksCubeArray, i);
+    var edgePart1 = edge.substring(0, 1);
+    var edgePart2 = edge.substring(1, 2);
+    if(edgePart2 == "4" || edgePart2 == "5")
+    {
+      rotationCount++;
+    }
+    else if(edgePart1 != "4" && edgePart1 != "5")
     {
       if(edgePart2 == "0" || edgePart2 == "2")
       {
@@ -411,24 +502,7 @@ function validateEdgeRotation(rubiksCubeArray)
       }
     }
   }
-
-  for(var i = EDGE_MIDDLE_LEFT_BACK; i <= EDGE_MIDDLE_RIGHT_FRONT; i++)
-  {
-    var edge = getEdge(rubiksCubeArray, i);
-    var edgePart1 = edge.substring(0, 1);
-    var edgePart2 = edge.substring(1, 2);
-    if(edgePart2 == "0" || edgePart2 == "2")
-    {
-      rotationCount++;
-    }
-    else if(!edgePart1 == "0" && !edgePart2 == "2")
-    {
-      if(edgePart2 == "4" || edgePart2 == "5")
-      {
-        rotationCount++;
-      }
-    }
-  }
+  console.log(rotationCount);
 
   for(var i = EDGE_DOWN_FRONT; i <= EDGE_DOWN_LEFT; i++)
   {
@@ -439,7 +513,7 @@ function validateEdgeRotation(rubiksCubeArray)
     {
       rotationCount++;
     }
-    else if(!edgePart1 == "4" && !edgePart2 == "5")
+    else if(edgePart1 != "4" && edgePart1 != "5")
     {
       if(edgePart2 == "0" || edgePart2 == "2")
       {
@@ -447,6 +521,7 @@ function validateEdgeRotation(rubiksCubeArray)
       }
     }
   }
+  console.log(rotationCount);
 
   return rotationCount % 2 == 0;
 }
@@ -487,7 +562,6 @@ function generateEdgeSwapArray(rubiksCubeArray)
   {
     edgeSwapCountArray.push(convertEdgeToPermutationValue(normalizeEdge(getEdge(rubiksCubeArray, edgeOrder[i]))));
   }
-  console.log(edgeSwapCountArray);
   return edgeSwapCountArray;
 }
 
@@ -499,7 +573,6 @@ function generateCornerSwapArray(rubiksCubeArray)
   {
     cornerSwapCountArray.push(convertCornerToPermutationValue(normalizeCorner(getCorner(rubiksCubeArray, cornerOrder[i]))));
   }
-  console.log(cornerSwapCountArray);
   return cornerSwapCountArray
 }
 
@@ -535,4 +608,223 @@ function convertCornerToPermutationValue(val)
     case "512": return 6; break;
     case "501": return 7; break;
   }
+}
+
+function copyCubeArray(rubiksCubeFaces)
+{
+  var newCube = new Array(6);
+  for (var i = 0; i < newCube.length; i++)
+  {
+    newCube[i] = new Array(9);
+    for(var j = 0; j < newCube[i].length; j++)
+    {
+      newCube[i][j] = rubiksCubeFaces[i][j];
+    }
+  }
+  return newCube;
+}
+
+function performSolveAlgorithmSequence(rubiksCubeFaces, alg)
+{
+  var moves = alg.split(" ");
+  moves.forEach(function(move) {
+    switch(move)
+    {
+      case "F": solveFront(rubiksCubeFaces); break;
+      case "F'": solveFrontPrime(rubiksCubeFaces); break;
+      case "X": solveXAxis(rubiksCubeFaces); break;
+      case "X'": solveXAxisPrime(rubiksCubeFaces); break;
+      case "Y": solveYAxis(rubiksCubeFaces); break;
+      case "Y'": solveYAxisPrime(rubiksCubeFaces); break;
+      case "Z": solveZAxis(rubiksCubeFaces); break;
+      case "Z'": solveZAxisPrime(rubiksCubeFaces); break;
+      case "R": solveRight(rubiksCubeFaces); break;
+      case "R'": solveRightPrime(rubiksCubeFaces); break;
+      case "L": solveLeft(rubiksCubeFaces); break;
+      case "L'": solveLeftPrime(rubiksCubeFaces); break;
+      case "B": solveBack(rubiksCubeFaces); break;
+      case "B'": solveBackPrime(rubiksCubeFaces); break;
+      case "U": solveUp(rubiksCubeFaces); break;
+      case "U'": solveUpPrime(rubiksCubeFaces); break;
+      case "D": solveDown(rubiksCubeFaces); break;
+      case "D'": solveDownPrime(rubiksCubeFaces); break;
+      case "E": solveEquator(rubiksCubeFaces); break;
+      case "E'": solveEquatorPrime(rubiksCubeFaces); break;
+      case "M": solveMiddle(rubiksCubeFaces); break;
+      case "M'": solveMiddlePrime(rubiksCubeFaces); break;
+      case "S": solveStanding(rubiksCubeFaces); break;
+      case "S'": solveStandingPrime(rubiksCubeFaces); break;
+      case "F2": solveFront(rubiksCubeFaces); solveFront(rubiksCubeFaces); break;
+      case "X2": solveXAxis(rubiksCubeFaces); solveXAxis(rubiksCubeFaces); break;
+      case "Y2": solveYAxis(rubiksCubeFaces); solveYAxis(rubiksCubeFaces); break;
+      case "Z2": solveZAxis(rubiksCubeFaces); solveZAxis(rubiksCubeFaces); break;
+      case "R2": solveRight(rubiksCubeFaces); solveRight(rubiksCubeFaces); break;
+      case "L2": solveLeft(rubiksCubeFaces); solveLeft(rubiksCubeFaces); break;
+      case "B2": solveBack(rubiksCubeFaces); solveBack(rubiksCubeFaces); break;
+      case "U2": solveUp(rubiksCubeFaces); solveUp(rubiksCubeFaces); break;
+      case "D2": solveDown(rubiksCubeFaces); solveDown(rubiksCubeFaces); break;
+      case "E2": solveEquator(rubiksCubeFaces); solveEquator(rubiksCubeFaces); break;
+      case "M2": solveMiddle(rubiksCubeFaces); solveMiddle(rubiksCubeFaces); break;
+      case "S2": solveStanding(rubiksCubeFaces); solveStanding(rubiksCubeFaces); break;
+    }
+  });
+}
+
+function solveFront(rubiksCubeFaces)
+{
+  rubiksCubeFacesReference = copyCubeArray(rubiksCubeFaces);
+  for(var i = 0; i < rubiksCubeFaces[0].length; i++)
+  {
+    rubiksCubeFaces[0][i] = rubiksCubeFacesReference[0][((2 - (i % 3)) * 3) + Math.floor(i / 3)];
+  }
+
+  for(var i = 0; i < 3; i++)
+  {
+    rubiksCubeFaces[1][(3 * i) + 2] = rubiksCubeFacesReference[4][(3 * (3 - i)) - 1];
+    rubiksCubeFaces[5][(3 * i) + 2] = rubiksCubeFacesReference[1][(3 * i) + 2];
+    rubiksCubeFaces[3][(3 * (3 - i)) - 1] = rubiksCubeFacesReference[5][(3 * i) + 2];
+    rubiksCubeFaces[4][(3 * (3 - i)) - 1] = rubiksCubeFacesReference[3][(3 * (3 - i)) - 1];
+  }
+}
+
+function solveFrontPrime(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "F F F");
+}
+
+function solveXAxis(rubiksCubeFaces)
+{
+  rubiksCubeFacesReference = copyCubeArray(rubiksCubeFaces);
+  for(var i = 0; i < rubiksCubeFaces[0].length; i++)
+  {
+    rubiksCubeFaces[4][i] = rubiksCubeFacesReference[0][Math.floor(i/3) * 3 + (2 - (i % 3))];
+    rubiksCubeFaces[0][i] = rubiksCubeFacesReference[5][i];
+    rubiksCubeFaces[5][i] = rubiksCubeFacesReference[2][Math.floor(i/3) * 3 + (2 - (i % 3))];
+    rubiksCubeFaces[2][i] = rubiksCubeFacesReference[4][i];
+    rubiksCubeFaces[1][i] = rubiksCubeFacesReference[1][(2 - (i % 3)) * 3 + Math.floor(i/3)];
+    rubiksCubeFaces[3][i] = rubiksCubeFacesReference[3][(2 - (i % 3)) * 3 + Math.floor(i/3)];
+  }
+}
+
+function solveXAxisPrime(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "X X X");
+}
+
+function solveYAxis(rubiksCubeFaces)
+{
+  rubiksCubeFacesReference = copyCubeArray(rubiksCubeFaces);
+  for(var i = 0; i < rubiksCubeFaces[0].length; i++)
+  {
+    rubiksCubeFaces[0][i] = rubiksCubeFacesReference[1][Math.floor(i % 3) * 3 + (2 - (Math.floor(i/3)))];
+    rubiksCubeFaces[1][i] = rubiksCubeFacesReference[2][Math.floor(i % 3) * 3 + ((Math.floor(i/3)))];
+    rubiksCubeFaces[2][i] = rubiksCubeFacesReference[3][Math.floor(i % 3) * 3 + (2 - (Math.floor(i/3)))];
+    rubiksCubeFaces[3][i] = rubiksCubeFacesReference[0][Math.floor(i % 3) * 3 + ((Math.floor(i/3)))];
+    rubiksCubeFaces[4][i] = rubiksCubeFacesReference[4][(i % 3) * 3 + (2 - Math.floor(i/3))];
+    rubiksCubeFaces[5][i] = rubiksCubeFacesReference[5][(i % 3) * 3 + (2 - Math.floor(i/3))];
+  }
+}
+
+function solveYAxisPrime(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "Y Y Y");
+}
+
+function solveZAxis(rubiksCubeFaces)
+{
+  rubiksCubeFacesReference = copyCubeArray(rubiksCubeFaces);
+  for(var i = 0; i < rubiksCubeFaces[0].length; i++)
+  {
+    rubiksCubeFaces[4][i] = rubiksCubeFacesReference[3][Math.floor(i/3) * 3 + (i % 3)];
+    rubiksCubeFaces[3][i] = rubiksCubeFacesReference[5][(2 - Math.floor(i/3)) * 3 + (i % 3)];
+    rubiksCubeFaces[5][i] = rubiksCubeFacesReference[1][Math.floor(i/3) * 3 + (i % 3)];
+    rubiksCubeFaces[1][i] = rubiksCubeFacesReference[4][(2 - Math.floor(i/3)) * 3 + (i % 3)];
+    rubiksCubeFaces[0][i] = rubiksCubeFacesReference[0][(2 - (i % 3)) * 3 + Math.floor(i/3)];
+    rubiksCubeFaces[2][i] = rubiksCubeFacesReference[2][(2 - (i % 3)) * 3 + Math.floor(i/3)];
+  }
+}
+
+function solveZAxisPrime(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "Z Z Z");
+}
+
+function solveRight(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "Y F Y'");
+}
+
+function solveRightPrime(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "Y F' Y'");
+}
+
+function solveLeft(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "Y' F Y");
+}
+
+function solveLeftPrime(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "Y' F' Y");
+}
+
+function solveBack(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "X X F X' X'");
+}
+
+function solveBackPrime(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "X X F' X' X'");
+}
+
+function solveUp(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "X' F X");
+}
+
+function solveUpPrime(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "X' F' X");
+}
+
+function solveDown(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "X F X'");
+}
+
+function solveDownPrime(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "X F' X'");
+}
+
+function solveMiddle(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "Y F Y' Y' F' Y X'");
+}
+
+function solveMiddlePrime(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "Y F' Y' Y' F Y X");
+}
+
+function solveEquator(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "X F' X' X' F X Y'");
+}
+
+function solveEquatorPrime(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "X F X' X' F' X Y");
+}
+
+function solveStanding(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "F' Y Y F Y' Y' Z");
+}
+
+function solveStandingPrime(rubiksCubeFaces)
+{
+  performSolveAlgorithmSequence(rubiksCubeFaces, "F Y Y F' Y' Y' Z'");
 }

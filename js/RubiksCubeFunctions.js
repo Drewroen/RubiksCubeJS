@@ -86,6 +86,56 @@ function performTurn(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot,
   }
 }
 
+function generateRandomScramble(length)
+{
+  var scramble = "";
+  for(var i = 0; i < length; i++)
+  {
+    var temp = Math.floor(Math.random() * 36);
+    console.log(temp);
+    switch(temp)
+    {
+      case 0: scramble += "F "; break;
+      case 1: scramble += "F' "; break;
+      case 2: scramble += "X "; break;
+      case 3: scramble += "X' "; break;
+      case 4: scramble += "Y "; break;
+      case 5: scramble += "Y' "; break;
+      case 6: scramble += "Z "; break;
+      case 7: scramble += "Z' "; break;
+      case 8: scramble += "R "; break;
+      case 9: scramble += "R' "; break;
+      case 10: scramble += "L "; break;
+      case 11: scramble += "L' "; break;
+      case 12: scramble += "B "; break;
+      case 13: scramble += "B' "; break;
+      case 14: scramble += "U "; break;
+      case 15: scramble += "U' "; break;
+      case 16: scramble += "D "; break;
+      case 17: scramble += "D' "; break;
+      case 18: scramble += "E "; break;
+      case 19: scramble += "E' "; break;
+      case 20: scramble += "M "; break;
+      case 21: scramble += "M' "; break;
+      case 22: scramble += "S "; break;
+      case 23: scramble += "S' "; break;
+      case 24: scramble += "F2 "; break;
+      case 25: scramble += "X2 "; break;
+      case 26: scramble += "Y2 "; break;
+      case 27: scramble += "Z2 "; break;
+      case 28: scramble += "R2 "; break;
+      case 29: scramble += "L2 "; break;
+      case 30: scramble += "B2 "; break;
+      case 31: scramble += "U2 "; break;
+      case 32: scramble += "D2 "; break;
+      case 33: scramble += "E2 "; break;
+      case 34: scramble += "M2 "; break;
+      case 35: scramble += "S2 "; break;
+    }
+  }
+  return scramble;
+}
+
 function cubeLeft(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot)
 {
   if(isNotRotating(rotations))

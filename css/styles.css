@@ -164,3 +164,7 @@ canvas {
     margin-top: 6px;
   }
 }
+
+.modal-backdrop {
+   background-color: transparent;
+}
