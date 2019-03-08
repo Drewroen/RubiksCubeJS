@@ -86,6 +86,12 @@ function checkForThreeMoveSequence(unsolvedCube)
   var unsolvedCubeTest;
   var moves = ["F", "F'", "R", "R'", "L", "L'","B","B'","U","U'","D","D'","E","E'","M","M'","S","S'", "F2","R2","L2","B2","U2","D2","E2","M2","S2"];
   var solution = "";
+
+  if(solved(unsolvedCube))
+  {
+    return "This_cube_is_already_solved!_Congratulations! ";
+  }
+
   for(var i = 0; i < moves.length; i++)
   {
     unsolvedCubeTest = copyCubeArray(unsolvedCube);
