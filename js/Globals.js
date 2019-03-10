@@ -12,8 +12,8 @@ var CAMERA_NEAR_PLANE = .1;
 var CAMERA_FAR_PLANE = 1000;
 
 //Sets globals for snapping the cube to a loose grid
-var CAMERA_RADIUS = 7;
-var CAMERA_SNAP_HORIZONTAL = .7;
+var CAMERA_RADIUS = 6;
+var CAMERA_SNAP_HORIZONTAL = .8;
 var CAMERA_SNAP_VERTICAL_ANGLE = 20;
 var SNAP_SPEED = 8;
 

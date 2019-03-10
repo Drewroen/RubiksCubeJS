@@ -76,6 +76,142 @@ function solve(rubiksCubeFaces)
   if(threeMoveSolution)
   {
     solution += threeMoveSolution;
+    return solution;
+  }
+
+  var crossSolution = generateCross(unsolvedCube);
+  solution += crossSolution
+
+  solution += "At_this_point_in_development,_the_cube_can't_be_solved._It_will_get_there_eventually!_Stay_tuned!";
+  return solution;
+}
+
+function generateCross(rubiksCubeFaces)
+{
+  solution = "";
+  solution += crossPiece(rubiksCubeFaces, false);
+  return solution;
+}
+
+/*
+var EDGE_UP_FRONT = 0;
+var EDGE_UP_RIGHT = 1;
+var EDGE_UP_BACK = 2;
+var EDGE_UP_LEFT = 3;
+var EDGE_MIDDLE_LEFT_BACK = 4;
+var EDGE_MIDDLE_RIGHT_BACK = 5;
+var EDGE_MIDDLE_LEFT_FRONT = 6;
+var EDGE_MIDDLE_RIGHT_FRONT = 7;
+var EDGE_DOWN_FRONT = 8;
+var EDGE_DOWN_RIGHT = 9;
+var EDGE_DOWN_BACK = 10;
+var EDGE_DOWN_LEFT = 11;
+*/
+function crossPiece(rubiksCubeFaces, onePieceDone)
+{
+  var solution = "";
+  for(var i = 0; i < 4; i++)
+  {
+    var solutionPortion = "";
+    if(getEdge(rubiksCubeFaces, EDGE_UP_BACK) == "4" + i)
+    {
+      solutionPortion += "B2 D2 F2 ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_UP_BACK) == i + "4")
+    {
+      solutionPortion += "B E F E' ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_UP_LEFT) == "4" + i)
+    {
+      solutionPortion += "L2 D F2 ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_UP_LEFT) == i + "4")
+    {
+      solutionPortion += "L F ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_UP_RIGHT) == "4" + i)
+    {
+      solutionPortion += "R2 D' F2 ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_UP_RIGHT) == i + "4")
+    {
+      solutionPortion += "R' F' ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_UP_FRONT) == "4" + i)
+    {
+      solutionPortion += "";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_UP_FRONT) == i + "4")
+    {
+      solutionPortion += "F E' F E ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_MIDDLE_LEFT_BACK) == "4" + i)
+    {
+      solutionPortion += "E F E' ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_MIDDLE_LEFT_BACK) == i + "4")
+    {
+      solutionPortion += "E2 F' E2 ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_MIDDLE_RIGHT_BACK) == "4" + i)
+    {
+      solutionPortion += "E' F' E ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_MIDDLE_RIGHT_BACK) == i + "4")
+    {
+      solutionPortion += "E2 F E2 ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_MIDDLE_LEFT_FRONT) == "4" + i)
+    {
+      solutionPortion += "E F' E' ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_MIDDLE_LEFT_FRONT) == i + "4")
+    {
+      solutionPortion += "F ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_MIDDLE_RIGHT_FRONT) == "4" + i)
+    {
+      solutionPortion += "E' F E ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_MIDDLE_RIGHT_FRONT) == i + "4")
+    {
+      solutionPortion += "F' ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_DOWN_BACK) == "4" + i)
+    {
+      solutionPortion += "D2 F2 ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_DOWN_BACK) == i + "4")
+    {
+      solutionPortion += "D2 F E F' E' ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_DOWN_LEFT) == "4" + i)
+    {
+      solutionPortion += "D F2 ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_DOWN_LEFT) == i + "4")
+    {
+      solutionPortion += "D F E F' E' ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_DOWN_RIGHT) == "4" + i)
+    {
+      solutionPortion += "D' F2 ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_DOWN_RIGHT) == i + "4")
+    {
+      solutionPortion += "D' F E F' E' ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_DOWN_FRONT) == "4" + i)
+    {
+      solutionPortion += "F2 ";
+    }
+    if(getEdge(rubiksCubeFaces, EDGE_DOWN_FRONT) == i + "4")
+    {
+      solutionPortion += "F E F' E' ";
+    }
+    solutionPortion += "Y ";
+    performSolveAlgorithmSequence(rubiksCubeFaces, solutionPortion);
+    solution += solutionPortion;
   }
 
   return solution;
