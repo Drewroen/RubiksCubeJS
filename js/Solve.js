@@ -80,34 +80,18 @@ function solve(rubiksCubeFaces)
   }
 
   var crossSolution = generateCross(unsolvedCube);
-  solution += crossSolution
+  solution += crossSolution;
+
+  solution += "Now_we_solve_the_corners! ";
+
+  var cornerSolution = generateFirstLayerCorners(unsolvedCube);
+  solution += cornerSolution;
 
   solution += "At_this_point_in_development,_the_cube_can't_be_solved._It_will_get_there_eventually!_Stay_tuned!";
   return solution;
 }
 
 function generateCross(rubiksCubeFaces)
-{
-  solution = "";
-  solution += crossPiece(rubiksCubeFaces, false);
-  return solution;
-}
-
-/*
-var EDGE_UP_FRONT = 0;
-var EDGE_UP_RIGHT = 1;
-var EDGE_UP_BACK = 2;
-var EDGE_UP_LEFT = 3;
-var EDGE_MIDDLE_LEFT_BACK = 4;
-var EDGE_MIDDLE_RIGHT_BACK = 5;
-var EDGE_MIDDLE_LEFT_FRONT = 6;
-var EDGE_MIDDLE_RIGHT_FRONT = 7;
-var EDGE_DOWN_FRONT = 8;
-var EDGE_DOWN_RIGHT = 9;
-var EDGE_DOWN_BACK = 10;
-var EDGE_DOWN_LEFT = 11;
-*/
-function crossPiece(rubiksCubeFaces, onePieceDone)
 {
   var solution = "";
   for(var i = 0; i < 4; i++)
@@ -213,7 +197,69 @@ function crossPiece(rubiksCubeFaces, onePieceDone)
     performSolveAlgorithmSequence(rubiksCubeFaces, solutionPortion);
     solution += solutionPortion;
   }
+  return solution;
+}
 
+function generateFirstLayerCorners(rubiksCubeFaces)
+{
+  var solution = "";
+  for(var i = 0; i < 4; i++)
+  {
+    var solutionPortion = "";
+    var j = (i + 1) % 4;
+    if(normalizeCorner(getCorner(rubiksCubeFaces, CORNER_UP_LEFT_BACK)) == "4" + j + i)
+    {
+      solutionPortion += "L' D2 L ";
+    }
+    if(normalizeCorner(getCorner(rubiksCubeFaces, CORNER_UP_RIGHT_BACK)) == "4" + j + i)
+    {
+      solutionPortion += "R D2 R' D ";
+    }
+    if(normalizeCorner(getCorner(rubiksCubeFaces, CORNER_UP_LEFT_FRONT)) == "4" + j + i)
+    {
+      solutionPortion += "L D L' ";
+    }
+    if(normalizeCorner(getCorner(rubiksCubeFaces, CORNER_UP_RIGHT_FRONT)) == "4" + j + i)
+    {
+      solutionPortion += "R' D' R D ";
+    }
+    if(normalizeCorner(getCorner(rubiksCubeFaces, CORNER_DOWN_LEFT_BACK)) == "4" + j + i)
+    {
+      solutionPortion += "D2 ";
+    }
+    if(normalizeCorner(getCorner(rubiksCubeFaces, CORNER_DOWN_RIGHT_BACK)) == "4" + j + i)
+    {
+      solutionPortion += "D' ";
+    }
+    if(normalizeCorner(getCorner(rubiksCubeFaces, CORNER_DOWN_LEFT_FRONT)) == "4" + j + i)
+    {
+      solutionPortion += "D ";
+    }
+    if(normalizeCorner(getCorner(rubiksCubeFaces, CORNER_DOWN_RIGHT_FRONT)) == "4" + j + i)
+    {
+      solutionPortion += "";
+    }
+    console.log(solutionPortion);
+    performSolveAlgorithmSequence(rubiksCubeFaces, solutionPortion);
+    solution += solutionPortion;
+    solutionPortion = "";
+
+    if(getCorner(rubiksCubeFaces, CORNER_DOWN_RIGHT_FRONT) == "4" + j + i)
+    {
+      solutionPortion += "R' D2 R D R' D' R "
+    }
+    if(getCorner(rubiksCubeFaces, CORNER_DOWN_RIGHT_FRONT) == "" + j + i + "4")
+    {
+      solutionPortion += "R' D' R "
+    }
+    if(getCorner(rubiksCubeFaces, CORNER_DOWN_RIGHT_FRONT) == i + "4" + j)
+    {
+      solutionPortion += "F D F' ";
+    }
+    solutionPortion += "Y ";
+    performSolveAlgorithmSequence(rubiksCubeFaces, solutionPortion);
+    solution += solutionPortion;
+  }
   return solution;
 }
 
@@ -477,7 +523,7 @@ function getNormalizedCornerArray(rubiksCubeFaces)
   var corners = [];
   for(var i = CORNER_UP_LEFT_BACK; i <= CORNER_DOWN_RIGHT_FRONT; i++)
   {
-    corners.push(normalizeCorner(getCorner(rubiksCubeFaces, i)));
+    corners.push((normalizeCorner(getCorner(rubiksCubeFaces, i))));
   }
   return corners;
 }
@@ -808,6 +854,7 @@ function performSolveAlgorithmSequence(rubiksCubeFaces, alg)
       case "E2": solveEquator(rubiksCubeFaces); solveEquator(rubiksCubeFaces); break;
       case "M2": solveMiddle(rubiksCubeFaces); solveMiddle(rubiksCubeFaces); break;
       case "S2": solveStanding(rubiksCubeFaces); solveStanding(rubiksCubeFaces); break;
+      default: break;
     }
   });
 }
