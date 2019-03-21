@@ -92,7 +92,6 @@ function generateRandomScramble(length)
   for(var i = 0; i < length; i++)
   {
     var temp = Math.floor(Math.random() * 36);
-    console.log(temp);
     switch(temp)
     {
       case 0: scramble += "F "; break;

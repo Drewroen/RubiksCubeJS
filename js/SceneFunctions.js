@@ -8,8 +8,7 @@ function prepareSolving(rubiksCubeFaces)
 
 function scramble(rubiksCubeFaces)
 {
-	var solution = generateRandomScramble(8);
-	console.log(solution);
+	var solution = generateRandomScramble(12);
 	var algArray = solution.split(" ");
 	algorithm.fullAlgorithm = algorithm.fullAlgorithm.concat(algArray);
 	updateSceneState(SCENE_SOLVE);
