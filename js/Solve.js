@@ -79,20 +79,57 @@ function solve(rubiksCubeFaces)
     return solution;
   }
 
+  //solution += "First,_we_solve_the_cross! ";
+
   var crossSolution = generateCross(unsolvedCube);
   solution += crossSolution;
 
-  solution += "Now_we_solve_the_corners! ";
+  //solution += "Now_we_solve_the_corners! ";
 
   var cornerSolution = generateFirstLayerCorners(unsolvedCube);
   solution += cornerSolution;
 
-  solution += "Now_we_solve_the_second_layer! ";
+  //solution += "Now_we_solve_the_second_layer! ";
 
   var secondLayerSolution = generateSecondLayer(unsolvedCube);
   solution += secondLayerSolution;
 
-  solution += "At_this_point_in_development,_the_cube_can't_be_solved._It_will_get_there_eventually!_Stay_tuned!";
+  normalizeCube(unsolvedCube);
+
+  //solution += "Now_we_solve_the_top_cross! ";
+
+  var topCrossSolution = generateTopCross(unsolvedCube);
+  solution += topCrossSolution;
+
+  normalizeCube(unsolvedCube);
+
+  //solution += "Now_we_permutate_the_top_cross! ";
+
+  var topCrossPermutationSolution = generateTopCrossPermutation(unsolvedCube);
+  solution += topCrossPermutationSolution;
+
+  //solution += "Now_we_orientate_the_top_corners! ";
+
+  var topCornerOrientationSolution = generateTopCornerOrientation(unsolvedCube);
+  solution += topCornerOrientationSolution;
+
+  normalizeCube(unsolvedCube);
+
+  //solution += "Finally,_we_permutate_the_final_corners! ";
+
+  var topCornerPermutationSolution = generateTopCornerPermutation(unsolvedCube);
+  solution += topCornerPermutationSolution;
+
+
+  solution += "It_should_be_solved! ";
+
+  console.log("Cross:" + crossSolution);
+  console.log("Corners:" + cornerSolution);
+  console.log("Layer 2:" + secondLayerSolution);
+  console.log("Top cross:" + topCrossSolution);
+  console.log("Top cross perm:" + topCrossPermutationSolution);
+  console.log("Top corner orient:" + topCornerOrientationSolution);
+  console.log("Top corner perm:" + topCornerPermutationSolution);
   return solution;
 }
 
@@ -280,33 +317,25 @@ function generateSecondLayer(rubiksCubeFaces)
     var j = (i + 1) % 4;
     var edgePiece = ((5 - i) % 4) + "" + ((6 - i) % 4);
     var edgePieceReversed = ((6 - i) % 4) + "" + ((5 - i) % 4);
-    //var edgePiece = j + "" + ((i + 2) % 4);
-    //var edgePieceReversed = ((i + 2) % 4) + "" + j;
-    console.log(edgePiece);
-    console.log(edgePieceReversed);
 
     if(normalizeEdge(getEdge(rubiksCubeFaces, EDGE_MIDDLE_LEFT_FRONT)) == edgePiece)
     {
-      solutionPortion += "EDGE_MIDDLE_LEFT_FRONT ";
       solutionPortion += algorithmLeftInsert;
     }
     if(normalizeEdge(getEdge(rubiksCubeFaces, EDGE_MIDDLE_LEFT_BACK)) == edgePiece)
     {
-      solutionPortion += "EDGE_MIDDLE_LEFT_BACK ";
       solutionPortion += "Y' ";
       solutionPortion += algorithmLeftInsert;
       solutionPortion += "Y ";
     }
     if(normalizeEdge(getEdge(rubiksCubeFaces, EDGE_MIDDLE_RIGHT_BACK)) == edgePiece)
     {
-      solutionPortion += "EDGE_MIDDLE_RIGHT_BACK ";
       solutionPortion += "Y ";
       solutionPortion += algorithmRightInsert;
       solutionPortion += "Y' ";
     }
     if(normalizeEdge(getEdge(rubiksCubeFaces, EDGE_MIDDLE_RIGHT_FRONT)) == edgePiece)
     {
-      solutionPortion += "EDGE_MIDDLE_RIGHT_FRONT ";
       if(getEdge(rubiksCubeFaces, EDGE_MIDDLE_RIGHT_FRONT) != edgePieceReversed)
       {
         solutionPortion += algorithmRightInsert;
@@ -320,7 +349,6 @@ function generateSecondLayer(rubiksCubeFaces)
 
     if(normalizeEdge(getEdge(rubiksCubeFaces, EDGE_UP_FRONT)) == edgePiece)
     {
-      solutionPortion += "EDGE_UP_FRONT ";
       if(getEdge(rubiksCubeFaces, EDGE_UP_FRONT) != edgePiece)
       {
         solutionPortion += "Y U' ";
@@ -334,7 +362,6 @@ function generateSecondLayer(rubiksCubeFaces)
     }
     if(normalizeEdge(getEdge(rubiksCubeFaces, EDGE_UP_RIGHT)) == edgePiece)
     {
-      solutionPortion += "EDGE_UP_RIGHT ";
       if(getEdge(rubiksCubeFaces, EDGE_UP_RIGHT) != edgePiece)
       {
         solutionPortion += "Y ";
@@ -349,7 +376,6 @@ function generateSecondLayer(rubiksCubeFaces)
     }
     if(normalizeEdge(getEdge(rubiksCubeFaces, EDGE_UP_BACK)) == edgePiece)
     {
-      solutionPortion += "EDGE_UP_BACK ";
       if(getEdge(rubiksCubeFaces, EDGE_UP_BACK) != edgePiece)
       {
         solutionPortion += "Y U ";
@@ -364,7 +390,6 @@ function generateSecondLayer(rubiksCubeFaces)
     }
     if(normalizeEdge(getEdge(rubiksCubeFaces, EDGE_UP_LEFT)) == edgePiece)
     {
-      solutionPortion += "EDGE_UP_LEFT ";
       if(getEdge(rubiksCubeFaces, EDGE_UP_LEFT) != edgePiece)
       {
         solutionPortion += "Y U2 ";
@@ -378,11 +403,298 @@ function generateSecondLayer(rubiksCubeFaces)
       }
     }
     solutionPortion += "Y ";
-    console.log(solutionPortion);
     performSolveAlgorithmSequence(rubiksCubeFaces, solutionPortion);
     solution += solutionPortion;
   }
   return solution;
+}
+
+function generateTopCross(rubiksCubeFaces)
+{
+  var solution = "";
+  if(checkForTopCross(rubiksCubeFaces))
+  {
+    return "The_top_cross_is_already_solved. ";
+  }
+  else if (checkForTopNone(rubiksCubeFaces))
+  {
+    solution += "F R U R' U' F' Y2 F R U R' U' F' F R U R' U' F' ";
+  }
+  else if (checkForTopL(rubiksCubeFaces))
+  {
+    switch(checkForTopL(rubiksCubeFaces))
+    {
+      case 1: break;
+      case 2: solution += "Y "; break;
+      case 3: solution += "Y2 "; break;
+      case 4: solution += "Y' "; break;
+    }
+    solution += "F R U R' U' F' F R U R' U' F' ";
+  }
+  else if (checkForTopLine(rubiksCubeFaces))
+  {
+    switch(checkForTopLine(rubiksCubeFaces))
+    {
+      case 1: break;
+      case 2: solution += "Y "; break;
+    }
+    solution += "F R U R' U' F' ";
+  }
+  performSolveAlgorithmSequence(rubiksCubeFaces, solution);
+
+  return solution;
+}
+
+function checkForTopCross(rubiksCubeFaces)
+{
+  return rubiksCubeFaces[4][1] == 4 && rubiksCubeFaces[4][3] == 4 && rubiksCubeFaces[4][5] == 4 && rubiksCubeFaces[4][7] == 4;
+}
+
+function checkForTopNone(rubiksCubeFaces)
+{
+  return rubiksCubeFaces[4][1] != 4 && rubiksCubeFaces[4][3] != 4 && rubiksCubeFaces[4][5] != 4 && rubiksCubeFaces[4][7] != 4;
+}
+
+function checkForTopL(rubiksCubeFaces)
+{
+  if(rubiksCubeFaces[4][1] == 4 && rubiksCubeFaces[4][3] == 4)
+  {
+    return 1;
+  }
+  else if (rubiksCubeFaces[4][1] == 4 && rubiksCubeFaces[4][5] == 4)
+  {
+    return 2;
+  }
+  else if (rubiksCubeFaces[4][5] == 4 && rubiksCubeFaces[4][7] == 4)
+  {
+    return 3;
+  }
+  else if (rubiksCubeFaces[4][3] == 4 && rubiksCubeFaces[4][7] == 4)
+  {
+    return 4;
+  }
+  return 0;
+}
+
+function checkForTopLine(rubiksCubeFaces)
+{
+  if(rubiksCubeFaces[4][1] == 4 && rubiksCubeFaces[4][7] == 4)
+  {
+    return 1;
+  }
+  else if (rubiksCubeFaces[4][3] == 4 && rubiksCubeFaces[4][5] == 4)
+  {
+    return 2;
+  }
+  return 0;
+}
+
+function generateTopCrossPermutation(rubiksCubeFaces)
+{
+  var solution = "";
+  var solutionPortion = "";
+  var rotation = getTopCrossTurn(rubiksCubeFaces);
+  switch(rotation)
+  {
+    case(1): solutionPortion += "U "; break;
+    case(2): solutionPortion += "U2 "; break;
+    case(3): solutionPortion += "U' "; break;
+  }
+
+  performSolveAlgorithmSequence(rubiksCubeFaces, solutionPortion);
+  solution += solutionPortion;
+  solutionPortion = "";
+  switch(getTopPermutationType(rubiksCubeFaces))
+  {
+    case(1): solutionPortion += generateTopPermutationNotAdjacent(rubiksCubeFaces); break;
+    case(2): solutionPortion += generateTopPermutationAdjacent(rubiksCubeFaces); break;
+  }
+
+  performSolveAlgorithmSequence(rubiksCubeFaces, solutionPortion);
+  solution += solutionPortion;
+
+  if(solution == "")
+  {
+    solution += "The_top_cross_edges_are_already_solved. ";
+  }
+  return solution;
+}
+
+function generateTopPermutationAdjacent(rubiksCubeFaces)
+{
+  var permutation = rubiksCubeFaces[0][5] + "" + rubiksCubeFaces[1][7] + "" + rubiksCubeFaces[2][5] + "" + rubiksCubeFaces[3][7];
+  switch(permutation)
+  {
+    case("0132"): return "Y' R U R' U R U2 R' U Y "; break;
+    case("3120"): return "R U R' U R U2 R' U "; break;
+    case("1023"): return "Y R U R' U R U2 R' U Y' "; break;
+    case("0213"): return "Y2 R U R' U R U2 R' U Y2 "; break;
+  }
+}
+
+function generateTopPermutationNotAdjacent(rubiksCubeFaces)
+{
+  var permutation = rubiksCubeFaces[0][5] + "" + rubiksCubeFaces[1][7] + "" + rubiksCubeFaces[2][5] + "" + rubiksCubeFaces[3][7];
+  if(permutation == "0321")
+  {
+    return "R U R' U R U2 R' U U' Y' R U R' U R U2 R' U Y ";
+  }
+  else
+  {
+    return "Y R U R' U R U2 R' U U' Y' R U R' U R U2 R' U ";
+  }
+}
+
+function getTopCrossTurn(rubiksCubeFaces)
+{
+  var permutation = rubiksCubeFaces[0][5] + "" + rubiksCubeFaces[1][7] + "" + rubiksCubeFaces[2][5] + "" + rubiksCubeFaces[3][7];
+  for(var i = 0; i < 4; i++)
+  {
+    if(compareTopPermutations(permutation, "0123"))
+    {
+      return i;
+    }
+    permutation = permutation.substring(1, 4) + permutation.substring(0, 1);
+  }
+  return -1;
+}
+
+function compareTopPermutations(perm1, perm2)
+{
+  var count = 0;
+  perm1Arr = perm1.split('');
+  perm2Arr = perm2.split('');
+  for(var i = 0; i < perm1Arr.length; i++)
+  {
+    if(perm1Arr[i] == perm2Arr[i])
+    {
+      count++;
+    }
+  }
+  return count >= 2;
+}
+
+function getTopPermutationType(rubiksCubeFaces)
+{
+  var permutation = rubiksCubeFaces[0][5] + "" + rubiksCubeFaces[1][7] + "" + rubiksCubeFaces[2][5] + "" + rubiksCubeFaces[3][7];
+  if(permutation == "0123")
+  {
+    return 0;
+  }
+  else if (permutation == "0321" || permutation == "2103")
+  {
+    return 1;
+  }
+  else
+  {
+    return 2;
+  }
+}
+
+function generateTopCornerOrientation(rubiksCubeFaces)
+{
+  var solution = "";
+  var solutionPortion = "";
+  console.log(countCorrectCorners(rubiksCubeFaces));
+  if(countCorrectCorners(rubiksCubeFaces) == 0)
+  {
+    solutionPortion += "U R U' L' U R' U' L ";
+    performSolveAlgorithmSequence(rubiksCubeFaces, solutionPortion);
+    solution += solutionPortion;
+    solutionPortion = "";
+  }
+  if(countCorrectCorners(rubiksCubeFaces) == 1)
+  {
+    var correctCorner = findCorrectTopCorner(rubiksCubeFaces);
+    switch(correctCorner)
+    {
+      case(0): solutionPortion += "Y2 "; break;
+      case(1): solutionPortion += "Y "; break;
+      case(2): solutionPortion += "Y' "; break;
+    }
+    solutionPortion += "U R U' L' U R' U' L ";
+    performSolveAlgorithmSequence(rubiksCubeFaces, solutionPortion);
+    solution += solutionPortion;
+    solutionPortion = "";
+    console.log("Correct corners:" + countCorrectCorners(rubiksCubeFaces));
+    normalizeCube(rubiksCubeFaces);
+    if(countCorrectCorners(rubiksCubeFaces) == 1)
+    {
+      solutionPortion += "U R U' L' U R' U' L ";
+      performSolveAlgorithmSequence(rubiksCubeFaces, solutionPortion);
+      solution += solutionPortion;
+      solutionPortion = "";
+    }
+  }
+
+  if(!solution)
+  {
+    solution += "The_corners_are_already_orientated. ";
+  }
+  return solution;
+}
+
+function countCorrectCorners(rubiksCubeFaces)
+{
+  var count = 0;
+  var corners = ["432", "421", "403", "410"];
+  for(var i = CORNER_UP_LEFT_BACK; i <= CORNER_UP_RIGHT_FRONT; i++)
+  {
+    if(normalizeCorner(getCorner(rubiksCubeFaces, i)) == corners[i])
+    {
+      count++;
+    }
+  }
+  return count;
+}
+
+function findCorrectTopCorner(rubiksCubeFaces)
+{
+  var corners = ["432", "421", "403", "410"];
+  for(var i = CORNER_UP_LEFT_BACK; i <= CORNER_UP_RIGHT_FRONT; i++)
+  {
+    if(normalizeCorner(getCorner(rubiksCubeFaces, i)) == corners[i])
+    {
+      console.log("Correct corner: " + i);
+      return i;
+    }
+  }
+}
+
+function generateTopCornerPermutation(rubiksCubeFaces)
+{
+  var solution = "";
+  var solutionPortion = "";
+  for(var i = 0; i < 4; i++)
+  {
+    console.log(getCornerRotation(getCorner(rubiksCubeFaces, CORNER_UP_RIGHT_FRONT)));
+    for(var j = 0; j < getCornerRotation(getCorner(rubiksCubeFaces, CORNER_UP_RIGHT_FRONT)); j++)
+    {
+      solutionPortion += "R' D' R D ";
+    }
+    solutionPortion += "U ";
+    performSolveAlgorithmSequence(rubiksCubeFaces, solutionPortion);
+    solution += solutionPortion;
+    solutionPortion = "";
+  }
+
+  return solution;
+}
+
+function getCornerRotation(corner)
+{
+  if(corner.substring(0, 1) == "4")
+  {
+    return 0;
+  }
+  else if(corner.substring(1, 2) == "4")
+  {
+    return 2;
+  }
+  else if(corner.substring(2, 3) == "4")
+  {
+    return 4;
+  }
 }
 
 function checkForThreeMoveSequence(unsolvedCube)
