@@ -49,6 +49,13 @@ var touchCameraPosition = {
 	z: camera.position.z
 }
 
+//Creates the highlights for adding the meshes
+var pieceInputMesh = new THREE.Mesh(rubiksCubeBlocks[1][1][1].geometry, new THREE.MeshBasicMaterial({color: 0xff6923, opacity: 0.65, transparent: true}));
+var pieceOutputMesh = new THREE.Mesh(rubiksCubeBlocks[1][1][1].geometry, new THREE.MeshBasicMaterial({color: 0x30ff33, opacity: 0.65, transparent: true}));
+pieceInputMesh.scale.multiplyScalar(1.1);
+pieceOutputMesh.scale.multiplyScalar(1.1);
+
+
 //Creates the 3D Rubik's Cube
 addCubeBlocksToScene(rubiksCubeBlocks, scene);
 addCubeFacesToScene(rubiksCubeFaces, scene);

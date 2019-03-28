@@ -1,10 +1,3 @@
-var pieceToBeMovedMaterial = new THREE.MeshBasicMaterial({color: 0x34bfff, opacity: 0.5, transparent: true});
-var locationToMoveMaterial = new THREE.MeshBasicMaterial({color: 0x30ff33, opacity: 0.5, transparent: true});
-var outlineMesh = new THREE.Mesh( rubiksCubeBlocks[2][2][2].geometry, pieceToBeMovedMaterial );
-var outlineMesh2 = new THREE.Mesh( rubiksCubeBlocks[2][2][2].geometry, locationToMoveMaterial );
-outlineMesh.scale.multiplyScalar( 1.1 );
-outlineMesh2.scale.multiplyScalar( 1.1);
-
 //Used to track when keys are pressed
 //Meant for debugging purposes only
 //Will NOT be in the final product
@@ -15,7 +8,7 @@ document.addEventListener('keydown', function(event){
   }
   if(event.which == 68)
   {
-    rubiksCubeBlocks[2][2][2].add(outlineMesh);
+    rubiksCubeBlocks[2][2][2].add(pieceInputMesh);
     rubiksCubeBlocks[2][2][1].add(outlineMesh2);
   }
   if(event.which == 70)

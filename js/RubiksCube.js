@@ -195,3 +195,29 @@ function colorsEqual(color1, color2)
 {
   return color1.r == color2.r && color1.g == color2.g && color1.b == color2.b;
 }
+
+function addInputOutline(x, y, z)
+{
+  rubiksCubeBlocks[x][y][z].add(pieceInputMesh);
+}
+
+function addOutputOutline(x, y, z)
+{
+  rubiksCubeBlocks[x][y][z].add(pieceOutputMesh);
+}
+
+function clearOutlines()
+{
+  for (var i = 0; i < 3; i++)
+  {
+    for (var j = 0; j < 3; j++)
+    {
+      for (var k = 0; k < 3; k++)
+      {
+        rubiksCubeBlocks[i][j][k].remove(pieceInputMesh);
+        rubiksCubeBlocks[i][j][k].remove(pieceOutputMesh);
+      }
+    }
+  }
+
+}
