@@ -20,8 +20,8 @@ function updateSceneState(state)
 	if(state == SCENE_INPUT)
 	{
 		controls.enabled = true;
-		window.addEventListener('mousemove', onDocumentMouseMove, false);
-		window.addEventListener('touchstart', onDocumentTouchStart, false);
+		window.addEventListener('mousemove', onDocumentMouseMove);
+		window.addEventListener('touchstart', onDocumentTouchStart);
 		window.addEventListener('touchend', onDocumentTouchEnd);
 		window.addEventListener('mouseup', onDocumentMouseUp);
 		window.addEventListener('mousedown', onDocumentMouseDown);
@@ -30,8 +30,8 @@ function updateSceneState(state)
 	else if (state == SCENE_SETTINGS)
 	{
 		controls.enabled = false;
-		window.removeEventListener('mousemove', onDocumentMouseMove, false);
-		window.removeEventListener('touchstart', onDocumentTouchStart, false);
+		window.removeEventListener('mousemove', onDocumentMouseMove);
+		window.removeEventListener('touchstart', onDocumentTouchStart);
 		window.removeEventListener('touchend', onDocumentTouchEnd);
 		window.removeEventListener('mouseup', onDocumentMouseUp);
 		window.removeEventListener('mousedown', onDocumentMouseDown);
@@ -40,8 +40,8 @@ function updateSceneState(state)
 	else if (state == SCENE_SOLVE)
 	{
 		controls.enabled = false;
-		window.removeEventListener('mousemove', onDocumentMouseMove, false);
-		window.removeEventListener('touchstart', onDocumentTouchStart, false);
+		window.removeEventListener('mousemove', onDocumentMouseMove);
+		window.removeEventListener('touchstart', onDocumentTouchStart);
 		window.removeEventListener('touchend', onDocumentTouchEnd);
 		window.removeEventListener('mouseup', onDocumentMouseUp);
 		window.removeEventListener('mousedown', onDocumentMouseDown);
@@ -49,11 +49,11 @@ function updateSceneState(state)
 	}
 	else if (state == SCENE_INFO)
 	{
-		controls.enabled = false;
-		window.removeEventListener('mousemove', onDocumentMouseMove, false);
-		window.removeEventListener('touchstart', onDocumentTouchStart, false);
-		window.removeEventListener('touchend', onDocumentTouchEnd);
-		window.removeEventListener('mouseup', onDocumentMouseUp);
-		window.removeEventListener('mousedown', onDocumentMouseDown);
+		controls.enabled = true;
+		window.addEventListener('mousemove', onDocumentMouseMove);
+		window.addEventListener('touchstart', onDocumentTouchStart);
+		window.addEventListener('touchend', onDocumentTouchEnd);
+		window.addEventListener('mouseup', onDocumentMouseUp);
+		window.addEventListener('mousedown', onDocumentMouseDown);
 	}
 }

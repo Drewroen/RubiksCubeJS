@@ -37,6 +37,7 @@ function onDocumentMouseUp()
 		{
 			if(isObjectSticker(clickedObject))
 	    {
+				console.log(getPickedColor(pickedColorGUI, cubeColorGUI));
 	      setStickerColor(clickedObject, new THREE.Color(getPickedColor(pickedColorGUI, cubeColorGUI)));
 	    }
 		}

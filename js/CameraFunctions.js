@@ -75,6 +75,26 @@ function moveTowardGrid(camera, controls)
   controls.update();
 }
 
+function closeEnoughToGrid(camera)
+{
+  var angle = getAngleNoYAxis(camera);
+  var angleExtension;
+  if(angle > 180)
+  {
+    angleExtension = (360 - CAMERA_SNAP_VERTICAL_ANGLE - angle) / SNAP_SPEED;
+  }
+  else {
+    angleExtension = (CAMERA_SNAP_VERTICAL_ANGLE - angle) / SNAP_SPEED;
+  }
+  var radius = getRadiusNoYAxis(camera);
+  var radiusExtension = (CAMERA_RADIUS - CAMERA_SNAP_HORIZONTAL - radius) / SNAP_SPEED;
+  if(Math.abs(radiusExtension) < GRID_SNAP_THRESHOLD && Math.abs(angleExtension) < GRID_SNAP_THRESHOLD)
+  {
+    return true;
+  }
+  return false;
+}
+
 function getAngleNoYAxis(camera)
 {
     var xCoord = camera.position.x;

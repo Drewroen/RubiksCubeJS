@@ -14,8 +14,9 @@ var CAMERA_FAR_PLANE = 1000;
 //Sets globals for snapping the cube to a loose grid
 var CAMERA_RADIUS = 6;
 var CAMERA_SNAP_HORIZONTAL = .8;
-var CAMERA_SNAP_VERTICAL_ANGLE = 20;
+var CAMERA_SNAP_VERTICAL_ANGLE = 45;
 var SNAP_SPEED = 8;
+var GRID_SNAP_THRESHOLD = .001;
 
 //Sets the global for the background color
 var CANVAS_BACKGROUND_COLOR = 0xdddddd;

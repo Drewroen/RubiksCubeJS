@@ -5,10 +5,12 @@ var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(CAMERA_FOV, window.innerWidth / window.innerHeight, CAMERA_NEAR_PLANE, CAMERA_FAR_PLANE);
 
 //Sets the initial position of the camera
-camera.position.z = CAMERA_RADIUS;
+camera.position.x = Math.sqrt((CAMERA_RADIUS * CAMERA_RADIUS) / 2.5);
+camera.position.y = Math.sqrt((CAMERA_RADIUS * CAMERA_RADIUS) / 5.0);
+camera.position.z = Math.sqrt((CAMERA_RADIUS * CAMERA_RADIUS) / 2.5);
 
 //Creates the renderer for the cube
-var renderer = new THREE.WebGLRenderer();
+var renderer = new THREE.WebGLRenderer({alpha: true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor(CANVAS_BACKGROUND_COLOR);
 document.body.appendChild(renderer.domElement);

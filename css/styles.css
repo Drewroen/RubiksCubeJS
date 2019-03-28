@@ -85,10 +85,25 @@ canvas {
 
 .modal-backdrop {
     z-index: 1040 !important;
+    background-color: black;
 }
 .modal-dialog {
     margin: 2px auto;
     z-index: 1100 !important;
+}
+
+.modal-open .modal {
+    width: 300px;
+    margin: 0 auto;
+}
+
+.modal-backdrop {
+  display: none !important;
+}
+.modal-open .modal {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
 }
 
 .jscolor {
@@ -163,8 +178,4 @@ canvas {
     font-size: 15px;
     margin-top: 6px;
   }
-}
-
-.modal-backdrop {
-   background-color: transparent;
 }
