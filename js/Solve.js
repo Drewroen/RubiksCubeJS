@@ -1,25 +1,3 @@
-var CORNER_UP_LEFT_BACK = 0;
-var CORNER_UP_RIGHT_BACK = 1;
-var CORNER_UP_LEFT_FRONT = 2;
-var CORNER_UP_RIGHT_FRONT = 3;
-var CORNER_DOWN_LEFT_BACK = 4;
-var CORNER_DOWN_RIGHT_BACK = 5;
-var CORNER_DOWN_LEFT_FRONT = 6;
-var CORNER_DOWN_RIGHT_FRONT = 7;
-
-var EDGE_UP_FRONT = 0;
-var EDGE_UP_RIGHT = 1;
-var EDGE_UP_BACK = 2;
-var EDGE_UP_LEFT = 3;
-var EDGE_MIDDLE_LEFT_BACK = 4;
-var EDGE_MIDDLE_RIGHT_BACK = 5;
-var EDGE_MIDDLE_LEFT_FRONT = 6;
-var EDGE_MIDDLE_RIGHT_FRONT = 7;
-var EDGE_DOWN_FRONT = 8;
-var EDGE_DOWN_RIGHT = 9;
-var EDGE_DOWN_BACK = 10;
-var EDGE_DOWN_LEFT = 11;
-
 function solve(rubiksCubeFaces)
 {
   var solution = "";
@@ -27,7 +5,7 @@ function solve(rubiksCubeFaces)
 
   if(!validateNineStickers(unsolvedCube))
   {
-    return "Error:_Not_9_of_each_color.";
+    return "I-EDGE_UP_LEFT*O-EDGE_UP_BACK**O-EDGE_MIDDLE_LEFT_BACK*Error:_Not_9_of_each_color.";
   }
 
   if(!validateCenters(unsolvedCube))
@@ -129,101 +107,102 @@ function generateCross(rubiksCubeFaces)
   for(var i = 0; i < 4; i++)
   {
     var solutionPortion = "";
+    var explanationPortion = "O-EDGE_UP_FRONT*We_need_to_move_the_piece_highlighted_red_to_the_front_top_section. ";
     if(getEdge(rubiksCubeFaces, EDGE_UP_BACK) == "4" + i)
     {
-      solutionPortion += "B2 D2 F2 ";
+      solutionPortion += "I-EDGE_UP_BACK*" + explanationPortion + " B2 D2 F2 ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_UP_BACK) == i + "4")
     {
-      solutionPortion += "B E F E' ";
+      solutionPortion += "I-EDGE_UP_BACK*" + explanationPortion + "B E F E' ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_UP_LEFT) == "4" + i)
     {
-      solutionPortion += "L2 D F2 ";
+      solutionPortion += "I-EDGE_UP_LEFT*" + explanationPortion + "L2 D F2 ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_UP_LEFT) == i + "4")
     {
-      solutionPortion += "L F ";
+      solutionPortion += "I-EDGE_UP_LEFT*" + explanationPortion + "L F ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_UP_RIGHT) == "4" + i)
     {
-      solutionPortion += "R2 D' F2 ";
+      solutionPortion += "I-EDGE_UP_RIGHT*" + explanationPortion + "R2 D' F2 ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_UP_RIGHT) == i + "4")
     {
-      solutionPortion += "R' F' ";
+      solutionPortion += "I-EDGE_UP_RIGHT*" + explanationPortion + "R' F' ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_UP_FRONT) == "4" + i)
     {
-      solutionPortion += "";
+      solutionPortion += "O-EDGE_UP_FRONT*" + "This_piece_is_already_in_the_correct_position. ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_UP_FRONT) == i + "4")
     {
-      solutionPortion += "F E' F E ";
+      solutionPortion += "I-EDGE_UP_FRONT*" + "This_piece_is_in_the_right_position,_but_we_need_to_flip_it. " + "F E' F E ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_MIDDLE_LEFT_BACK) == "4" + i)
     {
-      solutionPortion += "E F E' ";
+      solutionPortion += "I-EDGE_MIDDLE_LEFT_BACK*" + explanationPortion + "E F E' ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_MIDDLE_LEFT_BACK) == i + "4")
     {
-      solutionPortion += "E2 F' E2 ";
+      solutionPortion += "I-EDGE_MIDDLE_LEFT_BACK*" + explanationPortion + "E2 F' E2 ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_MIDDLE_RIGHT_BACK) == "4" + i)
     {
-      solutionPortion += "E' F' E ";
+      solutionPortion += "I-EDGE_MIDDLE_RIGHT_BACK*" + explanationPortion + "E' F' E ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_MIDDLE_RIGHT_BACK) == i + "4")
     {
-      solutionPortion += "E2 F E2 ";
+      solutionPortion += "I-EDGE_MIDDLE_RIGHT_BACK*" + explanationPortion + "E2 F E2 ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_MIDDLE_LEFT_FRONT) == "4" + i)
     {
-      solutionPortion += "E F' E' ";
+      solutionPortion += "I-EDGE_MIDDLE_LEFT_FRONT*" + explanationPortion + "E F' E' ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_MIDDLE_LEFT_FRONT) == i + "4")
     {
-      solutionPortion += "F ";
+      solutionPortion += "I-EDGE_MIDDLE_LEFT_FRONT*" + explanationPortion + "F ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_MIDDLE_RIGHT_FRONT) == "4" + i)
     {
-      solutionPortion += "E' F E ";
+      solutionPortion += "I-EDGE_MIDDLE_RIGHT_FRONT*" + explanationPortion + "E' F E ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_MIDDLE_RIGHT_FRONT) == i + "4")
     {
-      solutionPortion += "F' ";
+      solutionPortion += "I-EDGE_MIDDLE_RIGHT_FRONT*" + explanationPortion + "F' ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_DOWN_BACK) == "4" + i)
     {
-      solutionPortion += "D2 F2 ";
+      solutionPortion += "I-EDGE_DOWN_BACK*" + explanationPortion + "D2 F2 ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_DOWN_BACK) == i + "4")
     {
-      solutionPortion += "D2 F E F' E' ";
+      solutionPortion += "I-EDGE_DOWN_BACK*" + explanationPortion + "D2 F E F' E' ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_DOWN_LEFT) == "4" + i)
     {
-      solutionPortion += "D F2 ";
+      solutionPortion += "I-EDGE_DOWN_LEFT*" + explanationPortion + "D F2 ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_DOWN_LEFT) == i + "4")
     {
-      solutionPortion += "D F E F' E' ";
+      solutionPortion += "I-EDGE_DOWN_LEFT*" + explanationPortion + "D F E F' E' ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_DOWN_RIGHT) == "4" + i)
     {
-      solutionPortion += "D' F2 ";
+      solutionPortion += "I-EDGE_DOWN_RIGHT*" + explanationPortion + "D' F2 ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_DOWN_RIGHT) == i + "4")
     {
-      solutionPortion += "D' F E F' E' ";
+      solutionPortion += "I-EDGE_DOWN_RIGHT*" + explanationPortion + "D' F E F' E' ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_DOWN_FRONT) == "4" + i)
     {
-      solutionPortion += "F2 ";
+      solutionPortion += "I-EDGE_DOWN_FRONT*" + explanationPortion + "F2 ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_DOWN_FRONT) == i + "4")
     {
-      solutionPortion += "F E F' E' ";
+      solutionPortion += "I-EDGE_DOWN_FRONT*" + explanationPortion + "F E F' E' ";
     }
     solutionPortion += "Y ";
     performSolveAlgorithmSequence(rubiksCubeFaces, solutionPortion);

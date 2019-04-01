@@ -8,19 +8,23 @@ document.addEventListener('keydown', function(event){
   }
   if(event.which == 68)
   {
-    rubiksCubeBlocks[2][2][2].add(pieceInputMesh);
-    rubiksCubeBlocks[2][2][1].add(outlineMesh2);
+    addOutputOutlinePiece(EDGE_UP_RIGHT);
+    addOutputOutlinePiece(EDGE_UP_LEFT);
   }
   if(event.which == 70)
   {
-    rubiksCubeBlocks[2][2][2].remove(outlineMesh);
-    rubiksCubeBlocks[2][2][1].remove(outlineMesh2);
+    clearOutlines();
   }
 });
 
 //Update logic
 var update = function()
 {
+
+  opacityTracker += .03;
+  pieceInputMesh.material.opacity = Math.sin(opacityTracker) / (8.0/3) + .375;
+  pieceOutputMesh.material.opacity = Math.sin(opacityTracker) / (8.0/3) + .375;
+
   //Render the scene and camera
   renderer.render(scene, camera);
 
@@ -44,16 +48,38 @@ var update = function()
 	    {
         if(isNotation(algorithm.currentTurn))
         {
+          clearOutlines();
           algorithm.performing = true;
   	      performTurn(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot, algorithm.currentTurn, algorithm);
         }
         else
         {
-          showSolveModal(document, splitUnderscores(algorithm.currentTurn));
+          opacityTracker = 0;
+          var separatedInfo = algorithm.currentTurn.split("*");
+          if(separatedInfo.length > 1)
+          {
+            showSolveModal(document, splitUnderscores(separatedInfo[separatedInfo.length - 1]));
+            for(var i = 0; i < separatedInfo.length - 1; i++)
+            {
+              if(separatedInfo[i].substring(0, 2) == "I-")
+              {
+                addInputOutlinePiece(eval(separatedInfo[i].substring(2)));
+              }
+              if(separatedInfo[i].substring(0, 2) == "O-")
+              {
+                addOutputOutlinePiece(eval(separatedInfo[i].substring(2)));
+              }
+            }
+          }
+          else
+          {
+            showSolveModal(document, splitUnderscores(separatedInfo[0]));
+          }
         }
 	    }
 	    else
 	    {
+        clearOutlines();
 	      algorithm.performing = false;
 				updateSceneState(SCENE_INPUT);
 	    }

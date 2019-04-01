@@ -50,10 +50,13 @@ var touchCameraPosition = {
 }
 
 //Creates the highlights for adding the meshes
-var pieceInputMesh = new THREE.Mesh(rubiksCubeBlocks[1][1][1].geometry, new THREE.MeshBasicMaterial({color: 0xff6923, opacity: 0.65, transparent: true}));
-var pieceOutputMesh = new THREE.Mesh(rubiksCubeBlocks[1][1][1].geometry, new THREE.MeshBasicMaterial({color: 0x30ff33, opacity: 0.65, transparent: true}));
+var pieceInputMesh = new THREE.Mesh(rubiksCubeBlocks[1][1][1].geometry, new THREE.MeshBasicMaterial({color: 0xff6923, opacity: 0.6, transparent: true, name: "inputOutline"}));
+var pieceOutputMesh = new THREE.Mesh(rubiksCubeBlocks[1][1][1].geometry, new THREE.MeshBasicMaterial({color: 0x30ff33, opacity: 0.6, transparent: true, name: "outputOutline"}));
 pieceInputMesh.scale.multiplyScalar(1.1);
 pieceOutputMesh.scale.multiplyScalar(1.1);
+pieceInputMesh.needsUpdate = true;
+pieceOutputMesh.needsUpdate = true;
+var opacityTracker = 0;
 
 
 //Creates the 3D Rubik's Cube

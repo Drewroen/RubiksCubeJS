@@ -1,31 +1,53 @@
+const CORNER_UP_LEFT_BACK = 0;
+const CORNER_UP_RIGHT_BACK = 1;
+const CORNER_UP_LEFT_FRONT = 2;
+const CORNER_UP_RIGHT_FRONT = 3;
+const CORNER_DOWN_LEFT_BACK = 4;
+const CORNER_DOWN_RIGHT_BACK = 5;
+const CORNER_DOWN_LEFT_FRONT = 6;
+const CORNER_DOWN_RIGHT_FRONT = 7;
+
+const EDGE_UP_FRONT = 8;
+const EDGE_UP_RIGHT = 9;
+const EDGE_UP_BACK = 10;
+const EDGE_UP_LEFT = 11;
+const EDGE_MIDDLE_LEFT_BACK = 12;
+const EDGE_MIDDLE_RIGHT_BACK = 13;
+const EDGE_MIDDLE_LEFT_FRONT = 14;
+const EDGE_MIDDLE_RIGHT_FRONT = 15;
+const EDGE_DOWN_FRONT = 16;
+const EDGE_DOWN_RIGHT = 17;
+const EDGE_DOWN_BACK = 18;
+const EDGE_DOWN_LEFT = 19;
+
 //Globals for the cube faces
-var FRONT_FACE = 0;
-var RIGHT_FACE = 1;
-var BACK_FACE = 2;
-var LEFT_FACE = 3;
-var TOP_FACE = 4;
-var BOTTOM_FACE = 5;
+const FRONT_FACE = 0;
+const RIGHT_FACE = 1;
+const BACK_FACE = 2;
+const LEFT_FACE = 3;
+const TOP_FACE = 4;
+const BOTTOM_FACE = 5;
 
 //Creates the camera for the cube
-var CAMERA_FOV = 75;
-var CAMERA_NEAR_PLANE = .1;
-var CAMERA_FAR_PLANE = 1000;
+const CAMERA_FOV = 75;
+const CAMERA_NEAR_PLANE = .1;
+const CAMERA_FAR_PLANE = 1000;
 
 //Sets globals for snapping the cube to a loose grid
-var CAMERA_RADIUS = 6;
-var CAMERA_SNAP_HORIZONTAL = .8;
-var CAMERA_SNAP_VERTICAL_ANGLE = 45;
-var SNAP_SPEED = 8;
-var GRID_SNAP_THRESHOLD = .001;
+const CAMERA_RADIUS = 6;
+const CAMERA_SNAP_HORIZONTAL = .8;
+const CAMERA_SNAP_VERTICAL_ANGLE = 30;
+const SNAP_SPEED = 8;
+const GRID_SNAP_THRESHOLD = .001;
 
 //Sets the global for the background color
-var CANVAS_BACKGROUND_COLOR = 0xdddddd;
+const CANVAS_BACKGROUND_COLOR = 0xdddddd;
 
 //Sets global for the touch threshold
-var TOUCH_THRESHOLD = .4;
+const TOUCH_THRESHOLD = .4;
 
 //Sets globals for the different scenes
-var SCENE_INPUT = 0;
-var SCENE_SETTINGS = 1;
-var SCENE_SOLVE = 2;
-var SCENE_INFO = 3;
+const SCENE_INPUT = 0;
+const SCENE_SETTINGS = 1;
+const SCENE_SOLVE = 2;
+const SCENE_INFO = 3;

@@ -198,12 +198,66 @@ function colorsEqual(color1, color2)
 
 function addInputOutline(x, y, z)
 {
-  rubiksCubeBlocks[x][y][z].add(pieceInputMesh);
+  rubiksCubeBlocks[x][y][z].add(pieceInputMesh.clone());
+}
+
+function addInputOutlinePiece(val)
+{
+  switch(val)
+  {
+    case EDGE_UP_FRONT: addInputOutline(1, 2, 2); break;
+    case EDGE_UP_RIGHT: addInputOutline(2, 2, 1); break;
+    case EDGE_UP_BACK: addInputOutline(1, 2, 0); break;
+    case EDGE_UP_LEFT: addInputOutline(0, 2, 1); break;
+    case EDGE_MIDDLE_LEFT_BACK: addInputOutline(0, 1, 0); break;
+    case EDGE_MIDDLE_RIGHT_BACK: addInputOutline(2, 1, 0); break;
+    case EDGE_MIDDLE_LEFT_FRONT: addInputOutline(0, 1, 2); break;
+    case EDGE_MIDDLE_RIGHT_FRONT: addInputOutline(2, 1, 2); break;
+    case EDGE_DOWN_FRONT: addInputOutline(1, 0, 2); break;
+    case EDGE_DOWN_RIGHT: addInputOutline(2, 0, 1); break;
+    case EDGE_DOWN_BACK: addInputOutline(1, 0, 0); break;
+    case EDGE_DOWN_LEFT: addInputOutline(0, 0, 1); break;
+    case CORNER_UP_LEFT_BACK: addInputOutline(0, 2, 0); break;
+    case CORNER_UP_RIGHT_BACK: addInputOutline(2, 2, 0); break;
+    case CORNER_UP_LEFT_FRONT: addInputOutline(0, 2, 2); break;
+    case CORNER_UP_RIGHT_FRONT: addInputOutline(2, 2, 2); break;
+    case CORNER_DOWN_LEFT_BACK: addInputOutline(0, 0, 0); break;
+    case CORNER_DOWN_RIGHT_BACK: addInputOutline(2, 0, 0); break;
+    case CORNER_DOWN_LEFT_FRONT: addInputOutline(0, 0, 2); break;
+    case CORNER_DOWN_RIGHT_FRONT: addInputOutline(2, 0, 2); break;
+  }
 }
 
 function addOutputOutline(x, y, z)
 {
-  rubiksCubeBlocks[x][y][z].add(pieceOutputMesh);
+  rubiksCubeBlocks[x][y][z].add(pieceOutputMesh.clone());
+}
+
+function addOutputOutlinePiece(val)
+{
+  switch(val)
+  {
+    case EDGE_UP_FRONT: addOutputOutline(1, 2, 2); break;
+    case EDGE_UP_RIGHT: addOutputOutline(2, 2, 1); break;
+    case EDGE_UP_BACK: addOutputOutline(1, 2, 0); break;
+    case EDGE_UP_LEFT: addOutputOutline(0, 2, 1); break;
+    case EDGE_MIDDLE_LEFT_BACK: addOutputOutline(0, 1, 0); break;
+    case EDGE_MIDDLE_RIGHT_BACK: addOutputOutline(2, 1, 0); break;
+    case EDGE_MIDDLE_LEFT_FRONT: addOutputOutline(0, 1, 2); break;
+    case EDGE_MIDDLE_RIGHT_FRONT: addOutputOutline(2, 1, 2); break;
+    case EDGE_DOWN_FRONT: addOutputOutline(1, 0, 2); break;
+    case EDGE_DOWN_RIGHT: addOutputOutline(2, 0, 1); break;
+    case EDGE_DOWN_BACK: addOutputOutline(1, 0, 0); break;
+    case EDGE_DOWN_LEFT: addOutputOutline(0, 0, 1); break;
+    case CORNER_UP_LEFT_BACK: addOutputOutline(0, 2, 0); break;
+    case CORNER_UP_RIGHT_BACK: addOutputOutline(2, 2, 0); break;
+    case CORNER_UP_LEFT_FRONT: addOutputOutline(0, 2, 2); break;
+    case CORNER_UP_RIGHT_FRONT: addOutputOutline(2, 2, 2); break;
+    case CORNER_DOWN_LEFT_BACK: addOutputOutline(0, 0, 0); break;
+    case CORNER_DOWN_RIGHT_BACK: addOutputOutline(2, 0, 0); break;
+    case CORNER_DOWN_LEFT_FRONT: addOutputOutline(0, 0, 2); break;
+    case CORNER_DOWN_RIGHT_FRONT: addOutputOutline(2, 0, 2); break;
+  }
 }
 
 function clearOutlines()
@@ -214,9 +268,9 @@ function clearOutlines()
     {
       for (var k = 0; k < 3; k++)
       {
-        rubiksCubeBlocks[i][j][k].remove(pieceInputMesh);
-        rubiksCubeBlocks[i][j][k].remove(pieceOutputMesh);
+        rubiksCubeBlocks[i][j][k].remove(rubiksCubeBlocks[i][j][k].children[0]);
       }
+
     }
   }
 
