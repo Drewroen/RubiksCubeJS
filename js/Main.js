@@ -20,7 +20,7 @@ document.addEventListener('keydown', function(event){
 //Update logic
 var update = function()
 {
-
+  //Updates the glow of the indicated pieces.
   opacityTracker += .03;
   pieceInputMesh.material.opacity = Math.sin(opacityTracker) / (8.0/3) + .375;
   pieceOutputMesh.material.opacity = Math.sin(opacityTracker) / (8.0/3) + .375;
@@ -42,13 +42,13 @@ var update = function()
 		//If the cube is not performing a move, try to perform a move that is available
 	  if(isNotRotating(rotations) && closeEnoughToGrid(camera))
 	  {
+      clearOutlines();
 	    //Add the move to the tempAlgorithm to perform it
 	    algorithm.currentTurn = algorithm.fullAlgorithm.shift();
-	    if(algorithm.currentTurn)
+	    if(algorithm.currentTurn && algorithm.fullAlgorithm.length > 0)
 	    {
         if(isNotation(algorithm.currentTurn))
         {
-          clearOutlines();
           algorithm.performing = true;
   	      performTurn(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot, algorithm.currentTurn, algorithm);
         }

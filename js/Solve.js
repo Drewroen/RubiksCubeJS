@@ -5,7 +5,7 @@ function solve(rubiksCubeFaces)
 
   if(!validateNineStickers(unsolvedCube))
   {
-    return "I-EDGE_UP_LEFT*O-EDGE_UP_BACK**O-EDGE_MIDDLE_LEFT_BACK*Error:_Not_9_of_each_color.";
+    return "Error:_Not_9_of_each_color.";
   }
 
   if(!validateCenters(unsolvedCube))
@@ -49,7 +49,6 @@ function solve(rubiksCubeFaces)
   {
     return "Error:_Pieces_of_the_cube_are_permutated_incorrectly._Confirm_you_entered_the_pieces_correctly._If_you_did,_you_need_to_disassemble_your_cube_and_put_it_back_together.";
   }
-  solution += "Valid_cube. ";
   var threeMoveSolution = checkForThreeMoveSequence(unsolvedCube)
   if(threeMoveSolution)
   {
@@ -57,7 +56,6 @@ function solve(rubiksCubeFaces)
     return solution;
   }
 
-  solution += "First,_we_solve_the_cross! ";
   var crossSolution = generateCross(unsolvedCube);
   solution += crossSolution;
 
@@ -103,14 +101,14 @@ function solve(rubiksCubeFaces)
 
 function generateCross(rubiksCubeFaces)
 {
-  var solution = "";
+  var solution = "Step_1:_The_first_layer_cross O-EDGE_UP_FRONT*O-EDGE_UP_LEFT*O-EDGE_UP_RIGHT*O-EDGE_UP_BACK*We_need_to_solve_these_four_pieces_first._This_is_known_as_the_first_layer_cross._We_will_focus_on_one_piece_at_a_time. ";
   for(var i = 0; i < 4; i++)
   {
     var solutionPortion = "";
-    var explanationPortion = "O-EDGE_UP_FRONT*We_need_to_move_the_piece_highlighted_red_to_the_front_top_section. ";
+    var explanationPortion = "O-EDGE_UP_FRONT*We_need_to_move_the_piece_highlighted_red_to_the_position_highlighted_in_green. ";
     if(getEdge(rubiksCubeFaces, EDGE_UP_BACK) == "4" + i)
     {
-      solutionPortion += "I-EDGE_UP_BACK*" + explanationPortion + " B2 D2 F2 ";
+      solutionPortion += "I-EDGE_UP_BACK*" + explanationPortion + "B2 D2 F2 ";
     }
     if(getEdge(rubiksCubeFaces, EDGE_UP_BACK) == i + "4")
     {
@@ -218,8 +216,10 @@ function generateFirstLayerCorners(rubiksCubeFaces)
   const TOP_LAYER_COLOR = "4";
   const positionCornerAlgorithms = ["L' D2 L ", "R D2 R' D ", "L D L' ", "R' D' R D ", "D2 ", "D' ", "D ", ""];
   const insertCornerAlgorithms = ["R' D2 R D R' D' R ", "F D F' ", "R' D' R "];
+  var explanationPortion = "O-CORNER_UP_RIGHT_FRONT*We_need_to_move_the_piece_highlighted_red_to_the_top_right_front_corner. ";
 
-  var solution = "";
+  var solution = "Step_2:_The_first_layer_corners O-CORNER_UP_LEFT_BACK*O-CORNER_UP_RIGHT_BACK*O-CORNER_UP_LEFT_FRONT*O-CORNER_UP_RIGHT_FRONT*Next,_we_need_to_solve_the_corners_of_the_first_layer._Keep_in_mind_the_colors_of_the_corners_must_match_on_all_sides._We_will_focus_on_one_piece_at_a_time. ";
+
 
   for(var firstColor = 0; firstColor < NUMBER_OF_CORNERS; firstColor++)
   {
@@ -229,7 +229,28 @@ function generateFirstLayerCorners(rubiksCubeFaces)
     {
       if(normalizeCorner(getCorner(rubiksCubeFaces, cornerValue)) == TOP_LAYER_COLOR + secondColor + firstColor)
       {
-        solutionPortion += positionCornerAlgorithms[cornerValue];
+        switch(cornerValue)
+        {
+          case(CORNER_UP_LEFT_BACK): solutionPortion += "I-CORNER_UP_LEFT_BACK*"; break;
+          case(CORNER_UP_RIGHT_BACK): solutionPortion += "I-CORNER_UP_RIGHT_BACK*"; break;
+          case(CORNER_UP_LEFT_FRONT): solutionPortion += "I-CORNER_UP_LEFT_FRONT*"; break;
+          case(CORNER_DOWN_LEFT_BACK): solutionPortion += "I-CORNER_DOWN_LEFT_BACK*"; break;
+          case(CORNER_DOWN_RIGHT_BACK): solutionPortion += "I-CORNER_DOWN_RIGHT_BACK*"; break;
+          case(CORNER_DOWN_LEFT_FRONT): solutionPortion += "I-CORNER_DOWN_LEFT_FRONT*"; break;
+          case(CORNER_DOWN_RIGHT_FRONT): solutionPortion += "I-CORNER_DOWN_RIGHT_FRONT*"; break;
+        }
+        if(cornerValue == CORNER_UP_RIGHT_FRONT && getCorner(rubiksCubeFaces, cornerValue) == TOP_LAYER_COLOR + secondColor + firstColor)
+        {
+          solutionPortion += "O-CORNER_UP_RIGHT_FRONT*This_corner_is_already_in_the_correct_position. ";
+        }
+        else if(cornerValue == CORNER_UP_RIGHT_FRONT)
+        {
+          solutionPortion += "O-CORNER_UP_RIGHT_FRONT*This_corner_is_in_the_right_position,_but_it_is_rotated_the_wrong_way._We_need_to_rotate_it_correctly. " + positionCornerAlgorithms[cornerValue];
+        }
+        else
+        {
+          solutionPortion += explanationPortion + positionCornerAlgorithms[cornerValue];
+        }
       }
     }
     performSolveAlgorithmSequence(rubiksCubeFaces, solutionPortion);

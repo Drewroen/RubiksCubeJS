@@ -66,7 +66,7 @@ function showGUIElements(document)
 
 function showSolveModal(document, message)
 {
-  document.getElementById("solveMessage").innerHTML = "<h2>"+message+"</h2> <br> <button type=\"button\" class=\"btn btn-info btn-sm\" data-dismiss=\"modal\">Click here to continue</button>";
+  document.getElementById("solveMessage").innerHTML = "<h2 style='font-size:25px;'>"+message+"</h2> <br> <button type=\"button\" class=\"btn btn-info btn-sm\" data-dismiss=\"modal\">Click here to continue</button>";
 	$('#solveMessageModal').modal('show');
   updateSceneState(SCENE_INFO);
 }
