@@ -59,35 +59,26 @@ function solve(rubiksCubeFaces)
   var crossSolution = generateCross(unsolvedCube);
   solution += crossSolution;
 
-  solution += "Now_we_solve_the_corners! ";
   var cornerSolution = generateFirstLayerCorners(unsolvedCube);
   solution += cornerSolution;
 
-  solution += "Now_we_solve_the_second_layer! ";
   var secondLayerSolution = generateSecondLayer(unsolvedCube);
   solution += secondLayerSolution;
 
   normalizeCube(unsolvedCube);
-  solution += "Now_we_solve_the_top_cross! ";
   var topCrossSolution = generateTopCross(unsolvedCube);
   solution += topCrossSolution;
 
   normalizeCube(unsolvedCube);
-  solution += "Now_we_permutate_the_top_cross! ";
   var topCrossPermutationSolution = generateTopCrossPermutation(unsolvedCube);
   solution += topCrossPermutationSolution;
 
-  solution += "Now_we_orientate_the_top_corners! ";
   var topCornerOrientationSolution = generateTopCornerOrientation(unsolvedCube);
   solution += topCornerOrientationSolution;
 
   normalizeCube(unsolvedCube);
-  solution += "Finally,_we_permutate_the_final_corners! ";
   var topCornerPermutationSolution = generateTopCornerPermutation(unsolvedCube);
   solution += topCornerPermutationSolution;
-
-
-  solution += "It_should_be_solved! ";
 
   console.log("Cross:" + crossSolution);
   console.log("Corners:" + cornerSolution);
@@ -101,7 +92,12 @@ function solve(rubiksCubeFaces)
 
 function generateCross(rubiksCubeFaces)
 {
-  var solution = "Step_1:_The_first_layer_cross O-EDGE_UP_FRONT*O-EDGE_UP_LEFT*O-EDGE_UP_RIGHT*O-EDGE_UP_BACK*We_need_to_solve_these_four_pieces_first._This_is_known_as_the_first_layer_cross._We_will_focus_on_one_piece_at_a_time. ";
+  var solution = "Step_1:_The_first_layer_cross ";
+  solution += "O-EDGE_UP_FRONT*O-EDGE_UP_LEFT*O-EDGE_UP_RIGHT*O-EDGE_UP_BACK*";
+  solution += "We_need_to_solve_these_four_pieces_first._";
+  solution += "This_is_known_as_the_first_layer_cross._";
+  solution += "We_will_focus_on_one_piece_at_a_time. ";
+
   for(var i = 0; i < 4; i++)
   {
     var solutionPortion = "";
@@ -216,9 +212,14 @@ function generateFirstLayerCorners(rubiksCubeFaces)
   const TOP_LAYER_COLOR = "4";
   const positionCornerAlgorithms = ["L' D2 L ", "R D2 R' D ", "L D L' ", "R' D' R D ", "D2 ", "D' ", "D ", ""];
   const insertCornerAlgorithms = ["R' D2 R D R' D' R ", "F D F' ", "R' D' R "];
-  var explanationPortion = "O-CORNER_UP_RIGHT_FRONT*We_need_to_move_the_piece_highlighted_red_to_the_top_right_front_corner. ";
+  var explanationPortion = "O-CORNER_UP_RIGHT_FRONT*";
+  explanationPortion += "We_need_to_move_the_piece_highlighted_red_to_the_top_right_front_corner. ";
 
-  var solution = "Step_2:_The_first_layer_corners O-CORNER_UP_LEFT_BACK*O-CORNER_UP_RIGHT_BACK*O-CORNER_UP_LEFT_FRONT*O-CORNER_UP_RIGHT_FRONT*Next,_we_need_to_solve_the_corners_of_the_first_layer._Keep_in_mind_the_colors_of_the_corners_must_match_on_all_sides._We_will_focus_on_one_piece_at_a_time. ";
+  var solution = "Step_2:_The_first_layer_corners ";
+  solution += "O-CORNER_UP_LEFT_BACK*O-CORNER_UP_RIGHT_BACK*O-CORNER_UP_LEFT_FRONT*O-CORNER_UP_RIGHT_FRONT*";
+  solution += "Next,_we_need_to_solve_the_corners_of_the_first_layer._";
+  solution += "Keep_in_mind_the_colors_of_the_corners_must_match_on_all_sides._";
+  solution += "We_will_focus_on_one_piece_at_a_time. ";
 
 
   for(var firstColor = 0; firstColor < NUMBER_OF_CORNERS; firstColor++)
@@ -269,7 +270,8 @@ function generateFirstLayerCorners(rubiksCubeFaces)
     performSolveAlgorithmSequence(rubiksCubeFaces, solutionPortion);
     solution += solutionPortion;
   }
-
+  solution += "The_first_layer_is_solved! "
+  solution += "Let's_flip_over_the_cube_so_our_solved_layer_is_on_the_bottom._This_will_prepare_us_for_the_next_step. "
   solution += "X2 ";
   performSolveAlgorithmSequence(rubiksCubeFaces, "X2");
   return solution;
@@ -277,9 +279,28 @@ function generateFirstLayerCorners(rubiksCubeFaces)
 
 function generateSecondLayer(rubiksCubeFaces)
 {
+  var algorithmLeftText = "U'_L'_U_L_U_F_U'_F' ";
+  var algorithmRightText = "U_R_U'_R'_U'_F'_U_F ";
+
+  var solution = "Step_3:_The_second_layer_edges ";
+  solution += "O-EDGE_MIDDLE_LEFT_BACK*O-EDGE_MIDDLE_RIGHT_BACK*O-EDGE_MIDDLE_LEFT_FRONT*O-EDGE_MIDDLE_RIGHT_FRONT*";
+  solution += "Now_we_need_to_solve_the_second_layer_pieces._";
+  solution += "Note_how_the_centers_are_already_in_the_correct_place._";
+  solution += "Like_before,_we_will_focus_on_one_piece_at_a_time. ";
+  solution += "We_will_need_two_algorithms_for_this_step: ";
+  solution += algorithmLeftText;
+  solution += algorithmRightText;
+
+  var explanationPortion = "O-EDGE_MIDDLE_RIGHT_FRONT*";
+  explanationPortion += "We_need_to_move_the_piece_highlighted_red_to_the_middle_front_right_edge. ";
+
+  var leftSlotExplanationPortion = "I-EDGE_MIDDLE_LEFT_FRONT*However,_the_piece_is_already_in_the_second_layer,_so_we_need_to_take_it_out_with_one_of_the_algorithms. ";
+  leftSlotExplanationPortion += "I-EDGE_MIDDLE_LEFT_FRONT*We_will_use_the_algorithm_for_the_left_side,_which_is: I-EDGE_MIDDLE_LEFT_FRONT*" + algorithmLeftText;
+  var rightSlotExplanationPortion = "I-EDGE_MIDDLE_RIGHT_FRONT*However,_the_piece_is_already_in_the_second_layer,_so_we_need_to_take_it_out_with_one_of_the_algorithms. ";
+  rightSlotExplanationPortion += "I-EDGE_MIDDLE_RIGHT_FRONT*We_will_use_the_algorithm_for_the_right_side,_which_is: I-EDGE_MIDDLE_RIGHT_FRONT*" + algorithmRightText;
+
   var algorithmLeftInsert = "U' L' U L U F U' F' ";
   var algorithmRightInsert = "U R U' R' U' F' U F ";
-  var solution = "";
   for(var i = 0; i < 4; i++)
   {
     var solutionPortion = "";
@@ -289,17 +310,22 @@ function generateSecondLayer(rubiksCubeFaces)
 
     if(normalizeEdge(getEdge(rubiksCubeFaces, EDGE_MIDDLE_LEFT_FRONT)) == edgePiece)
     {
+      solutionPortion += "I-EDGE_MIDDLE_LEFT_FRONT*" + explanationPortion + leftSlotExplanationPortion;
       solutionPortion += algorithmLeftInsert;
     }
     if(normalizeEdge(getEdge(rubiksCubeFaces, EDGE_MIDDLE_LEFT_BACK)) == edgePiece)
     {
+      solutionPortion += "I-EDGE_MIDDLE_LEFT_BACK*" + explanationPortion;
       solutionPortion += "Y' ";
+      solutionPortion += leftSlotExplanationPortion;
       solutionPortion += algorithmLeftInsert;
       solutionPortion += "Y ";
     }
     if(normalizeEdge(getEdge(rubiksCubeFaces, EDGE_MIDDLE_RIGHT_BACK)) == edgePiece)
     {
+      solutionPortion += "I-EDGE_MIDDLE_RIGHT_BACK*" + explanationPortion;
       solutionPortion += "Y ";
+      solutionPortion += rightSlotExplanationPortion;
       solutionPortion += algorithmRightInsert;
       solutionPortion += "Y' ";
     }
@@ -307,9 +333,14 @@ function generateSecondLayer(rubiksCubeFaces)
     {
       if(getEdge(rubiksCubeFaces, EDGE_MIDDLE_RIGHT_FRONT) != edgePieceReversed)
       {
+        solutionPortion += "I-EDGE_MIDDLE_RIGHT_FRONT*This_piece_is_in_the_right_position,_but_it_is_flipped_the_wrong_way ";
+        solutionPortion += "I-EDGE_MIDDLE_RIGHT_FRONT*We_will_remove_the_piece_from_it's_position_with_an_algorithm,_then_put_it_back_with_the_same_algorithm. ";
         solutionPortion += algorithmRightInsert;
         solutionPortion += "U2 ";
         solutionPortion += algorithmRightInsert;
+      }
+      else {
+        solutionPortion += "O-EDGE_MIDDLE_RIGHT_FRONT*This_piece_is_already_in_the_correct_position. "
       }
     }
     performSolveAlgorithmSequence(rubiksCubeFaces, solutionPortion);
