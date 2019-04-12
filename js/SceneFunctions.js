@@ -26,6 +26,8 @@ function updateSceneState(state)
 		window.addEventListener('mouseup', onDocumentMouseUp);
 		window.addEventListener('mousedown', onDocumentMouseDown);
 		showGUIElements(document);
+		algorithm.reverseAlgorithm = [];
+		document.getElementById("solveButtons").style = "visibility: hidden;";
 	}
 	else if (state == SCENE_SETTINGS)
 	{
@@ -46,6 +48,7 @@ function updateSceneState(state)
 		window.removeEventListener('mouseup', onDocumentMouseUp);
 		window.removeEventListener('mousedown', onDocumentMouseDown);
 		hideGUIElements(document);
+		document.getElementById("solveButtons").style = "visiblity: visible;";
 	}
 	else if (state == SCENE_INFO)
 	{

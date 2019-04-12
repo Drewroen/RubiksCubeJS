@@ -5,49 +5,49 @@ function solve(rubiksCubeFaces)
 
   if(!validateNineStickers(unsolvedCube))
   {
-    return "Error:_Not_9_of_each_color.";
+    return "Error:_Not_9_of_each_color. ";
   }
 
   if(!validateCenters(unsolvedCube))
   {
-    return "Error:_Duplicate_centers.";
+    return "Error:_Duplicate_centers. ";
   }
 
   normalizeCube(unsolvedCube);
 
   if(!checkAllCornersValid(unsolvedCube))
   {
-    return "Error:_A_corner_is_invalid._Check_the_corner_pieces_to_make_sure_they_are_correct.";
+    return "Error:_A_corner_is_invalid._Check_the_corner_pieces_to_make_sure_they_are_correct. ";
   }
 
   if(!validateUniqueCorners(unsolvedCube))
   {
-    return "Error:_A_corner_piece_is_included_twice._Check_the_corner_pieces_to_make_sure_they_are_correct.";
+    return "Error:_A_corner_piece_is_included_twice._Check_the_corner_pieces_to_make_sure_they_are_correct. ";
   }
 
   if(!checkAllEdgesValid(unsolvedCube))
   {
-    return "Error:_An_edge_is_invalid._Check_the_edge_pieces_to_make_sure_they_are_correct.";
+    return "Error:_An_edge_is_invalid._Check_the_edge_pieces_to_make_sure_they_are_correct. ";
   }
 
   if(!validateUniqueEdges(unsolvedCube))
   {
-    return "Error:_An_edge_piece_is_included_twice._Check_the_edge_pieces_to_make_sure_they_are_correct.";
+    return "Error:_An_edge_piece_is_included_twice._Check_the_edge_pieces_to_make_sure_they_are_correct. ";
   }
 
   if(!validateCornerRotation(unsolvedCube))
   {
-    return "Error:_A_corner_piece_is_rotated_incorrectly._Confirm_you_entered_the_pieces_correctly._If_you_did,_you_need_to_disassemble_your_cube_and_put_it_back_together.";
+    return "Error:_A_corner_piece_is_rotated_incorrectly._Confirm_you_entered_the_pieces_correctly._If_you_did,_you_need_to_disassemble_your_cube_and_put_it_back_together. ";
   }
 
   if(!validateEdgeRotation(unsolvedCube))
   {
-    return "Error:_An_edge_piece_is_rotated_incorrectly._Confirm_you_entered_the_pieces_correctly._If_you_did,_you_need_to_disassemble_your_cube_and_put_it_back_together.";
+    return "Error:_An_edge_piece_is_rotated_incorrectly._Confirm_you_entered_the_pieces_correctly._If_you_did,_you_need_to_disassemble_your_cube_and_put_it_back_together. ";
   }
 
   if(!validatePermutation(unsolvedCube))
   {
-    return "Error:_Pieces_of_the_cube_are_permutated_incorrectly._Confirm_you_entered_the_pieces_correctly._If_you_did,_you_need_to_disassemble_your_cube_and_put_it_back_together.";
+    return "Error:_Pieces_of_the_cube_are_permutated_incorrectly._Confirm_you_entered_the_pieces_correctly._If_you_did,_you_need_to_disassemble_your_cube_and_put_it_back_together. ";
   }
   var threeMoveSolution = checkForThreeMoveSequence(unsolvedCube)
   if(threeMoveSolution)

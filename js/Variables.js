@@ -36,5 +36,12 @@ var rotations = {
 var algorithm = {
 	currentTurn: "",
   fullAlgorithm: [],
+	reverseAlgorithm: [],
   performing: false
 }
+
+var currentTime = 0;
+
+var paused = false;
+
+var reverseStep = false;

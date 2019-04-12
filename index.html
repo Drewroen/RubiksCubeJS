@@ -30,6 +30,16 @@
 				<button id="settings" class="btn btn-info fas fa-cog" data-toggle="modal" data-target="#settingsModal"></button>
 		</div>
 
+		<div id="solveButtons" style="visibility: hidden;">
+			<input class="custom-range" id="rotationSpeedSlider" type="range" min="0.01" max="0.08" value="0.01" step="0.0025" id="slider" oninput="rotationSpeed=value">
+			<button type="button" id="button_bw" class="btn" onclick='backButton();'>
+      	<i class="fa fa-backward"></i>
+    	</button>
+    	<button type="button" id="button_play_pause" class="btn" onclick='playPauseButton();'>
+      	<i class="fa fa-pause" id="play"></i>
+    	</button>
+		</div>
+
 		<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsCenterTitle" aria-hidden="true">
 		  <div class="modal-dialog modal-dialog-centered" role="document">
 		    <div class="modal-content">
@@ -56,12 +66,6 @@
 						<input class="colorInput" type="hidden" id="color_value6" onchange="cubeColorGUI.face6 = parseInt(value, 16);">
         		<button class="colorButton btn btn-secondary colorSetting jscolor {valueElement: 'color_value6'}"></button>
 						<br/>
-						<br/>
-						<label for="formControlRange">Cube Rotation Speed</label>
-						<br/>
-						<input id="rotationSpeedSlider" type="range" min="0.0025" max="0.1" value="0.05" step="0.0025" id="slider" oninput="rotationSpeed=value">
-
-
 					</div>
 		      </div>
 		      <div class="modal-footer">

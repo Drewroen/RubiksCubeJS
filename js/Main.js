@@ -1,6 +1,8 @@
 //Used to track when keys are pressed
 //Meant for debugging purposes only
 //Will NOT be in the final product
+
+/*
 document.addEventListener('keydown', function(event){
   if(event.which == 83)
   {
@@ -16,6 +18,7 @@ document.addEventListener('keydown', function(event){
     clearOutlines();
   }
 });
+*/
 
 //Update logic
 var update = function()
@@ -31,6 +34,11 @@ var update = function()
   //Update the control camera to point the camera at the cube
   controls.update();
 
+  if(!paused)
+  {
+    currentTime++;
+  }
+
 	if(sceneState == SCENE_SOLVE)
 	{
     //If the user isn't dragging the cube, snap it to the grid
@@ -38,51 +46,111 @@ var update = function()
     {
       moveTowardGrid(camera, controls);
     }
+    var waitingTime = -5143 * rotationSpeed + 451.4;
 
-		//If the cube is not performing a move, try to perform a move that is available
-	  if(isNotRotating(rotations) && closeEnoughToGrid(camera))
-	  {
-      clearOutlines();
-	    //Add the move to the tempAlgorithm to perform it
-	    algorithm.currentTurn = algorithm.fullAlgorithm.shift();
-	    if(algorithm.currentTurn && algorithm.fullAlgorithm.length > 0)
-	    {
-        if(isNotation(algorithm.currentTurn))
+    clearOutlines();
+
+    if(currentTime >= waitingTime && !paused)
+    {
+      //If the cube is not performing a move, try to perform a move that is available
+  	  if(isNotRotating(rotations) && closeEnoughToGrid(camera))
+  	  {
+
+  	    //Add the move to the tempAlgorithm to perform it
+        if(!reverseStep)
         {
-          algorithm.performing = true;
-  	      performTurn(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot, algorithm.currentTurn, algorithm);
+          algorithm.currentTurn = algorithm.fullAlgorithm.shift();
+          if(algorithm.currentTurn)
+          {
+            if(algorithm.currentTurn.length > 2)
+            {
+              algorithm.reverseAlgorithm.unshift(algorithm.currentTurn);
+            }
+            else if(algorithm.currentTurn.substring(1, 2) == "2")
+            {
+              algorithm.reverseAlgorithm.unshift(algorithm.currentTurn.substring(0, 1) + "'");
+            }
+            else if (algorithm.currentTurn.substring(1, 2) == "'")
+            {
+              algorithm.reverseAlgorithm.unshift(algorithm.currentTurn.substring(0, 1));
+            }
+            else
+            {
+              algorithm.reverseAlgorithm.unshift(algorithm.currentTurn + "'");
+            }
+          }
         }
         else
         {
-          opacityTracker = 0;
-          var separatedInfo = algorithm.currentTurn.split("*");
-          if(separatedInfo.length > 1)
+          algorithm.currentTurn = algorithm.reverseAlgorithm.shift();
+          if(algorithm.currentTurn)
           {
-            showSolveModal(document, splitUnderscores(separatedInfo[separatedInfo.length - 1]));
-            for(var i = 0; i < separatedInfo.length - 1; i++)
+            if(algorithm.currentTurn.length > 2)
             {
-              if(separatedInfo[i].substring(0, 2) == "I-")
+              algorithm.fullAlgorithm.unshift(algorithm.currentTurn);
+            }
+            else if(algorithm.currentTurn.substring(1, 2) == "'")
+            {
+              algorithm.fullAlgorithm.unshift(algorithm.currentTurn.substring(0, 1));
+            }
+            else
+            {
+              algorithm.fullAlgorithm.unshift(algorithm.currentTurn + "'");
+            }
+            paused = true;
+          }
+          while(algorithm.reverseAlgorithm[0] && algorithm.reverseAlgorithm[0].length > 2)
+          {
+            console.log("hey we're here");
+            algorithm.fullAlgorithm.unshift(algorithm.reverseAlgorithm.shift());
+          }
+        }
+
+        console.log(algorithm.reverseAlgorithm);
+
+  	    if(algorithm.fullAlgorithm.length > 0)
+  	    {
+          if(algorithm.currentTurn)
+          {
+            if(isNotation(algorithm.currentTurn))
+            {
+              currentTime = 0;
+              algorithm.performing = true;
+      	      performTurn(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot, algorithm.currentTurn, algorithm);
+            }
+            else
+            {
+              opacityTracker = 0;
+              var separatedInfo = algorithm.currentTurn.split("*");
+              if(separatedInfo.length > 1)
               {
-                addInputOutlinePiece(eval(separatedInfo[i].substring(2)));
+                showSolveModal(document, splitUnderscores(separatedInfo[separatedInfo.length - 1]));
+                for(var i = 0; i < separatedInfo.length - 1; i++)
+                {
+                  if(separatedInfo[i].substring(0, 2) == "I-")
+                  {
+                    addInputOutlinePiece(eval(separatedInfo[i].substring(2)));
+                  }
+                  if(separatedInfo[i].substring(0, 2) == "O-")
+                  {
+                    addOutputOutlinePiece(eval(separatedInfo[i].substring(2)));
+                  }
+                }
               }
-              if(separatedInfo[i].substring(0, 2) == "O-")
+              else
               {
-                addOutputOutlinePiece(eval(separatedInfo[i].substring(2)));
+                showSolveModal(document, splitUnderscores(separatedInfo[0]));
               }
             }
           }
-          else
-          {
-            showSolveModal(document, splitUnderscores(separatedInfo[0]));
-          }
-        }
-	    }
-	    else
-	    {
-        clearOutlines();
-	      algorithm.performing = false;
-				updateSceneState(SCENE_INPUT);
-	    }
+  	    }
+  	    else
+  	    {
+          clearOutlines();
+  	      algorithm.performing = false;
+  				updateSceneState(SCENE_INPUT);
+  	    }
+      }
 	  }
 
 	  //Rotate the cubes that are in the pivot scene
