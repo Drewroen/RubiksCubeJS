@@ -4,6 +4,7 @@ function prepareSolving(rubiksCubeFaces)
 	var algArray = solution.split(" ");
 	algorithm.fullAlgorithm = algorithm.fullAlgorithm.concat(algArray);
 	updateSceneState(SCENE_SOLVE);
+	currentTime = (-5143 * rotationSpeed + 451.4);
 }
 
 function scramble(rubiksCubeFaces)

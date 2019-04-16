@@ -1,7 +1,7 @@
 var sceneState = SCENE_INPUT;
 
 var algorithmInput = "L L' M M' R' R X' X U' U E E' D D' Y' Y F F' S S' B' B Z Z'";
-var rotationSpeed = 0.05;
+var rotationSpeed = 0.01;
 
 var cubeColorGUI = {
 	face1: 0xffffff,

@@ -1,25 +1,3 @@
-//Used to track when keys are pressed
-//Meant for debugging purposes only
-//Will NOT be in the final product
-
-/*
-document.addEventListener('keydown', function(event){
-  if(event.which == 83)
-  {
-    scramble(rubiksCubeFaces);
-  }
-  if(event.which == 68)
-  {
-    addOutputOutlinePiece(EDGE_UP_RIGHT);
-    addOutputOutlinePiece(EDGE_UP_LEFT);
-  }
-  if(event.which == 70)
-  {
-    clearOutlines();
-  }
-});
-*/
-
 //Update logic
 var update = function()
 {

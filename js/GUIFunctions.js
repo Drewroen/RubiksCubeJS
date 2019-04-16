@@ -33,5 +33,6 @@ function backButton()
 {
   paused = false;
   reverseStep = true;
+  currentTime = (-5143 * rotationSpeed + 451.4);
   document.getElementById("play").className = "fa fa-play";
 }

@@ -90,6 +90,17 @@ canvas {
   float: right;
 }
 
+#scramble{
+  bottom: 30px;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  border-width: 1.5px;
+  border-color: #247b9e;
+  margin: 5px;
+  float: right;
+}
+
 .btn:focus,.btn:active {
    outline: none;
    box-shadow: none;

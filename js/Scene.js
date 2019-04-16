@@ -1,3 +1,6 @@
+//Adds the tooltips to the buttons on the top of the screen
+$('[data-toggle="tooltip"]').tooltip()
+
 //Creates the scene for the cube
 var scene = new THREE.Scene();
 
