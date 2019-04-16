@@ -170,10 +170,18 @@ var update = function()
   }
 }
 //Run cube loop (update, render, repeat)
+var lastDate = new Date();
 var AnimationLoop = function()
 {
-  requestAnimationFrame(AnimationLoop);
-  update();
+  var currentDate = new Date();
+  var fps = 1000 / (currentDate - lastDate);
+  lastDate = currentDate;
+  setTimeout(function()
+  {
+    requestAnimationFrame(AnimationLoop);
+    update();
+  }, fps / 32);
+
 };
 
 AnimationLoop();
