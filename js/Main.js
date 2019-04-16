@@ -133,9 +133,9 @@ var update = function()
 
 	  //Rotate the cubes that are in the pivot scene
 	  //The cubes in the pivot scene are the ones that are part of a turn
-	  pivot.rotation.x += rotationSpeed * rotations.x;
-	  pivot.rotation.y += rotationSpeed * rotations.y;
-	  pivot.rotation.z += rotationSpeed * rotations.z;
+	  pivot.rotation.x += rotationSpeed * rotations.x * 120 / fps;
+	  pivot.rotation.y += rotationSpeed * rotations.y * 120 / fps;
+	  pivot.rotation.z += rotationSpeed * rotations.z * 120 / fps;
 
 	  //Set the cube to the original rotation with the new faces
     validateCube(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot);
@@ -171,17 +171,16 @@ var update = function()
 }
 //Run cube loop (update, render, repeat)
 var lastDate = new Date();
+var fps = 0;
 var AnimationLoop = function()
 {
   var currentDate = new Date();
-  var fps = 1000 / (currentDate - lastDate);
+  fps = 1000.0 / (currentDate - lastDate);
   lastDate = currentDate;
-  setTimeout(function()
-  {
-    requestAnimationFrame(AnimationLoop);
-    update();
-  }, fps / 32);
+  console.log(fps);
 
+  requestAnimationFrame(AnimationLoop);
+  update();
 };
 
 AnimationLoop();
