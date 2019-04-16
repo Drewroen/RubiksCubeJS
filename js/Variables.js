@@ -40,7 +40,7 @@ var algorithm = {
   performing: false
 }
 
-var currentTime = 0;
+var currentTime = 0.0;
 
 var paused = false;
 

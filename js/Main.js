@@ -1,6 +1,9 @@
 //Update logic
 var update = function()
 {
+
+  fpsMultiplier = 120 / fps;
+
   //Updates the glow of the indicated pieces.
   opacityTracker += .03;
   pieceInputMesh.material.opacity = Math.sin(opacityTracker) / (8.0/3) + .375;
@@ -14,7 +17,7 @@ var update = function()
 
   if(!paused)
   {
-    currentTime++;
+    currentTime += fpsMultiplier;
   }
 
 	if(sceneState == SCENE_SOLVE)
@@ -79,12 +82,9 @@ var update = function()
           }
           while(algorithm.reverseAlgorithm[0] && algorithm.reverseAlgorithm[0].length > 2)
           {
-            console.log("hey we're here");
             algorithm.fullAlgorithm.unshift(algorithm.reverseAlgorithm.shift());
           }
         }
-
-        console.log(algorithm.reverseAlgorithm);
 
   	    if(algorithm.fullAlgorithm.length > 0)
   	    {
@@ -133,9 +133,9 @@ var update = function()
 
 	  //Rotate the cubes that are in the pivot scene
 	  //The cubes in the pivot scene are the ones that are part of a turn
-	  pivot.rotation.x += rotationSpeed * rotations.x * 120 / fps;
-	  pivot.rotation.y += rotationSpeed * rotations.y * 120 / fps;
-	  pivot.rotation.z += rotationSpeed * rotations.z * 120 / fps;
+	  pivot.rotation.x += rotationSpeed * rotations.x * fpsMultiplier;
+	  pivot.rotation.y += rotationSpeed * rotations.y * fpsMultiplier;
+	  pivot.rotation.z += rotationSpeed * rotations.z * fpsMultiplier;
 
 	  //Set the cube to the original rotation with the new faces
     validateCube(rotations, rubiksCubeBlocks, rubiksCubeFaces, scene, pivot);
@@ -177,7 +177,6 @@ var AnimationLoop = function()
   var currentDate = new Date();
   fps = 1000.0 / (currentDate - lastDate);
   lastDate = currentDate;
-  console.log(fps);
 
   requestAnimationFrame(AnimationLoop);
   update();
