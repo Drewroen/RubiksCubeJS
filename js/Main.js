@@ -23,10 +23,7 @@ var update = function()
 	if(sceneState == SCENE_SOLVE)
 	{
     //If the user isn't dragging the cube, snap it to the grid
-    if(!mouseDown)
-    {
-      moveTowardGrid(camera, controls);
-    }
+    moveTowardGrid(camera, controls);
     var waitingTime = -5143 * rotationSpeed + 451.4;
 
     clearOutlines();

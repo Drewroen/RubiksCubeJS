@@ -53,6 +53,7 @@ function updateSceneState(state)
 	}
 	else if (state == SCENE_INFO)
 	{
+		mouseDown = true;
 		controls.enabled = true;
 		window.addEventListener('mousemove', onDocumentMouseMove);
 		window.addEventListener('touchstart', onDocumentTouchStart);
