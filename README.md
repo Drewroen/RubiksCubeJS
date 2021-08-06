@@ -1,5 +1,5 @@
 # RubiksCubeJS
-This is a JavaScript Rubik's Cube that is currently in development.
+This is a JavaScript Rubik's Cube that I created for my senior capstone at [Simpson College.](https://simpson.edu/academics/departments/academics/departments/department-computer-science/computer-science)
 
 You can see the progress [here!](https://drewroen.github.io/RubiksCubeJS/)
 
