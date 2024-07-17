@@ -9,6 +9,6 @@ The goal is to create a cube that people can input a scrambled cube and get a so
 # Authors
 Drew Roen
 
-# Build with
+# Built with
 * [Javascript](https://www.w3schools.com/js/)
 * [Three.js](threejs.org)
